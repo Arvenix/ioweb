@@ -173,6 +173,8 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:56px 0 40px;colo
 }
 @media(max-width:660px){
   .navlinks{display:none}.burger{display:block}
+  header.open .navlinks{display:flex;position:absolute;top:72px;left:0;right:0;flex-direction:column;gap:0;padding:8px 24px 16px;background:rgba(7,7,11,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  header.open .navlinks a{padding:13px 0;border-bottom:1px solid var(--line);font-size:16px}
   nav .btn{display:none}
   .features,.tiers{grid-template-columns:1fr}
   .hero{padding:72px 0 60px}.sec{padding:76px 0}
@@ -196,7 +198,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:56px 0 40px;colo
         <a href="#contact">Contact</a>
       </div>
       <a class="btn btn-primary" href="#contact">Get started</a>
-      <button class="burger" aria-label="Menu" onclick="document.querySelector('.navlinks').scrollIntoView()">☰</button>
+      <button class="burger" aria-label="Menu" onclick="document.getElementById('hdr').classList.toggle('open')">☰</button>
     </nav>
   </div>
 </header>
