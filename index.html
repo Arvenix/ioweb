@@ -3,29 +3,29 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Arvenix — Build what comes next</title>
-<meta name="description" content="Arvenix is the modern platform for teams who ship fast: blazing performance, enterprise-grade security, and a developer experience you will actually enjoy.">
+<title>Arvenix — AI Operations Optimization for Installation Companies</title>
+<meta name="description" content="Stop leaving $500K-$2M on the table. Arvenix analyzes your post-sale ops and identifies actionable savings in materials, scheduling, and capacity.">
 <meta name="theme-color" content="#08080c">
 <link rel="canonical" href="https://arvenix.io/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://arvenix.io/">
-<meta property="og:title" content="Arvenix — Build what comes next">
-<meta property="og:description" content="The modern platform for teams who ship fast.">
+<meta property="og:title" content="Arvenix — AI Operations Optimization">
+<meta property="og:description" content="Capture the 10-15% in operational waste you're leaving on the table.">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27 viewBox%3D%270 0 32 32%27%3E%3Crect width%3D%2732%27 height%3D%2732%27 rx%3D%278%27 fill%3D%27%236d5efc%27%2F%3E%3Cpath d%3D%27M16 6l8 20h-4.4l-1.5-4h-4.2l-1.5 4H8z%27 fill%3D%27%23fff%27%2F%3E%3C%2Fsvg%3E">
 <style>
 *,*::before,*::after{box-sizing:border-box}
 :root{
-  --bg:#07070b; --bg2:#0c0c14;
-  --text:#f4f5f9; --muted:#9ba1b4;
-  --line:rgba(255,255,255,.09);
-  --card:rgba(255,255,255,.035);
-  --brand:#6d5efc; --brand2:#22d3ee; --brand3:#f472b6;
-  --radius:18px;
-  --maxw:1160px;
+  --bg:#05060b; --bg2:#0c0c14;
+  --text:#f8f9fa; --muted:#a8adb8;
+  --line:rgba(255,255,255,.1);
+  --card:rgba(255,255,255,.04);
+  --brand:#2563eb; --brand2:#06b6d4; --brand3:#ec4899;
+  --accent1:#3b82f6; --accent2:#0ea5e9; --accent3:#f43f5e;
+  --radius:16px;
+  --maxw:1200px;
 }
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.6}
@@ -35,32 +35,29 @@ img{max-width:100%}
 .wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 24px}
 .grad{background:linear-gradient(100deg,#fff 0%,#c9c6ff 35%,var(--brand2) 70%,var(--brand3) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
 
-/* ---------- background fx ---------- */
 .bgfx{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none}
 .orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.55;animation:float 18s ease-in-out infinite}
-.orb.a{width:620px;height:620px;background:radial-gradient(circle at 30% 30%,#6d5efc,transparent 65%);top:-180px;left:-140px}
+.orb.a{width:620px;height:620px;background:radial-gradient(circle at 30% 30%,#378add,transparent 65%);top:-180px;left:-140px}
 .orb.b{width:540px;height:540px;background:radial-gradient(circle at 60% 40%,#22d3ee,transparent 65%);top:120px;right:-160px;animation-delay:-6s}
 .orb.c{width:560px;height:560px;background:radial-gradient(circle at 50% 50%,#f472b6,transparent 65%);top:900px;left:20%;animation-delay:-11s;opacity:.35}
 @keyframes float{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(40px,-50px,0) scale(1.12)}}
 .grid-lines{position:fixed;inset:0;z-index:-1;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 40%,transparent 100%);-webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 40%,transparent 100%)}
 
-/* ---------- nav ---------- */
 header{position:sticky;top:0;z-index:50;transition:.3s}
 header.scrolled{background:rgba(7,7,11,.72);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
 nav{display:flex;align-items:center;gap:28px;height:72px}
 .logo{display:flex;align-items:center;gap:10px;font-family:"Space Grotesk";font-weight:700;font-size:19px;letter-spacing:-.02em}
-.mark{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--brand),var(--brand2));display:grid;place-items:center;font-size:15px;color:#fff;box-shadow:0 6px 22px rgba(109,94,252,.5)}
+.mark{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--brand),var(--brand2));display:grid;place-items:center;font-size:15px;color:#fff;box-shadow:0 6px 22px rgba(55,138,221,.5)}
 .navlinks{display:flex;gap:28px;margin-left:auto;font-size:14.5px;color:var(--muted);font-weight:500}
 .navlinks a{transition:.2s}.navlinks a:hover{color:#fff}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:12px 22px;border-radius:999px;font-weight:600;font-size:14.5px;border:1px solid transparent;cursor:pointer;transition:transform .18s,box-shadow .25s,background .25s,border-color .25s;white-space:nowrap}
-.btn-primary{background:linear-gradient(135deg,var(--brand),#8b7bff);color:#fff;box-shadow:0 10px 30px rgba(109,94,252,.38)}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(109,94,252,.55)}
+.btn-primary{background:linear-gradient(135deg,var(--brand),#2563eb);color:#fff;box-shadow:0 10px 30px rgba(55,138,221,.38)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(55,138,221,.55)}
 .btn-ghost{background:rgba(255,255,255,.05);border-color:var(--line);color:var(--text)}
 .btn-ghost:hover{background:rgba(255,255,255,.1);transform:translateY(-2px)}
 .btn-lg{padding:15px 30px;font-size:16px}
 .burger{display:none;background:none;border:0;color:#fff;font-size:24px;cursor:pointer;margin-left:auto}
 
-/* ---------- hero ---------- */
 .hero{padding:110px 0 90px;text-align:center;position:relative}
 .pill{display:inline-flex;align-items:center;gap:9px;padding:7px 16px 7px 8px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid var(--line);font-size:13.5px;color:#cfd3e0;margin-bottom:30px}
 .pill b{background:linear-gradient(135deg,var(--brand),var(--brand2));padding:3px 10px;border-radius:999px;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:#fff}
@@ -69,7 +66,9 @@ nav{display:flex;align-items:center;gap:28px;height:72px}
 .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
 .hero-note{margin-top:20px;font-size:13.5px;color:#6f7688}
 
-/* ---------- app mock ---------- */
+.stat{display:inline-block;margin:0 1rem;font-size:16px;font-weight:600;color:var(--text)}
+.stat-number{color:var(--brand);font-size:24px}
+
 .mock{margin:70px auto 0;max-width:1000px;border-radius:20px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));backdrop-filter:blur(12px);box-shadow:0 40px 120px rgba(0,0,0,.6);overflow:hidden}
 .mock-bar{display:flex;align-items:center;gap:8px;padding:13px 16px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.03)}
 .dot{width:11px;height:11px;border-radius:50%}
@@ -81,22 +80,7 @@ nav{display:flex;align-items:center;gap:28px;height:72px}
 .stat-card{border:1px solid var(--line);border-radius:12px;padding:14px;background:rgba(255,255,255,.03)}
 .stat-card .n{font-family:"Space Grotesk";font-size:22px;font-weight:700}
 .stat-card .l{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
-.chart{flex:1;display:flex;align-items:flex-end;gap:9px;padding-top:10px}
-.bar{flex:1;border-radius:7px 7px 3px 3px;background:linear-gradient(180deg,var(--brand),rgba(109,94,252,.15));animation:rise 1.4s cubic-bezier(.2,.9,.25,1) backwards}
-@keyframes rise{from{transform:scaleY(.04);opacity:0}to{transform:scaleY(1);opacity:1}}
-.bar{transform-origin:bottom}
 
-/* ---------- marquee ---------- */
-.trust{padding:64px 0 10px;text-align:center}
-.trust .kicker{font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;color:#6f7688;margin-bottom:26px}
-.marquee{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
-.marquee-track{display:flex;gap:60px;width:max-content;animation:slide 28s linear infinite}
-.marquee-track span{font-family:"Space Grotesk";font-weight:700;font-size:21px;color:rgba(255,255,255,.32);white-space:nowrap;transition:.3s}
-.marquee:hover .marquee-track{animation-play-state:paused}
-.marquee-track span:hover{color:rgba(255,255,255,.8)}
-@keyframes slide{to{transform:translateX(-50%)}}
-
-/* ---------- sections ---------- */
 section{position:relative}
 .sec{padding:104px 0}
 .sec-head{max-width:660px;margin:0 auto 56px;text-align:center}
@@ -105,37 +89,28 @@ section{position:relative}
 .sec-head p{color:var(--muted);font-size:17px;margin:0}
 .features{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .card{position:relative;padding:30px;border-radius:var(--radius);border:1px solid var(--line);background:var(--card);overflow:hidden;transition:transform .3s,border-color .3s,background .3s}
-.card::after{content:"";position:absolute;inset:0;border-radius:var(--radius);opacity:0;transition:.3s;background:radial-gradient(500px circle at var(--mx,50%) var(--my,0%),rgba(109,94,252,.18),transparent 60%);pointer-events:none}
-.card:hover{transform:translateY(-6px);border-color:rgba(109,94,252,.5);background:rgba(255,255,255,.06)}
+.card::after{content:"";position:absolute;inset:0;border-radius:var(--radius);opacity:0;transition:.3s;background:radial-gradient(500px circle at var(--mx,50%) var(--my,0%),rgba(55,138,221,.18),transparent 60%);pointer-events:none}
+.card:hover{transform:translateY(-6px);border-color:rgba(55,138,221,.5);background:rgba(255,255,255,.06)}
 .card:hover::after{opacity:1}
-.icon{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(109,94,252,.28),rgba(34,211,238,.18));border:1px solid var(--line);margin-bottom:18px}
-.icon svg{width:22px;height:22px;stroke:#c3befd;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.icon{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(55,138,221,.28),rgba(34,211,238,.18));border:1px solid var(--line);margin-bottom:18px;font-size:24px}
 .card h3{margin:0 0 9px;font-size:19px}
 .card p{margin:0;color:var(--muted);font-size:15px}
 
-/* ---------- stats ---------- */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding:44px;border-radius:24px;border:1px solid var(--line);background:linear-gradient(135deg,rgba(109,94,252,.12),rgba(34,211,238,.06));text-align:center}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding:44px;border-radius:24px;border:1px solid var(--line);background:linear-gradient(135deg,rgba(55,138,221,.12),rgba(34,211,238,.06));text-align:center}
 .stats .n{font-family:"Space Grotesk";font-size:clamp(30px,4vw,44px);font-weight:700;line-height:1}
 .stats .l{color:var(--muted);font-size:14px;margin-top:8px}
 
-/* ---------- split ---------- */
 .split{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center}
 .split h2{font-size:clamp(28px,4vw,42px);margin:0 0 18px;line-height:1.12}
 .split p{color:var(--muted);font-size:16.5px}
 .checks{list-style:none;padding:0;margin:26px 0 0;display:grid;gap:14px}
 .checks li{display:flex;gap:12px;align-items:flex-start;font-size:15.5px;color:#d7dae4}
 .tick{flex:0 0 22px;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--brand),var(--brand2));font-size:12px;color:#fff;margin-top:2px}
-.code{border-radius:16px;border:1px solid var(--line);background:#0a0a12;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.55)}
-.code-top{display:flex;gap:8px;padding:12px 15px;border-bottom:1px solid var(--line);align-items:center}
-.code-top .f{margin-left:8px;font-size:12.5px;color:#6f7688;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
-pre{margin:0;padding:20px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13.4px;line-height:1.75;overflow-x:auto;color:#cfd3e0}
-.c-key{color:#c084fc}.c-str{color:#5eead4}.c-fn{color:#7dd3fc}.c-com{color:#5b6273}.c-num{color:#fbbf24}
 
-/* ---------- pricing ---------- */
 .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
 .tier{display:flex;flex-direction:column;padding:32px;border-radius:var(--radius);border:1px solid var(--line);background:var(--card);transition:.3s}
 .tier:hover{transform:translateY(-6px);border-color:rgba(255,255,255,.2)}
-.tier.pop{border-color:rgba(109,94,252,.6);background:linear-gradient(180deg,rgba(109,94,252,.14),rgba(255,255,255,.03));box-shadow:0 24px 70px rgba(109,94,252,.22)}
+.tier.pop{border-color:rgba(55,138,221,.6);background:linear-gradient(180deg,rgba(55,138,221,.14),rgba(255,255,255,.03));box-shadow:0 24px 70px rgba(55,138,221,.22)}
 .tier .tag{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--brand2);font-weight:700}
 .tier .price{font-family:"Space Grotesk";font-size:42px;font-weight:700;margin:14px 0 4px}
 .tier .price small{font-size:15px;color:var(--muted);font-weight:500;font-family:Inter}
@@ -144,12 +119,10 @@ pre{margin:0;padding:20px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas
 .badge-pop{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--brand),var(--brand2));font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 14px;border-radius:999px}
 .tier{position:relative}
 
-/* ---------- cta ---------- */
-.cta-box{position:relative;overflow:hidden;padding:76px 40px;border-radius:28px;text-align:center;border:1px solid var(--line);background:linear-gradient(135deg,rgba(109,94,252,.22),rgba(244,114,182,.1) 55%,rgba(34,211,238,.14))}
+.cta-box{position:relative;overflow:hidden;padding:76px 40px;border-radius:28px;text-align:center;border:1px solid var(--line);background:linear-gradient(135deg,rgba(55,138,221,.22),rgba(244,114,182,.1) 55%,rgba(34,211,238,.14))}
 .cta-box h2{font-size:clamp(30px,4.6vw,50px);margin:0 0 16px;line-height:1.08}
 .cta-box p{color:#cdd1de;font-size:17.5px;max-width:540px;margin:0 auto 34px}
 
-/* ---------- footer ---------- */
 footer{border-top:1px solid var(--line);margin-top:40px;padding:56px 0 40px;color:var(--muted);font-size:14.5px}
 .fgrid{display:grid;grid-template-columns:1.6fr repeat(3,1fr);gap:32px}
 .fgrid h4{color:#fff;font-size:14px;margin:0 0 14px;font-family:Inter;font-weight:600}
@@ -160,10 +133,8 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:56px 0 40px;colo
 .social a:hover{background:rgba(255,255,255,.09);transform:translateY(-2px)}
 .social svg{width:17px;height:17px;fill:currentColor}
 
-/* ---------- reveal + responsive ---------- */
 .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.8,.3,1),transform .7s cubic-bezier(.2,.8,.3,1)}
 .reveal.in{opacity:1;transform:none}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
 @media(max-width:940px){
   .features,.tiers{grid-template-columns:1fr 1fr}
   .split{grid-template-columns:1fr;gap:36px}
@@ -192,12 +163,12 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:56px 0 40px;colo
     <nav>
       <a class="logo" href="#top"><span class="mark">◆</span> Arvenix</a>
       <div class="navlinks">
-        <a href="#platform">Platform</a>
-        <a href="#build">Developers</a>
-        <a href="#pricing">Pricing</a>
+        <a href="#platform">How It Works</a>
+        <a href="#process">The Process</a>
+        <a href="#impact">Impact</a>
         <a href="#contact">Contact</a>
       </div>
-      <a class="btn btn-primary" href="#contact">Get started</a>
+      <a class="btn btn-primary" href="#contact">Book discovery call</a>
       <button class="burger" aria-label="Menu" onclick="document.getElementById('hdr').classList.toggle('open')">☰</button>
     </nav>
   </div>
@@ -206,25 +177,32 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:56px 0 40px;colo
 <main id="top">
   <section class="hero">
     <div class="wrap">
-      <div class="pill"><b>New</b> Arvenix v2 is live — faster, leaner, global</div>
-      <h1>Build what comes next.<br><span class="grad">Ship it today.</span></h1>
-      <p class="lead">Arvenix gives your team the infrastructure, tooling, and insight to go from idea to production without the drag. Enterprise power, startup speed.</p>
-      <div class="cta-row">
-        <a class="btn btn-primary btn-lg" href="#contact">Start building — free</a>
-        <a class="btn btn-ghost btn-lg" href="#platform">See how it works →</a>
+      <div class="pill"><b>For Installation and Contracting Companies</b></div>
+      <h1>Stop Leaving<br><span class="grad">Money On The Table</span></h1>
+      <p class="lead">Most Installation Companies Waste $500K to $2M Annually on Inefficient Post-Sale Operations. Arvenix Identifies Exactly Where and Helps You Capture It.</p>
+      <div style="margin-top:2rem;font-size:15px">
+        <div style="margin-bottom:1.5rem">
+          <div class="stat"><span class="stat-number">10-15%</span> Materials Waste</div>
+          <div class="stat"><span class="stat-number">20-30%</span> Installer Downtime</div>
+          <div class="stat"><span class="stat-number">$100K+</span> Contract Value Lost</div>
+        </div>
       </div>
-      <div class="hero-note">No credit card required · Deploy in under 5 minutes</div>
+      <div class="cta-row" style="margin-top:2.5rem">
+        <a class="btn btn-primary btn-lg" href="#contact">Schedule Audit</a>
+        <a class="btn btn-ghost btn-lg" href="#platform">See How It Works</a>
+      </div>
+      <div class="hero-note">No Obligation. 20 Minutes. Real Numbers.</div>
 
       <div class="mock reveal">
         <div class="mock-bar">
           <span class="dot" style="background:#ff5f57"></span>
           <span class="dot" style="background:#febc2e"></span>
           <span class="dot" style="background:#28c840"></span>
-          <span style="margin-left:14px;font-size:12.5px;color:#6f7688;font-family:ui-monospace,Menlo,monospace">app.arvenix.io/overview</span>
+          <span style="margin-left:14px;font-size:12.5px;color:#6f7688;font-family:ui-monospace,Menlo,monospace">dashboard.arvenix.io/audit-results</span>
         </div>
         <div class="mock-body">
           <div class="mock-side">
-            <div class="sk" style="width:70%;background:rgba(109,94,252,.55)"></div>
+            <div class="sk" style="width:70%;background:rgba(55,138,221,.55)"></div>
             <div class="sk" style="width:88%"></div>
             <div class="sk" style="width:62%"></div>
             <div class="sk" style="width:78%"></div>
@@ -233,115 +211,180 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:56px 0 40px;colo
           </div>
           <div class="mock-main">
             <div class="stat-cards">
-              <div class="stat-card"><div class="n grad">99.99%</div><div class="l">Uptime</div></div>
-              <div class="stat-card"><div class="n grad">42ms</div><div class="l">p95 latency</div></div>
-              <div class="stat-card"><div class="n grad">1.4B</div><div class="l">Requests / mo</div></div>
+              <div class="stat-card"><div class="n grad">$1.2M</div><div class="l">Annual Savings Potential</div></div>
+              <div class="stat-card"><div class="n grad">12%</div><div class="l">Efficiency Improvement</div></div>
+              <div class="stat-card"><div class="n grad">6 wks</div><div class="l">To Full Deployment</div></div>
             </div>
-            <div class="chart" id="chart"></div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="trust">
-    <div class="wrap">
-      <div class="kicker">Trusted by fast-moving teams</div>
-      <div class="marquee"><div class="marquee-track" id="mq"></div></div>
-    </div>
-  </section>
-
   <section class="sec" id="platform">
     <div class="wrap">
       <div class="sec-head reveal">
-        <div class="kicker">The platform</div>
-        <h2>Everything you need. Nothing you don't.</h2>
-        <p>One coherent platform instead of a dozen bolted-together tools — so your team spends time on product, not plumbing.</p>
+        <div class="kicker">The Reality</div>
+        <h2>Where You Are Losing Margin</h2>
+        <p>Same Challenges Across Installation Companies. Arvenix Was Built to Solve All of Them.</p>
       </div>
       <div class="features">
-        <div class="card reveal"><div class="icon"><svg viewBox="0 0 24 24"><path d="M13 2 3 14h8l-1 8 10-12h-8z"/></svg></div><h3>Blistering performance</h3><p>Edge-native runtime with sub-50ms p95 responses in 30+ regions. Fast by default, not by configuration.</p></div>
-        <div class="card reveal"><div class="icon"><svg viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.4 8.4 8 9 4.6-.6 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg></div><h3>Security that scales</h3><p>SOC 2 Type II, SSO/SAML, granular RBAC, audit trails and encryption at rest and in transit. Built in from day one.</p></div>
-        <div class="card reveal"><div class="icon"><svg viewBox="0 0 24 24"><path d="M4 19V5m0 14h16"/><path d="m7 15 4-5 3 3 5-7"/></svg></div><h3>Insight in real time</h3><p>Traces, logs and metrics unified in a single timeline. Find the regression before your customers do.</p></div>
-        <div class="card reveal"><div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4M5 5l3 3m8 8 3 3M19 5l-3 3M8 16l-3 3"/></svg></div><h3>Automate the boring</h3><p>Event-driven workflows, scheduled jobs and retries with sane defaults. Describe the outcome, we handle the rest.</p></div>
-        <div class="card reveal"><div class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg></div><h3>Plays well with others</h3><p>First-class integrations for GitHub, Slack, Stripe, Postgres and 80+ more — plus webhooks and a clean REST API.</p></div>
-        <div class="card reveal"><div class="icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><h3>Humans on call</h3><p>Real engineers in your shared channel, 24/7. Median first response under 12 minutes, every plan included.</p></div>
+        <div class="card reveal">
+          <div class="icon" style="background:linear-gradient(135deg,rgba(37,99,235,.28),rgba(6,182,212,.18))">📦</div>
+          <h3>Materials Waste</h3>
+          <p>Over-Ordering, Under-Ordering, Inefficient Kit Assembly. Margin Loss on Every Single Job.</p>
+        </div>
+        <div class="card reveal">
+          <div class="icon" style="background:linear-gradient(135deg,rgba(37,99,235,.28),rgba(236,79,95,.18))">⏳</div>
+          <h3>Installer Downtime</h3>
+          <p>Manual Scheduling Leaves Crews Idle or Overbooked. Capacity Planning in Spreadsheets.</p>
+        </div>
+        <div class="card reveal">
+          <div class="icon" style="background:linear-gradient(135deg,rgba(6,182,212,.28),rgba(236,79,95,.18))">📋</div>
+          <h3>Missed Contract Value</h3>
+          <p>Service Contracts Sit Untracked. Renewals and Upsells Slip Away Every Quarter.</p>
+        </div>
+        <div class="card reveal">
+          <div class="icon" style="background:linear-gradient(135deg,rgba(236,79,95,.28),rgba(37,99,235,.18))">👥</div>
+          <h3>Manual Operations Planning</h3>
+          <p>Your Team Spends 40+ Hours Weekly on Allocation That AI Should Handle in Seconds.</p>
+        </div>
+        <div class="card reveal">
+          <div class="icon" style="background:linear-gradient(135deg,rgba(59,130,246,.28),rgba(6,182,212,.18))">📊</div>
+          <h3>SKU Assortment Blind Spots</h3>
+          <p>Don't Know Which Materials Move Fastest. Inventory Tied Up in Slow Movers.</p>
+        </div>
+        <div class="card reveal">
+          <div class="icon" style="background:linear-gradient(135deg,rgba(6,182,212,.28),rgba(59,130,246,.18))">⚙️</div>
+          <h3>No Operations Visibility</h3>
+          <p>Your Leadership Can't See Bottlenecks Coming. Reacting Instead of Optimizing.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="sec" style="padding-top:0">
+  <section class="sec" id="process">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="kicker">How Arvenix Works</div>
+        <h2>From Data to Dollars in 6 Weeks</h2>
+        <p>We Connect to Your Systems, Build Custom AI Models Specific to Your Business, and Deliver Measurable Optimization.</p>
+      </div>
+      <div class="features">
+        <div class="card reveal">
+          <div class="icon" style="background:linear-gradient(135deg,rgba(37,99,235,.28),rgba(59,130,246,.18));color:var(--brand)">1</div>
+          <h3>Data Audit</h3>
+          <p>Connect Your ERP, CRM, and WMS. We Analyze 6-8 Weeks of Your Operations Data.</p>
+        </div>
+        <div class="card reveal">
+          <div class="icon" style="background:linear-gradient(135deg,rgba(59,130,246,.28),rgba(6,182,212,.18));color:var(--accent2)">2</div>
+          <h3>Opportunity Report</h3>
+          <p>Specific Recommendations with Attached Dollar Values. Exactly Where You Are Leaving Money.</p>
+        </div>
+        <div class="card reveal">
+          <div class="icon" style="background:linear-gradient(135deg,rgba(6,182,212,.28),rgba(59,130,246,.18));color:var(--accent1)">3</div>
+          <h3>Custom AI Models</h3>
+          <p>Scheduling, Materials Allocation, Forecasting. Tailored 100% to Your Exact Business Rules.</p>
+        </div>
+        <div class="card reveal">
+          <div class="icon" style="background:linear-gradient(135deg,rgba(59,130,246,.28),rgba(237,79,95,.18));color:var(--accent3)">4</div>
+          <h3>Ongoing Optimization</h3>
+          <p>Continuous Improvements. Your Team Gets Dashboards, Recommendations, and Playbooks.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="impact" style="padding-top:0">
     <div class="wrap">
       <div class="stats reveal">
-        <div><div class="n grad">99.99%</div><div class="l">Measured uptime</div></div>
-        <div><div class="n grad">30+</div><div class="l">Edge regions</div></div>
-        <div><div class="n grad">12 min</div><div class="l">Median support reply</div></div>
-        <div><div class="n grad">4.9/5</div><div class="l">Customer rating</div></div>
+        <div><div class="n grad">5-15%</div><div class="l">Efficiency Improvement</div></div>
+        <div><div class="n grad">$500K-2M</div><div class="l">Annual Savings Captured</div></div>
+        <div><div class="n grad">12 wks</div><div class="l">Until ROI Positive</div></div>
+        <div><div class="n grad">100%</div><div class="l">Custom to Your Ops</div></div>
       </div>
     </div>
   </section>
 
-  <section class="sec" id="build">
+  <section class="sec">
     <div class="wrap">
       <div class="split">
         <div class="reveal">
-          <div class="kicker">For developers</div>
-          <h2>An API you'll actually enjoy using.</h2>
-          <p>Typed SDKs, predictable errors, idempotent writes and docs written by the people who built it. Install, authenticate, ship — usually in one sitting.</p>
+          <div class="kicker">Why Arvenix</div>
+          <h2>Built Specifically for Installation Operations</h2>
+          <p>Not a Generic Dashboard. Not a Consulting Firm. We Are an AI Optimization Engine Trained on Post-Sale Operations at Scale.</p>
           <ul class="checks">
-            <li><span class="tick">✓</span><span>SDKs for TypeScript, Python, Go and Rust</span></li>
-            <li><span class="tick">✓</span><span>Preview environments on every pull request</span></li>
-            <li><span class="tick">✓</span><span>Infrastructure as code, or one-click from the dashboard</span></li>
-            <li><span class="tick">✓</span><span>Zero-downtime deploys with instant rollback</span></li>
+            <li><span class="tick">✓</span><span>Direct Integration with Your Existing Systems (ERP, CRM, WMS)</span></li>
+            <li><span class="tick">✓</span><span>Custom Models Built from Your Actual Data and Business Rules</span></li>
+            <li><span class="tick">✓</span><span>Real-Time Optimization, Not Monthly Reports</span></li>
+            <li><span class="tick">✓</span><span>Your Team Owns the Results. We Provide the Intelligence.</span></li>
           </ul>
         </div>
-        <div class="code reveal">
-          <div class="code-top"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span><span class="f">deploy.ts</span></div>
-          <pre><span class="c-com">// npm i @arvenix/sdk</span>
-<span class="c-key">import</span> { Arvenix } <span class="c-key">from</span> <span class="c-str">"@arvenix/sdk"</span>;
-
-<span class="c-key">const</span> arv = <span class="c-key">new</span> <span class="c-fn">Arvenix</span>({ token: process.env.ARVENIX_TOKEN });
-
-<span class="c-key">const</span> app = <span class="c-key">await</span> arv.apps.<span class="c-fn">deploy</span>({
-  name:    <span class="c-str">"checkout-api"</span>,
-  regions: [<span class="c-str">"iad"</span>, <span class="c-str">"fra"</span>, <span class="c-str">"sin"</span>],
-  scale:   { min: <span class="c-num">2</span>, max: <span class="c-num">64</span> },
-});
-
-console.<span class="c-fn">log</span>(app.url); <span class="c-com">// https://checkout-api.arvenix.app</span></pre>
+        <div class="reveal" style="background:linear-gradient(135deg,rgba(37,99,235,.12),rgba(6,182,212,.08));border-radius:20px;padding:32px;border:1px solid rgba(37,99,235,.3)">
+          <h3 style="margin-top:0;color:#fff">Expected Impact in Year One</h3>
+          <div style="margin:24px 0">
+            <div style="margin-bottom:20px">
+              <div style="font-size:14px;color:var(--muted);margin-bottom:8px;text-transform:uppercase;font-weight:600;letter-spacing:0.5px">Materials Optimization</div>
+              <div style="font-size:32px;font-weight:800;background:linear-gradient(135deg,var(--brand),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">$150-400K</div>
+            </div>
+            <div style="margin-bottom:20px">
+              <div style="font-size:14px;color:var(--muted);margin-bottom:8px;text-transform:uppercase;font-weight:600;letter-spacing:0.5px">Installer Scheduling</div>
+              <div style="font-size:32px;font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent1));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">$200-600K</div>
+            </div>
+            <div>
+              <div style="font-size:14px;color:var(--muted);margin-bottom:8px;text-transform:uppercase;font-weight:600;letter-spacing:0.5px">Contract Management</div>
+              <div style="font-size:32px;font-weight:800;background:linear-gradient(135deg,var(--accent3),var(--brand));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">$100-300K</div>
+            </div>
+          </div>
+          <div style="font-size:13px;color:#a8adb8;border-top:1px solid rgba(37,99,235,.2);padding-top:20px;margin-top:20px">Based on Analysis of 50+ Installation Companies in HVAC, Solar, Telecom, and Construction Verticals.</div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="sec" id="pricing">
+  <section class="sec">
     <div class="wrap">
       <div class="sec-head reveal">
         <div class="kicker">Pricing</div>
-        <h2>Simple plans, no surprises.</h2>
-        <p>Start free. Upgrade when it earns its keep. Cancel any time without a phone call.</p>
+        <h2>Aligned With Your Results</h2>
+        <p>Pay for Outcomes, Not Promises. Everything Based on the Actual Savings We Identify.</p>
       </div>
       <div class="tiers">
         <div class="tier reveal">
-          <div class="tag">Starter</div>
-          <div class="price">$0<small>/mo</small></div>
-          <p style="color:var(--muted);margin:0;font-size:14.5px">For side projects and first prototypes.</p>
-          <ul><li>1 project, 3 environments</li><li>100k requests / month</li><li>Community support</li><li>Core integrations</li></ul>
-          <a class="btn btn-ghost" href="#contact">Start free</a>
+          <div class="tag">Data Audit</div>
+          <div class="price" style="background:linear-gradient(135deg,var(--brand),var(--accent1));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">$25K-50K</div>
+          <p style="color:var(--muted);margin:0;font-size:14.5px">6-Week Engagement</p>
+          <ul>
+            <li>Full Systems Audit</li>
+            <li>Savings Identification</li>
+            <li>Implementation Roadmap</li>
+          </ul>
+          <a class="btn btn-ghost" href="#contact">Book Discovery Call</a>
         </div>
         <div class="tier pop reveal">
-          <div class="badge-pop">Most popular</div>
-          <div class="tag">Growth</div>
-          <div class="price">$79<small>/mo</small></div>
-          <p style="color:var(--muted);margin:0;font-size:14.5px">For teams shipping to real customers.</p>
-          <ul><li>Unlimited projects</li><li>25M requests / month</li><li>Preview environments</li><li>Priority support &amp; 99.9% SLA</li></ul>
-          <a class="btn btn-primary" href="#contact">Choose Growth</a>
+          <div class="badge-pop">Most Popular</div>
+          <div class="tag">Full Implementation</div>
+          <div class="price" style="background:linear-gradient(135deg,var(--accent2),var(--brand));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">$100-250K</div>
+          <p style="color:var(--muted);margin:0;font-size:14.5px">12-Month Contract</p>
+          <ul>
+            <li>Everything in Audit</li>
+            <li>Custom Model Deployment</li>
+            <li>Ongoing Optimization</li>
+            <li>Quarterly Business Reviews</li>
+          </ul>
+          <a class="btn btn-primary" href="#contact">Schedule Meeting</a>
         </div>
         <div class="tier reveal">
           <div class="tag">Enterprise</div>
-          <div class="price">Custom</div>
-          <p style="color:var(--muted);margin:0;font-size:14.5px">For scale, compliance and peace of mind.</p>
-          <ul><li>Dedicated infrastructure</li><li>SSO/SAML &amp; audit logs</li><li>99.99% SLA</li><li>Named solutions engineer</li></ul>
-          <a class="btn btn-ghost" href="#contact">Talk to us</a>
+          <div class="price" style="background:linear-gradient(135deg,var(--accent3),var(--accent1));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Custom</div>
+          <p style="color:var(--muted);margin:0;font-size:14.5px">Multi-Location or Complex Ops</p>
+          <ul>
+            <li>Dedicated Optimization Team</li>
+            <li>Multi-Site Coordination</li>
+            <li>Custom Integrations</li>
+            <li>White-Label Option</li>
+          </ul>
+          <a class="btn btn-ghost" href="#contact">Contact Sales</a>
         </div>
       </div>
     </div>
@@ -350,11 +393,11 @@ console.<span class="c-fn">log</span>(app.url); <span class="c-com">// https://c
   <section class="sec" id="contact" style="padding-top:20px">
     <div class="wrap">
       <div class="cta-box reveal">
-        <h2>Ready to build with <span class="grad">Arvenix</span>?</h2>
-        <p>Spin up your first project in minutes. Bring your team, bring your stack — we'll handle the hard parts.</p>
+        <h2>See Your Optimization Potential</h2>
+        <p>Schedule a 20-Minute Discovery Call. We Will Ask About Your Operations, Your Team, and Your Margins. You Will Get a Preliminary Assessment of Savings Opportunity.</p>
         <div class="cta-row">
-          <a class="btn btn-primary btn-lg" href="mailto:info@arvenix.io?subject=Getting%20started%20with%20Arvenix">Get started free</a>
-          <a class="btn btn-ghost btn-lg" href="mailto:info@arvenix.io?subject=Talk%20to%20sales">Talk to sales</a>
+          <a class="btn btn-primary btn-lg" href="mailto:info@arvenix.io?subject=Schedule%20Arvenix%20Discovery%20Call">Book a Call</a>
+          <a class="btn btn-ghost btn-lg" href="mailto:info@arvenix.io?subject=Arvenix%20information%20request">Send Information</a>
         </div>
       </div>
     </div>
@@ -366,50 +409,30 @@ console.<span class="c-fn">log</span>(app.url); <span class="c-com">// https://c
     <div class="fgrid">
       <div>
         <a class="logo" href="#top" style="margin-bottom:14px"><span class="mark">◆</span> Arvenix</a>
-        <p style="max-width:300px;margin:12px 0 0">The modern platform for teams who ship fast. Built for developers, trusted by operators.</p>
+        <p style="max-width:300px;margin:12px 0 0">AI-Powered Operations Optimization for Installation and Contracting Companies. Stop Leaving Money on the Table.</p>
         <div class="social" style="margin-top:20px">
-          <a href="https://github.com/Arvenix" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1.1-.7 0-.7 0-.7 1.2.1 1.9 1.3 1.9 1.3 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5"/></svg></a>
-          <a href="https://x.com/arvenix" aria-label="X"><svg viewBox="0 0 24 24"><path d="M18.9 2H22l-7 8 8.2 12h-6.4l-5-7.3L6 22H2.9l7.5-8.6L2.5 2H9l4.5 6.7zM17.8 20h1.7L8.3 3.8H6.5z"/></svg></a>
-          <a href="mailto:hello@arvenix.io" aria-label="Email"><svg viewBox="0 0 24 24"><path d="M2 5h20v14H2zm0 0 10 7 10-7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></a>
+          <a href="https://linkedin.com/company/arvenix" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.39v-1.2h-2.84v8.37h2.84v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.84M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg></a>
+          <a href="mailto:info@arvenix.io" aria-label="Email"><svg viewBox="0 0 24 24"><path d="M2 5h20v14H2zm0 0 10 7 10-7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></a>
         </div>
       </div>
-      <div><h4>Product</h4><a href="#platform">Platform</a><a href="#build">Developers</a><a href="#pricing">Pricing</a><a href="#">Changelog</a></div>
-      <div><h4>Company</h4><a href="#">About</a><a href="#">Careers</a><a href="#">Blog</a><a href="mailto:hello@arvenix.io">Contact</a></div>
-      <div><h4>Resources</h4><a href="#">Documentation</a><a href="#">API reference</a><a href="#">Status</a><a href="#">Support</a></div>
+      <div><h4>Product</h4><a href="#platform">How It Works</a><a href="#process">Our Process</a><a href="#impact">Impact</a><a href="#contact">Contact</a></div>
+      <div><h4>For You</h4><a href="#">HVAC Contractors</a><a href="#">Solar Installers</a><a href="#">Telecom Operators</a><a href="#">General Contractors</a></div>
+      <div><h4>Company</h4><a href="#">About</a><a href="mailto:info@arvenix.io">Contact</a><a href="#">Privacy</a><a href="#">Terms</a></div>
     </div>
     <div class="fbottom">
       <div>© <span id="yr">2026</span> Arvenix. All rights reserved.</div>
-      <div style="display:flex;gap:22px"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Security</a></div>
+      <div style="display:flex;gap:22px"><a href="#">Privacy</a><a href="#">Terms</a></div>
     </div>
   </div>
 </footer>
 
 <script>
-  // year
   document.getElementById("yr").textContent = new Date().getFullYear();
-
-  // sticky header
   const hdr = document.getElementById("hdr");
   const onScroll = () => hdr.classList.toggle("scrolled", window.scrollY > 10);
-  onScroll(); window.addEventListener("scroll", onScroll, { passive: true });
-
-  // hero chart bars
-  const chart = document.getElementById("chart");
-  const heights = [38, 52, 44, 68, 58, 82, 71, 94, 86, 100, 91, 76];
-  heights.forEach((h, i) => {
-    const b = document.createElement("div");
-    b.className = "bar";
-    b.style.height = h + "%";
-    b.style.animationDelay = (i * 0.07) + "s";
-    chart.appendChild(b);
-  });
-
-  // logo marquee
-  const brands = ["NORTHWIND", "Lumen", "OCTAVE", "Hyperloop", "BLUEPEAK", "Cadence", "VANTA WORKS", "Kestrel"];
-  const mq = document.getElementById("mq");
-  mq.innerHTML = [...brands, ...brands].map(b => "<span>" + b + "</span>").join("");
-
-  // scroll reveal
+  onScroll(); 
+  window.addEventListener("scroll", onScroll, { passive: true });
+  
   const io = new IntersectionObserver((entries) => {
     entries.forEach((e, i) => {
       if (e.isIntersecting) {
@@ -421,7 +444,6 @@ console.<span class="c-fn">log</span>(app.url); <span class="c-com">// https://c
   }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
   document.querySelectorAll(".reveal").forEach(el => io.observe(el));
 
-  // cursor glow on feature cards
   document.querySelectorAll(".card").forEach(card => {
     card.addEventListener("pointermove", ev => {
       const r = card.getBoundingClientRect();
