@@ -23,7 +23,6 @@ export interface RoiInputs {
   sustainableCapacityRecoveryPercent: number;
 
   // Backlog recovery
-  // Defaults to zero to avoid double counting capacity recovery.
   backlogCancellationSavings: number;
 
   // Arvenix investment
@@ -81,6 +80,7 @@ export const defaultInputs: RoiInputs = {
   sustainableCapacityRecoveryPercent: 0.07,
 
   // Backlog recovery
+  // Zero by default to avoid double counting capacity recovery
   backlogCancellationSavings: 0,
 
   // Arvenix investment
@@ -92,13 +92,13 @@ export function calculateRoi(inputs: RoiInputs): RoiResults {
   /*
    * CONTRIBUTION MARGIN
    *
-   * Recovered revenue is NOT treated as EBITDA.
+   * Recovered revenue is not treated as EBITDA.
    *
    * Revenue
    * less labor
    * less materials
    * less marketing
-   * = contribution available toward EBITDA
+   * equals contribution available toward EBITDA.
    */
 
   const contributionMargin = Math.max(
@@ -112,18 +112,8 @@ export function calculateRoi(inputs: RoiInputs): RoiResults {
   /*
    * SUSTAINABLE CAPACITY RECOVERY
    *
-   * Arvenix does not assume theoretical maximum technician capacity.
-   *
-   * Instead, we assume that a percentage of the company's EXISTING
-   * annual installation volume can be sustainably recovered through:
-   *
-   * material readiness
-   * scheduling
-   * backlog management
-   * geographic utilization
-   * reduced operational disruption
-   *
-   * Default assumption = 7%
+   * Based on a percentage of existing annual installation volume,
+   * not theoretical maximum technician capacity.
    */
 
   const recoveredInstalls =
@@ -141,8 +131,8 @@ export function calculateRoi(inputs: RoiInputs): RoiResults {
   /*
    * INVENTORY
    *
-   * Inventory reduction itself is working capital release.
-   * It is NOT EBITDA.
+   * Inventory reduction is working capital release.
+   * It is not EBITDA.
    */
 
   const inventoryReduction =
@@ -150,8 +140,8 @@ export function calculateRoi(inputs: RoiInputs): RoiResults {
     inputs.inventoryReductionPercent;
 
   /*
-   * Only the avoided carrying cost is treated as an
-   * annual EBITDA improvement.
+   * Only avoided inventory carrying cost is included
+   * as an annual EBITDA improvement.
    */
 
   const inventoryCarryingCostSavings =
@@ -180,9 +170,7 @@ export function calculateRoi(inputs: RoiInputs): RoiResults {
     capacityEbitdaContribution;
 
   /*
-   * RECURRING EBITDA
-   *
-   * Annual Arvenix platform expense reduces recurring EBITDA.
+   * RECURRING EBITDA IMPACT
    */
 
   const recurringNetEbitdaImpact =
@@ -191,8 +179,6 @@ export function calculateRoi(inputs: RoiInputs): RoiResults {
 
   /*
    * WORKING CAPITAL
-   *
-   * Shown separately from EBITDA and ROI.
    */
 
   const workingCapitalReleased =
@@ -207,7 +193,7 @@ export function calculateRoi(inputs: RoiInputs): RoiResults {
     inputs.implementationCost;
 
   /*
-   * YEAR ONE NET EBITDA BENEFIT
+   * YEAR ONE NET BENEFIT
    */
 
   const yearOneNetBenefit =
@@ -236,9 +222,8 @@ export function calculateRoi(inputs: RoiInputs): RoiResults {
   /*
    * PAYBACK
    *
-   * Based only on EBITDA benefit.
-   *
-   * Working capital release is deliberately excluded.
+   * Based on EBITDA benefit only.
+   * Working capital release is intentionally excluded.
    */
 
   const monthlyGrossEbitda =
