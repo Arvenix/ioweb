@@ -18,6 +18,14 @@ const number = new Intl.NumberFormat("en-US", {
   maximumFractionDigits: 1,
 });
 
+const wholeNumber = new Intl.NumberFormat("en-US", {
+  maximumFractionDigits: 0,
+});
+
+function percentInputValue(value: number): number {
+  return Number((value * 100).toFixed(2));
+}
+
 function NumberInput({
   label,
   value,
@@ -52,9 +60,14 @@ function NumberInput({
           min={min}
           max={max}
           value={value}
-          onChange={(e) => {
-            const parsed = Number(e.target.value);
-            onChange(Number.isFinite(parsed) ? parsed : 0);
+          onChange={(event) => {
+            const parsedValue = Number(event.target.value);
+
+            onChange(
+              Number.isFinite(parsedValue)
+                ? parsedValue
+                : 0
+            );
           }}
         />
 
@@ -78,9 +91,17 @@ function Metric({
   emphasis?: boolean;
 }) {
   return (
-    <div className={emphasis ? "metric emphasis" : "metric"}>
+    <div
+      className={
+        emphasis
+          ? "metric emphasis"
+          : "metric"
+      }
+    >
       <span>{label}</span>
+
       <strong>{value}</strong>
+
       {sub && <small>{sub}</small>}
     </div>
   );
@@ -95,7 +116,7 @@ export default function Home() {
     [inputs]
   );
 
-  const set = (
+  const setInput = (
     key: keyof RoiInputs,
     value: number
   ) => {
@@ -108,7 +129,8 @@ export default function Home() {
   const benefitRows = [
     {
       label: "Inventory carrying cost",
-      value: results.inventoryCarryingCostSavings,
+      value:
+        results.inventoryCarryingCostSavings,
     },
     {
       label: "Warehouse footprint",
@@ -116,11 +138,13 @@ export default function Home() {
     },
     {
       label: "Freight & transfers",
-      value: inputs.freightTransferSavings,
+      value:
+        inputs.freightTransferSavings,
     },
     {
       label: "Inventory shrink",
-      value: inputs.inventoryShrinkSavings,
+      value:
+        inputs.inventoryShrinkSavings,
     },
     {
       label: "Administrative labor",
@@ -131,17 +155,22 @@ export default function Home() {
       value: inputs.reworkSavings,
     },
     {
-      label: "Sustainable capacity recovery",
-      value: results.capacityEbitdaContribution,
+      label: "Capacity leakage recovery",
+      value:
+        results.capacityEbitdaContribution,
     },
     {
-      label: "Backlog / cancellation recovery",
-      value: inputs.backlogCancellationSavings,
+      label:
+        "Backlog / cancellation recovery",
+      value:
+        inputs.backlogCancellationSavings,
     },
   ];
 
   const maxBenefit = Math.max(
-    ...benefitRows.map((row) => row.value),
+    ...benefitRows.map(
+      (row) => row.value
+    ),
     1
   );
 
@@ -151,28 +180,36 @@ export default function Home() {
 
       <header className="hero">
         <div>
-          <p className="eyebrow">ARVENIX</p>
+          <p className="eyebrow">
+            ARVENIX
+          </p>
 
-          <h1>Operational ROI Calculator</h1>
+          <h1>
+            Operational ROI Calculator
+          </h1>
 
           <p className="lede">
-            Quantify EBITDA recovery, revenue capacity,
-            and working capital released by improving
-            inventory, material readiness, scheduling,
-            backlog management, and install execution.
+            Quantify EBITDA recovery,
+            revenue capacity, and working
+            capital released by improving
+            inventory, material readiness,
+            scheduling, backlog management,
+            and install execution.
           </p>
         </div>
 
         <button
           className="reset"
           type="button"
-          onClick={() => setInputs(defaultInputs)}
+          onClick={() =>
+            setInputs(defaultInputs)
+          }
         >
           Reset assumptions
         </button>
       </header>
 
-      {/* TOP SUMMARY */}
+      {/* SUMMARY */}
 
       <section className="summaryGrid">
         <Metric
@@ -219,16 +256,26 @@ export default function Home() {
 
           <section className="panel">
             <div className="panelTitle">
-              <h2>Company baseline</h2>
-              <span>Core economics</span>
+              <h2>
+                Company baseline
+              </h2>
+
+              <span>
+                Core economics
+              </span>
             </div>
 
             <div className="fieldGrid">
               <NumberInput
                 label="Annual install volume"
-                value={inputs.annualInstalls}
+                value={
+                  inputs.annualInstalls
+                }
                 onChange={(value) =>
-                  set("annualInstalls", value)
+                  setInput(
+                    "annualInstalls",
+                    value
+                  )
                 }
                 step={100}
                 help="Current annual completed installation volume."
@@ -237,9 +284,14 @@ export default function Home() {
               <NumberInput
                 label="Average job revenue"
                 prefix="$"
-                value={inputs.averageJobRevenue}
+                value={
+                  inputs.averageJobRevenue
+                }
                 onChange={(value) =>
-                  set("averageJobRevenue", value)
+                  setInput(
+                    "averageJobRevenue",
+                    value
+                  )
                 }
                 step={500}
               />
@@ -247,9 +299,14 @@ export default function Home() {
               <NumberInput
                 label="Inventory on hand"
                 prefix="$"
-                value={inputs.inventoryValue}
+                value={
+                  inputs.inventoryValue
+                }
                 onChange={(value) =>
-                  set("inventoryValue", value)
+                  setInput(
+                    "inventoryValue",
+                    value
+                  )
                 }
                 step={100000}
                 help="Predetermined Arvenix baseline: $8 million."
@@ -258,9 +315,14 @@ export default function Home() {
               <NumberInput
                 label="Labor"
                 suffix="%"
-                value={inputs.laborPercent * 100}
+                value={percentInputValue(
+                  inputs.laborPercent
+                )}
                 onChange={(value) =>
-                  set("laborPercent", value / 100)
+                  setInput(
+                    "laborPercent",
+                    value / 100
+                  )
                 }
                 step={0.5}
                 max={100}
@@ -269,9 +331,11 @@ export default function Home() {
               <NumberInput
                 label="Materials"
                 suffix="%"
-                value={inputs.materialPercent * 100}
+                value={percentInputValue(
+                  inputs.materialPercent
+                )}
                 onChange={(value) =>
-                  set(
+                  setInput(
                     "materialPercent",
                     value / 100
                   )
@@ -283,11 +347,11 @@ export default function Home() {
               <NumberInput
                 label="Marketing"
                 suffix="%"
-                value={
-                  inputs.marketingPercent * 100
-                }
+                value={percentInputValue(
+                  inputs.marketingPercent
+                )}
                 onChange={(value) =>
-                  set(
+                  setInput(
                     "marketingPercent",
                     value / 100
                   )
@@ -299,63 +363,74 @@ export default function Home() {
 
             <div className="formulaCallout">
               <span>
-                Fully loaded contribution margin
+                Fully loaded contribution
+                margin
               </span>
 
               <strong>
                 {number.format(
-                  results.contributionMargin * 100
+                  results.contributionMargin *
+                    100
                 )}
                 %
               </strong>
 
               <small>
-                100% less labor, materials, and
-                marketing. Recovered revenue is
-                converted to EBITDA contribution using
+                100% less labor, materials,
+                and marketing. Recovered
+                revenue is converted to
+                EBITDA contribution using
                 this margin.
               </small>
             </div>
           </section>
 
-          {/* SUSTAINABLE CAPACITY */}
+          {/* CAPACITY LEAKAGE */}
 
           <section className="panel">
             <div className="panelTitle">
               <h2>
-                Sustainable capacity recovery
+                Capacity leakage recovery
               </h2>
 
-              <span>Revenue opportunity</span>
+              <span>
+                Revenue opportunity
+              </span>
             </div>
 
             <div className="fieldGrid">
               <NumberInput
-                label="Sustainable capacity recovery"
+                label="Estimated capacity leakage"
                 suffix="%"
-                value={
-                  inputs.sustainableCapacityRecoveryPercent *
-                  100
-                }
+                value={percentInputValue(
+                  inputs.capacityLeakagePercent
+                )}
                 onChange={(value) =>
-                  set(
+                  setInput(
+                    "capacityLeakagePercent",
+                    value / 100
+                  )
+                }
+                step={1}
+                max={100}
+                help="Estimated portion of current install volume lost to operational constraints. Default: 10%."
+              />
+
+              <NumberInput
+                label="Sustainable recovery of leakage"
+                suffix="%"
+                value={percentInputValue(
+                  inputs.sustainableCapacityRecoveryPercent
+                )}
+                onChange={(value) =>
+                  setInput(
                     "sustainableCapacityRecoveryPercent",
                     value / 100
                   )
                 }
-                step={0.5}
-                max={20}
-                help="Default assumption: 7% of existing annual installation volume."
-              />
-
-              <NumberInput
-                label="Annual install volume"
-                value={inputs.annualInstalls}
-                onChange={(value) =>
-                  set("annualInstalls", value)
-                }
-                step={100}
-                help="Current completed install volume used as the recovery baseline."
+                step={1}
+                max={100}
+                help="Percentage of identified capacity leakage Arvenix is assumed to sustainably recover. Default: 7%."
               />
             </div>
 
@@ -366,9 +441,36 @@ export default function Home() {
                 </span>
 
                 <strong>
-                  {Math.round(
+                  {wholeNumber.format(
                     inputs.annualInstalls
-                  ).toLocaleString()}
+                  )}
+                </strong>
+              </div>
+
+              <div>
+                <span>
+                  Estimated capacity leakage
+                </span>
+
+                <strong>
+                  {number.format(
+                    inputs.capacityLeakagePercent *
+                      100
+                  )}
+                  %
+                </strong>
+              </div>
+
+              <div>
+                <span>
+                  Estimated lost install
+                  opportunities
+                </span>
+
+                <strong>
+                  {number.format(
+                    results.estimatedLostCapacityInstalls
+                  )}
                 </strong>
               </div>
 
@@ -387,7 +489,9 @@ export default function Home() {
               </div>
 
               <div>
-                <span>Recovered installs</span>
+                <span>
+                  Recovered installs
+                </span>
 
                 <strong>
                   {number.format(
@@ -397,7 +501,9 @@ export default function Home() {
               </div>
 
               <div>
-                <span>Recovered revenue</span>
+                <span>
+                  Recovered revenue
+                </span>
 
                 <strong>
                   {money.format(
@@ -408,7 +514,8 @@ export default function Home() {
 
               <div className="total">
                 <span>
-                  Capacity EBITDA opportunity
+                  Capacity EBITDA
+                  contribution
                 </span>
 
                 <strong>
@@ -420,14 +527,15 @@ export default function Home() {
             </div>
 
             <p className="disclaimer">
-              Capacity recovery is based on existing
-              installation volume rather than
-              theoretical maximum technician capacity.
-              The default 7% represents sustainable
-              recovery through improved material
-              readiness, scheduling, backlog
-              management, geographic utilization, and
-              reduced operational disruption.
+              Capacity recovery is not
+              calculated against all
+              installation volume. Arvenix
+              first estimates the portion of
+              install volume affected by
+              operational leakage, then
+              applies the sustainable
+              recovery assumption only to
+              that leakage.
             </p>
           </section>
 
@@ -435,7 +543,9 @@ export default function Home() {
 
           <section className="panel">
             <div className="panelTitle">
-              <h2>Inventory optimization</h2>
+              <h2>
+                Inventory optimization
+              </h2>
 
               <span>
                 Working capital + EBITDA
@@ -446,12 +556,11 @@ export default function Home() {
               <NumberInput
                 label="Inventory reduction"
                 suffix="%"
-                value={
-                  inputs.inventoryReductionPercent *
-                  100
-                }
+                value={percentInputValue(
+                  inputs.inventoryReductionPercent
+                )}
                 onChange={(value) =>
-                  set(
+                  setInput(
                     "inventoryReductionPercent",
                     value / 100
                   )
@@ -464,25 +573,26 @@ export default function Home() {
               <NumberInput
                 label="Inventory carrying cost"
                 suffix="%"
-                value={
-                  inputs.inventoryCarryingCostPercent *
-                  100
-                }
+                value={percentInputValue(
+                  inputs.inventoryCarryingCostPercent
+                )}
                 onChange={(value) =>
-                  set(
+                  setInput(
                     "inventoryCarryingCostPercent",
                     value / 100
                   )
                 }
                 step={1}
                 max={100}
-                help="Estimated annual cost of carrying excess inventory."
+                help="Estimated annual cost of carrying inventory."
               />
             </div>
 
             <div className="resultList">
               <div>
-                <span>Inventory baseline</span>
+                <span>
+                  Inventory baseline
+                </span>
 
                 <strong>
                   {money.format(
@@ -505,7 +615,8 @@ export default function Home() {
 
               <div className="total">
                 <span>
-                  Annual carrying cost savings
+                  Annual carrying cost
+                  savings
                 </span>
 
                 <strong>
@@ -517,18 +628,22 @@ export default function Home() {
             </div>
 
             <p className="disclaimer">
-              Inventory reduction is treated as working
-              capital release. Only the avoided annual
-              carrying cost is included in EBITDA
+              Inventory reduction is
+              treated as working capital
+              release. Only the avoided
+              annual carrying cost is
+              included in EBITDA
               improvement.
             </p>
           </section>
 
-          {/* OPERATING SAVINGS */}
+          {/* OPERATIONAL IMPROVEMENT */}
 
           <section className="panel">
             <div className="panelTitle">
-              <h2>Operational improvement</h2>
+              <h2>
+                Operational improvement
+              </h2>
 
               <span>
                 Editable annual assumptions
@@ -539,11 +654,16 @@ export default function Home() {
               <NumberInput
                 label="Warehouse savings"
                 prefix="$"
-                value={inputs.warehouseSavings}
-                onChange={(value) =>
-                  set("warehouseSavings", value)
+                value={
+                  inputs.warehouseSavings
                 }
-                step={10000}
+                onChange={(value) =>
+                  setInput(
+                    "warehouseSavings",
+                    value
+                  )
+                }
+                step={5000}
                 help="Reduced storage footprint, overflow, or third-party warehouse expense."
               />
 
@@ -554,12 +674,12 @@ export default function Home() {
                   inputs.freightTransferSavings
                 }
                 onChange={(value) =>
-                  set(
+                  setInput(
                     "freightTransferSavings",
                     value
                   )
                 }
-                step={10000}
+                step={5000}
                 help="Reduced unnecessary transfers, repositioning, and expedited freight."
               />
 
@@ -570,34 +690,44 @@ export default function Home() {
                   inputs.inventoryShrinkSavings
                 }
                 onChange={(value) =>
-                  set(
+                  setInput(
                     "inventoryShrinkSavings",
                     value
                   )
                 }
-                step={10000}
+                step={5000}
                 help="Reduction in lost, damaged, stranded, or unaccounted inventory."
               />
 
               <NumberInput
                 label="Administrative labor savings"
                 prefix="$"
-                value={inputs.adminLaborSavings}
-                onChange={(value) =>
-                  set("adminLaborSavings", value)
+                value={
+                  inputs.adminLaborSavings
                 }
-                step={10000}
+                onChange={(value) =>
+                  setInput(
+                    "adminLaborSavings",
+                    value
+                  )
+                }
+                step={5000}
                 help="Reduced manual reconciliation, reporting, follow-up, and exception handling."
               />
 
               <NumberInput
                 label="Rework / repeat trip savings"
                 prefix="$"
-                value={inputs.reworkSavings}
-                onChange={(value) =>
-                  set("reworkSavings", value)
+                value={
+                  inputs.reworkSavings
                 }
-                step={10000}
+                onChange={(value) =>
+                  setInput(
+                    "reworkSavings",
+                    value
+                  )
+                }
+                step={5000}
                 help="Avoided repeat trips, material errors, and preventable operational rework."
               />
 
@@ -608,23 +738,28 @@ export default function Home() {
                   inputs.backlogCancellationSavings
                 }
                 onChange={(value) =>
-                  set(
+                  setInput(
                     "backlogCancellationSavings",
                     value
                   )
                 }
-                step={10000}
-                help="Defaults to $0 to reduce the risk of double counting capacity recovery."
+                step={5000}
+                help="Defaults to $0 to avoid double counting capacity recovery."
               />
             </div>
           </section>
 
-          {/* ARVENIX COST */}
+          {/* ARVENIX INVESTMENT */}
 
           <section className="panel">
             <div className="panelTitle">
-              <h2>Arvenix investment</h2>
-              <span>Customer cost</span>
+              <h2>
+                Arvenix investment
+              </h2>
+
+              <span>
+                Customer cost
+              </span>
             </div>
 
             <div className="fieldGrid two">
@@ -635,7 +770,7 @@ export default function Home() {
                   inputs.implementationCost
                 }
                 onChange={(value) =>
-                  set(
+                  setInput(
                     "implementationCost",
                     value
                   )
@@ -650,7 +785,7 @@ export default function Home() {
                   inputs.annualArvenixCost
                 }
                 onChange={(value) =>
-                  set(
+                  setInput(
                     "annualArvenixCost",
                     value
                   )
@@ -666,42 +801,58 @@ export default function Home() {
         <div className="resultsColumn">
           <section className="panel sticky">
             <div className="panelTitle">
-              <h2>Annual value creation</h2>
-              <span>EBITDA impact</span>
+              <h2>
+                Annual value creation
+              </h2>
+
+              <span>
+                EBITDA impact
+              </span>
             </div>
 
             <div className="bars">
-              {benefitRows.map((row) => (
-                <div
-                  className="barRow"
-                  key={row.label}
-                >
-                  <div className="barLabel">
-                    <span>{row.label}</span>
+              {benefitRows.map(
+                (row) => {
+                  const width =
+                    Math.max(
+                      0,
+                      Math.min(
+                        100,
+                        (row.value /
+                          maxBenefit) *
+                          100
+                      )
+                    );
 
-                    <strong>
-                      {money.format(row.value)}
-                    </strong>
-                  </div>
-
-                  <div className="track">
+                  return (
                     <div
-                      className="fill"
-                      style={{
-                        width: `${Math.max(
-                          0,
-                          Math.min(
-                            100,
-                            (row.value /
-                              maxBenefit) *
-                              100
-                          )
-                        )}%`,
-                      }}
-                    />
-                  </div>
-                </div>
-              ))}
+                      className="barRow"
+                      key={row.label}
+                    >
+                      <div className="barLabel">
+                        <span>
+                          {row.label}
+                        </span>
+
+                        <strong>
+                          {money.format(
+                            row.value
+                          )}
+                        </strong>
+                      </div>
+
+                      <div className="track">
+                        <div
+                          className="fill"
+                          style={{
+                            width: `${width}%`,
+                          }}
+                        />
+                      </div>
+                    </div>
+                  );
+                }
+              )}
             </div>
 
             <div className="divider" />
@@ -720,7 +871,22 @@ export default function Home() {
               </div>
 
               <div>
-                <span>Recovered installs</span>
+                <span>
+                  Estimated lost install
+                  opportunities
+                </span>
+
+                <strong>
+                  {number.format(
+                    results.estimatedLostCapacityInstalls
+                  )}
+                </strong>
+              </div>
+
+              <div>
+                <span>
+                  Recovered installs
+                </span>
 
                 <strong>
                   {number.format(
@@ -730,7 +896,9 @@ export default function Home() {
               </div>
 
               <div>
-                <span>Recovered revenue</span>
+                <span>
+                  Recovered revenue
+                </span>
 
                 <strong>
                   {money.format(
@@ -741,7 +909,8 @@ export default function Home() {
 
               <div>
                 <span>
-                  Fully loaded contribution margin
+                  Fully loaded contribution
+                  margin
                 </span>
 
                 <strong>
@@ -755,7 +924,8 @@ export default function Home() {
 
               <div>
                 <span>
-                  Capacity EBITDA contribution
+                  Capacity EBITDA
+                  contribution
                 </span>
 
                 <strong>
@@ -793,7 +963,8 @@ export default function Home() {
 
               <div className="net">
                 <span>
-                  Net recurring EBITDA impact
+                  Net recurring EBITDA
+                  impact
                 </span>
 
                 <strong>
@@ -806,7 +977,9 @@ export default function Home() {
 
             <div className="roiBox">
               <div>
-                <span>Year 1 cost</span>
+                <span>
+                  Year 1 cost
+                </span>
 
                 <strong>
                   {money.format(
@@ -828,29 +1001,37 @@ export default function Home() {
               </div>
 
               <div>
-                <span>Year 1 ROI</span>
+                <span>
+                  Year 1 ROI
+                </span>
 
                 <strong>
                   {number.format(
-                    results.yearOneRoi * 100
+                    results.yearOneRoi *
+                      100
                   )}
                   %
                 </strong>
               </div>
 
               <div>
-                <span>Recurring ROI</span>
+                <span>
+                  Recurring ROI
+                </span>
 
                 <strong>
                   {number.format(
-                    results.recurringRoi * 100
+                    results.recurringRoi *
+                      100
                   )}
                   %
                 </strong>
               </div>
 
               <div>
-                <span>EBITDA payback</span>
+                <span>
+                  EBITDA payback
+                </span>
 
                 <strong>
                   {results.paybackMonths.toFixed(
@@ -874,15 +1055,19 @@ export default function Home() {
             </div>
 
             <p className="disclaimer">
-              Working capital release is shown
-              separately and is not included in EBITDA
-              or ROI. Recovered revenue is converted to
-              EBITDA contribution using the fully
-              loaded contribution margin rather than
-              counted dollar for dollar. Backlog and
-              cancellation savings default to zero to
-              reduce the risk of double counting
-              recovered installation capacity.
+              Working capital release is
+              shown separately and is not
+              included in EBITDA or ROI.
+              Recovered revenue is converted
+              to EBITDA contribution using
+              the fully loaded contribution
+              margin. Capacity recovery is
+              calculated only against
+              estimated operational leakage,
+              not total installation volume.
+              Backlog and cancellation
+              savings default to zero to
+              reduce double counting.
             </p>
           </section>
         </div>
