@@ -3,437 +3,527 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Arvenix — AI Operations Optimization for Installation Companies</title>
-<meta name="description" content="Turn Your Operational Constraints Into Revenue and Savings. Convert Backlog, Inventory, and Downtime Into Measurable Wins for Installation Companies.">
-<meta name="theme-color" content="#08080c">
+<title>Arvenix | Turn Operational Constraints Into Revenue</title>
+<meta name="description" content="Arvenix applies proven operational-excellence discipline to your operations data, converting backlog, inventory, downtime, and capacity constraints into measurable revenue and margin.">
+<meta name="theme-color" content="#0a0e1a">
 <link rel="canonical" href="https://arvenix.io/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://arvenix.io/">
-<meta property="og:title" content="Arvenix — Convert Operational Constraints Into Revenue">
-<meta property="og:description" content="Turn Backlog, Inventory, and Downtime Into Revenue and Savings.">
+<meta property="og:title" content="Arvenix | Turn Operational Constraints Into Revenue">
+<meta property="og:description" content="Proven operational-excellence discipline applied to your operations data. Convert constraints into revenue.">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232563eb'/%3E%3Cpath d='M7 25 L14.5 7 L17.5 7 L25 25 L21 25 L19.3 20.5 L12.7 20.5 L11 25 Z M13.6 17 L18.4 17 L16 10.5 Z' fill='%23fff'/%3E%3C/svg%3E">
 <style>
-*,*::before,*::after{box-sizing:border-box}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#05060b; --bg2:#0c0c14;
-  --text:#f8f9fa; --muted:#a8adb8;
-  --line:rgba(255,255,255,.1);
-  --card:rgba(255,255,255,.04);
-  --brand:#2563eb; --brand2:#06b6d4; --brand3:#ec4899;
-  --accent1:#3b82f6; --accent2:#0ea5e9; --accent3:#f43f5e;
-  --radius:16px;
+  /* Palette: engineering blueprint. Deep ink, precision blue, signal cyan, one warm data-accent */
+  --ink:#0a0e1a;
+  --ink-2:#0d1424;
+  --panel:#111a2e;
+  --panel-2:#0f1728;
+  --line:rgba(120,150,210,.14);
+  --line-bright:rgba(120,160,230,.28);
+  --text:#eef2fb;
+  --text-2:#9aa8c4;
+  --text-3:#6b7a99;
+  --blue:#3b7dff;
+  --blue-deep:#2563eb;
+  --cyan:#22d3ee;
+  --signal:#f5b642;      /* warm signal accent, used sparingly for the "goal/driver" markers */
+  --radius:14px;
   --maxw:1200px;
+  --gutter:clamp(20px,5vw,48px);
 }
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.6}
-h1,h2,h3,.mono{font-family:"Space Grotesk",Inter,sans-serif;letter-spacing:-.02em}
-a{color:inherit;text-decoration:none}
-img{max-width:100%}
-.wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 24px}
-.grad{background:linear-gradient(100deg,#fff 0%,#c9c6ff 35%,var(--brand2) 70%,var(--brand3) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
-
-.bgfx{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none}
-.orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.55;animation:float 18s ease-in-out infinite}
-.orb.a{width:620px;height:620px;background:radial-gradient(circle at 30% 30%,#378add,transparent 65%);top:-180px;left:-140px}
-.orb.b{width:540px;height:540px;background:radial-gradient(circle at 60% 40%,#22d3ee,transparent 65%);top:120px;right:-160px;animation-delay:-6s}
-.orb.c{width:560px;height:560px;background:radial-gradient(circle at 50% 50%,#f472b6,transparent 65%);top:900px;left:20%;animation-delay:-11s;opacity:.35}
-@keyframes float{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(40px,-50px,0) scale(1.12)}}
-.grid-lines{position:fixed;inset:0;z-index:-1;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 40%,transparent 100%);-webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 40%,transparent 100%)}
-
-header{position:sticky;top:0;z-index:50;transition:.3s}
-header.scrolled{background:rgba(7,7,11,.72);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-nav{display:flex;align-items:center;gap:28px;height:72px}
-.logo{display:flex;align-items:center;gap:10px;font-family:"Space Grotesk";font-weight:700;font-size:19px;letter-spacing:-.02em}
-.mark{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--brand),var(--brand2));display:grid;place-items:center;font-size:15px;color:#fff;box-shadow:0 6px 22px rgba(55,138,221,.5)}
-.navlinks{display:flex;gap:28px;margin-left:auto;font-size:14.5px;color:var(--muted);font-weight:500}
-.navlinks a{transition:.2s}.navlinks a:hover{color:#fff}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:12px 22px;border-radius:999px;font-weight:600;font-size:14.5px;border:1px solid transparent;cursor:pointer;transition:transform .18s,box-shadow .25s,background .25s,border-color .25s;white-space:nowrap}
-.btn-primary{background:linear-gradient(135deg,var(--brand),#2563eb);color:#fff;box-shadow:0 10px 30px rgba(55,138,221,.38)}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(55,138,221,.55)}
-.btn-ghost{background:rgba(255,255,255,.05);border-color:var(--line);color:var(--text)}
-.btn-ghost:hover{background:rgba(255,255,255,.1);transform:translateY(-2px)}
-.btn-lg{padding:15px 30px;font-size:16px}
-.burger{display:none;background:none;border:0;color:#fff;font-size:24px;cursor:pointer;margin-left:auto}
-
-.hero{padding:110px 0 90px;text-align:center;position:relative}
-.pill{display:inline-flex;align-items:center;gap:9px;padding:7px 16px 7px 8px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid var(--line);font-size:13.5px;color:#cfd3e0;margin-bottom:30px}
-.pill b{background:linear-gradient(135deg,var(--brand),var(--brand2));padding:3px 10px;border-radius:999px;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:#fff}
-.hero h1{font-size:clamp(42px,7.2vw,80px);line-height:1.02;margin:0 0 24px;font-weight:700}
-.hero p.lead{font-size:clamp(17px,2.1vw,20.5px);color:var(--muted);max-width:660px;margin:0 auto 38px}
-.cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-.hero-note{margin-top:20px;font-size:13.5px;color:#6f7688}
-
-.stat{display:inline-block;margin:0 1rem;font-size:16px;font-weight:600;color:var(--text)}
-.stat-number{color:var(--brand);font-size:24px}
-
-.mock{margin:70px auto 0;max-width:1000px;border-radius:20px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));backdrop-filter:blur(12px);box-shadow:0 40px 120px rgba(0,0,0,.6);overflow:hidden}
-.mock-bar{display:flex;align-items:center;gap:8px;padding:13px 16px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.03)}
-.dot{width:11px;height:11px;border-radius:50%}
-.mock-body{display:grid;grid-template-columns:190px 1fr;min-height:330px}
-.mock-side{border-right:1px solid var(--line);padding:18px 16px;display:flex;flex-direction:column;gap:11px}
-.sk{height:9px;border-radius:6px;background:rgba(255,255,255,.09)}
-.mock-main{padding:22px 24px;display:flex;flex-direction:column;gap:18px}
-.stat-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.stat-card{border:1px solid var(--line);border-radius:12px;padding:14px;background:rgba(255,255,255,.03)}
-.stat-card .n{font-family:"Space Grotesk";font-size:22px;font-weight:700}
-.stat-card .l{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
-
-section{position:relative}
-.sec{padding:104px 0}
-.sec-head{max-width:660px;margin:0 auto 56px;text-align:center}
-.kicker{font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--brand2);font-weight:600;margin-bottom:14px}
-.sec-head h2{font-size:clamp(30px,4.4vw,46px);line-height:1.1;margin:0 0 16px}
-.sec-head p{color:var(--muted);font-size:17px;margin:0}
-.features{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.card{position:relative;padding:30px;border-radius:var(--radius);border:1px solid var(--line);background:var(--card);overflow:hidden;transition:transform .3s,border-color .3s,background .3s}
-.card::after{content:"";position:absolute;inset:0;border-radius:var(--radius);opacity:0;transition:.3s;background:radial-gradient(500px circle at var(--mx,50%) var(--my,0%),rgba(55,138,221,.18),transparent 60%);pointer-events:none}
-.card:hover{transform:translateY(-6px);border-color:rgba(55,138,221,.5);background:rgba(255,255,255,.06)}
-.card:hover::after{opacity:1}
-.icon{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(55,138,221,.28),rgba(34,211,238,.18));border:1px solid var(--line);margin-bottom:18px;font-size:24px}
-.card h3{margin:0 0 9px;font-size:19px}
-.card p{margin:0;color:var(--muted);font-size:15px}
-
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding:44px;border-radius:24px;border:1px solid var(--line);background:linear-gradient(135deg,rgba(55,138,221,.12),rgba(34,211,238,.06));text-align:center}
-.stats .n{font-family:"Space Grotesk";font-size:clamp(30px,4vw,44px);font-weight:700;line-height:1}
-.stats .l{color:var(--muted);font-size:14px;margin-top:8px}
-
-.split{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center}
-.split h2{font-size:clamp(28px,4vw,42px);margin:0 0 18px;line-height:1.12}
-.split p{color:var(--muted);font-size:16.5px}
-.checks{list-style:none;padding:0;margin:26px 0 0;display:grid;gap:14px}
-.checks li{display:flex;gap:12px;align-items:flex-start;font-size:15.5px;color:#d7dae4}
-.tick{flex:0 0 22px;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--brand),var(--brand2));font-size:12px;color:#fff;margin-top:2px}
-
-.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
-.tier{display:flex;flex-direction:column;padding:32px;border-radius:var(--radius);border:1px solid var(--line);background:var(--card);transition:.3s}
-.tier:hover{transform:translateY(-6px);border-color:rgba(255,255,255,.2)}
-.tier.pop{border-color:rgba(55,138,221,.6);background:linear-gradient(180deg,rgba(55,138,221,.14),rgba(255,255,255,.03));box-shadow:0 24px 70px rgba(55,138,221,.22)}
-.tier .tag{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--brand2);font-weight:700}
-.tier .price{font-family:"Space Grotesk";font-size:42px;font-weight:700;margin:14px 0 4px}
-.tier .price small{font-size:15px;color:var(--muted);font-weight:500;font-family:Inter}
-.tier ul{list-style:none;padding:0;margin:22px 0 28px;display:grid;gap:11px;font-size:14.5px;color:#d7dae4;flex:1}
-.tier ul li::before{content:"✓";color:var(--brand2);margin-right:9px;font-weight:700}
-.badge-pop{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--brand),var(--brand2));font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 14px;border-radius:999px}
-.tier{position:relative}
-
-.cta-box{position:relative;overflow:hidden;padding:76px 40px;border-radius:28px;text-align:center;border:1px solid var(--line);background:linear-gradient(135deg,rgba(55,138,221,.22),rgba(244,114,182,.1) 55%,rgba(34,211,238,.14))}
-.cta-box h2{font-size:clamp(30px,4.6vw,50px);margin:0 0 16px;line-height:1.08}
-.cta-box p{color:#cdd1de;font-size:17.5px;max-width:540px;margin:0 auto 34px}
-
-footer{border-top:1px solid var(--line);margin-top:40px;padding:56px 0 40px;color:var(--muted);font-size:14.5px}
-.fgrid{display:grid;grid-template-columns:1.6fr repeat(3,1fr);gap:32px}
-.fgrid h4{color:#fff;font-size:14px;margin:0 0 14px;font-family:Inter;font-weight:600}
-.fgrid a{display:block;padding:5px 0;transition:.2s}.fgrid a:hover{color:#fff}
-.fbottom{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:44px;padding-top:24px;border-top:1px solid var(--line);font-size:13.5px}
-.social{display:flex;gap:12px}
-.social a{width:36px;height:36px;border-radius:10px;border:1px solid var(--line);display:grid;place-items:center;transition:.25s}
-.social a:hover{background:rgba(255,255,255,.09);transform:translateY(-2px)}
-.social svg{width:17px;height:17px;fill:currentColor}
-
-.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.8,.3,1),transform .7s cubic-bezier(.2,.8,.3,1)}
-.reveal.in{opacity:1;transform:none}
-@media(max-width:940px){
-  .features,.tiers{grid-template-columns:1fr 1fr}
-  .split{grid-template-columns:1fr;gap:36px}
-  .stats{grid-template-columns:1fr 1fr;padding:32px}
-  .fgrid{grid-template-columns:1fr 1fr}
-  .mock-body{grid-template-columns:1fr}.mock-side{display:none}
+body{
+  background:var(--ink);
+  color:var(--text);
+  font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
 }
-@media(max-width:660px){
-  .navlinks{display:none}.burger{display:block}
-  header.open .navlinks{display:flex;position:absolute;top:72px;left:0;right:0;flex-direction:column;gap:0;padding:8px 24px 16px;background:rgba(7,7,11,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-  header.open .navlinks a{padding:13px 0;border-bottom:1px solid var(--line);font-size:16px}
+h1,h2,h3,h4{font-family:Sora,Inter,sans-serif;letter-spacing:-.02em;line-height:1.08}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+a{color:inherit;text-decoration:none}
+
+/* blueprint grid backdrop */
+.blueprint{
+  position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:
+    linear-gradient(var(--ink),var(--ink));
+}
+.blueprint::before{
+  content:"";position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(120,160,230,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(120,160,230,.05) 1px,transparent 1px);
+  background-size:52px 52px;
+  mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 30%,transparent 85%);
+  -webkit-mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 30%,transparent 85%);
+}
+.glow{position:fixed;z-index:-1;pointer-events:none;border-radius:50%;filter:blur(120px);opacity:.5}
+.glow.one{width:560px;height:560px;background:radial-gradient(circle,#1e40af,transparent 68%);top:-160px;left:-120px}
+.glow.two{width:520px;height:520px;background:radial-gradient(circle,#0e7490,transparent 68%);top:420px;right:-160px;opacity:.35}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding-left:var(--gutter);padding-right:var(--gutter)}
+
+/* ---------- nav ---------- */
+header{position:sticky;top:0;z-index:60;transition:background .3s,border-color .3s}
+header.scrolled{background:rgba(10,14,26,.82);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+nav{display:flex;align-items:center;gap:32px;height:74px}
+.brand{display:flex;align-items:center;gap:11px;font-family:Sora;font-weight:700;font-size:19px}
+.brand-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(140deg,var(--blue-deep),var(--cyan));display:grid;place-items:center;box-shadow:0 6px 20px rgba(37,99,235,.4)}
+.brand-mark svg{width:20px;height:20px}
+.nav-links{display:flex;gap:30px;margin-left:auto;font-size:14.5px;color:var(--text-2);font-weight:500}
+.nav-links a{transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:600;font-size:14.5px;border-radius:999px;padding:12px 22px;cursor:pointer;border:1px solid transparent;transition:transform .18s,box-shadow .25s,background .25s,border-color .25s;white-space:nowrap;font-family:Inter}
+.btn-primary{background:linear-gradient(135deg,var(--blue),var(--blue-deep));color:#fff;box-shadow:0 8px 24px rgba(37,99,235,.36)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(37,99,235,.5)}
+.btn-line{background:rgba(255,255,255,.03);border-color:var(--line-bright);color:var(--text)}
+.btn-line:hover{background:rgba(255,255,255,.07);transform:translateY(-2px)}
+.btn-lg{padding:15px 30px;font-size:16px}
+.burger{display:none;background:none;border:0;color:var(--text);font-size:24px;cursor:pointer;margin-left:auto}
+
+/* ---------- hero ---------- */
+.hero{padding:96px 0 72px;position:relative}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:"IBM Plex Mono",monospace;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);margin-bottom:26px}
+.hero h1{font-size:clamp(40px,6.4vw,74px);font-weight:800;max-width:14ch;margin-bottom:26px}
+.hero h1 .accent{background:linear-gradient(120deg,var(--blue) 0%,var(--cyan) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-lead{font-size:clamp(17px,2vw,20px);color:var(--text-2);max-width:62ch;margin-bottom:36px}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.hero-meta{margin-top:22px;font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--text-3);letter-spacing:.04em}
+
+/* driver strip: the four constraint drivers as an engineered readout */
+.drivers{margin-top:56px;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(180deg,var(--panel),var(--panel-2));overflow:hidden}
+.drivers-head{display:flex;align-items:center;justify-content:space-between;padding:14px 22px;border-bottom:1px solid var(--line);font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3)}
+.drivers-head .dot{width:8px;height:8px;border-radius:50%;background:var(--signal);box-shadow:0 0 10px var(--signal);display:inline-block;margin-right:8px}
+.drivers-grid{display:grid;grid-template-columns:repeat(4,1fr)}
+.driver{padding:26px 22px;border-right:1px solid var(--line)}
+.driver:last-child{border-right:none}
+.driver .k{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:10px}
+.driver .v{font-family:Sora;font-size:15.5px;font-weight:700;color:var(--text);line-height:1.25}
+.driver .n{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--cyan);margin-top:10px}
+
+/* ---------- section scaffolding ---------- */
+section{position:relative}
+.band{padding:100px 0}
+.band-line{border-top:1px solid var(--line)}
+.sec-head{max-width:720px;margin-bottom:56px}
+.sec-head.center{margin-left:auto;margin-right:auto;text-align:center}
+.sec-eyebrow{font-family:"IBM Plex Mono",monospace;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);margin-bottom:16px;display:block}
+.sec-head h2{font-size:clamp(30px,4.2vw,46px);font-weight:800;margin-bottom:18px}
+.sec-head p{font-size:17px;color:var(--text-2)}
+
+/* ---------- methodology (signature block) ---------- */
+.method-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--panel-2)}
+.method{padding:38px 32px;border-right:1px solid var(--line);position:relative;transition:background .3s}
+.method:last-child{border-right:none}
+.method:hover{background:var(--panel)}
+.method .tag{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--cyan);margin-bottom:18px}
+.method h3{font-size:22px;font-weight:700;margin-bottom:12px}
+.method p{font-size:15px;color:var(--text-2)}
+.method .rule{width:34px;height:2px;background:linear-gradient(90deg,var(--blue),var(--cyan));margin-bottom:22px}
+
+/* ---------- constraints (blockers) ---------- */
+.blockers{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.blocker{border:1px solid var(--line);border-radius:var(--radius);background:var(--panel-2);padding:30px;transition:transform .3s,border-color .3s,background .3s;position:relative;overflow:hidden}
+.blocker::before{content:"";position:absolute;left:0;top:0;width:3px;height:100%;background:linear-gradient(180deg,var(--blue),var(--cyan));transform:scaleY(0);transform-origin:top;transition:transform .35s ease}
+.blocker:hover{transform:translateY(-5px);border-color:var(--line-bright);background:var(--panel)}
+.blocker:hover::before{transform:scaleY(1)}
+.blocker .idx{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--text-3);margin-bottom:16px}
+.blocker h3{font-size:18.5px;font-weight:700;margin-bottom:10px}
+.blocker p{font-size:14.5px;color:var(--text-2)}
+.blocker .lever{margin-top:16px;font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.04em;color:var(--cyan)}
+
+/* ---------- process (value stream) ---------- */
+.stream{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.stage{padding:32px 24px;border-right:1px solid var(--line);position:relative;background:var(--panel-2);transition:background .3s}
+.stage:last-child{border-right:none}
+.stage:hover{background:var(--panel)}
+.stage .step{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--cyan);margin-bottom:18px;letter-spacing:.08em}
+.stage h3{font-size:16.5px;font-weight:700;margin-bottom:10px}
+.stage p{font-size:13.5px;color:var(--text-2)}
+
+/* ---------- revenue model (the money block, uniform styling) ---------- */
+.model{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center}
+.model-copy h2{font-size:clamp(28px,3.8vw,42px);font-weight:800;margin-bottom:18px}
+.model-copy p{font-size:16.5px;color:var(--text-2);margin-bottom:24px}
+.model-list{list-style:none;display:grid;gap:14px}
+.model-list li{display:flex;gap:13px;align-items:flex-start;font-size:15.5px;color:var(--text)}
+.model-list .mk{flex:0 0 auto;width:20px;height:20px;border-radius:5px;background:linear-gradient(135deg,var(--blue),var(--cyan));display:grid;place-items:center;margin-top:2px}
+.model-list .mk svg{width:12px;height:12px}
+
+.ledger{border:1px solid var(--line-bright);border-radius:18px;overflow:hidden;background:linear-gradient(180deg,var(--panel),var(--panel-2))}
+.ledger-head{padding:22px 26px;border-bottom:1px solid var(--line)}
+.ledger-head .t{font-family:Sora;font-size:18px;font-weight:700}
+.ledger-head .s{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--text-3);margin-top:6px;letter-spacing:.04em}
+.ledger-row{display:flex;align-items:center;justify-content:space-between;padding:20px 26px;border-bottom:1px solid var(--line)}
+.ledger-row:last-of-type{border-bottom:none}
+.ledger-row .label{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-2)}
+.ledger-row .value{font-family:Sora;font-size:clamp(24px,3vw,30px);font-weight:800;color:var(--cyan);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.ledger-foot{padding:18px 26px;background:rgba(37,99,235,.08);border-top:1px solid var(--line)}
+.ledger-foot .label{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--text)}
+.ledger-total{display:flex;align-items:baseline;justify-content:space-between;padding:22px 26px}
+.ledger-total .label{font-family:Sora;font-size:16px;font-weight:700;color:var(--text)}
+.ledger-total .value{font-family:Sora;font-size:clamp(28px,3.6vw,38px);font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;background:linear-gradient(120deg,var(--blue),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+.ledger-note{padding:0 26px 22px;font-size:12.5px;color:var(--text-3);line-height:1.6}
+
+/* ---------- verticals ---------- */
+.verticals{display:flex;flex-wrap:wrap;gap:12px}
+.vertical{font-family:"IBM Plex Mono",monospace;font-size:13px;letter-spacing:.03em;color:var(--text-2);border:1px solid var(--line);border-radius:999px;padding:10px 18px;transition:border-color .25s,color .25s,background .25s}
+.vertical:hover{border-color:var(--line-bright);color:var(--text);background:var(--panel)}
+
+/* ---------- proof stats ---------- */
+.proof{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--panel-2)}
+.proof-cell{padding:34px 26px;border-right:1px solid var(--line);text-align:center}
+.proof-cell:last-child{border-right:none}
+.proof-cell .num{font-family:Sora;font-size:clamp(30px,4vw,42px);font-weight:800;letter-spacing:-.02em;background:linear-gradient(120deg,var(--blue),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+.proof-cell .cap{font-size:13.5px;color:var(--text-2);margin-top:10px}
+
+/* ---------- CTA ---------- */
+.cta{border:1px solid var(--line-bright);border-radius:24px;padding:clamp(44px,6vw,72px);text-align:center;position:relative;overflow:hidden;background:linear-gradient(150deg,rgba(37,99,235,.16),rgba(34,211,238,.08))}
+.cta h2{font-size:clamp(30px,4.4vw,48px);font-weight:800;margin-bottom:18px;max-width:18ch;margin-left:auto;margin-right:auto}
+.cta p{font-size:17.5px;color:var(--text-2);max-width:56ch;margin:0 auto 34px}
+.cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line);padding:56px 0 40px;color:var(--text-2);font-size:14.5px;margin-top:20px}
+.foot-grid{display:grid;grid-template-columns:1.6fr repeat(3,1fr);gap:36px}
+.foot-grid h4{color:var(--text);font-size:13px;font-family:"IBM Plex Mono",monospace;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px;font-weight:600}
+.foot-grid a{display:block;padding:5px 0;color:var(--text-2);transition:color .2s}
+.foot-grid a:hover{color:var(--text)}
+.foot-brand p{max-width:300px;margin-top:14px;color:var(--text-3)}
+.foot-bottom{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:44px;padding-top:24px;border-top:1px solid var(--line);font-size:13px;color:var(--text-3);font-family:"IBM Plex Mono",monospace;letter-spacing:.03em}
+
+/* ---------- reveal ---------- */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.2,.8,.3,1),transform .7s cubic-bezier(.2,.8,.3,1)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+
+/* ---------- responsive ---------- */
+@media(max-width:1000px){
+  .method-grid,.stream{grid-template-columns:1fr;}
+  .method{border-right:none;border-bottom:1px solid var(--line)}
+  .method:last-child{border-bottom:none}
+  .stage{border-right:none;border-bottom:1px solid var(--line)}
+  .stage:last-child{border-bottom:none}
+  .blockers{grid-template-columns:1fr 1fr}
+  .model{grid-template-columns:1fr;gap:40px}
+  .proof{grid-template-columns:1fr 1fr}
+  .proof-cell:nth-child(2){border-right:none}
+  .proof-cell{border-bottom:1px solid var(--line)}
+  .drivers-grid{grid-template-columns:1fr 1fr}
+  .driver:nth-child(2){border-right:none}
+  .driver{border-bottom:1px solid var(--line)}
+  .foot-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:620px){
+  .nav-links{display:none}.burger{display:block}
+  header.open .nav-links{display:flex;position:absolute;top:74px;left:0;right:0;flex-direction:column;gap:0;padding:8px var(--gutter) 18px;background:rgba(10,14,26,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+  header.open .nav-links a{padding:14px 0;border-bottom:1px solid var(--line);font-size:16px}
   nav .btn{display:none}
-  .features,.tiers{grid-template-columns:1fr}
-  .hero{padding:72px 0 60px}.sec{padding:76px 0}
-  .fgrid{grid-template-columns:1fr}
-  .stat-cards{grid-template-columns:1fr}
+  .blockers{grid-template-columns:1fr}
+  .drivers-grid{grid-template-columns:1fr}
+  .driver{border-right:none;border-bottom:1px solid var(--line)}
+  .driver:last-child{border-bottom:none}
+  .proof{grid-template-columns:1fr}
+  .proof-cell{border-right:none}
+  .foot-grid{grid-template-columns:1fr}
+  .band{padding:72px 0}
 }
 </style>
 </head>
 <body>
-<div class="bgfx"><div class="orb a"></div><div class="orb b"></div><div class="orb c"></div></div>
-<div class="grid-lines"></div>
+<div class="blueprint"></div>
+<div class="glow one"></div>
+<div class="glow two"></div>
 
 <header id="hdr">
   <div class="wrap">
     <nav>
-      <a class="logo" href="#top"><span class="mark">◆</span> Arvenix</a>
-      <div class="navlinks">
-        <a href="#platform">How It Works</a>
-        <a href="#methodology">Methodology</a>
-        <a href="#process">The Process</a>
-        <a href="#impact">Impact</a>
-        <a href="#contact">Contact</a>
+      <a class="brand" href="#top">
+        <span class="brand-mark">
+          <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M7 25 L14.5 7 L17.5 7 L25 25 L21 25 L19.3 20.5 L12.7 20.5 L11 25 Z M13.6 17 L18.4 17 L16 10.5 Z" fill="#fff"/></svg>
+        </span>
+        Arvenix
+      </a>
+      <div class="nav-links">
+        <a href="#method">Methodology</a>
+        <a href="#constraints">Constraints</a>
+        <a href="#process">Engagement</a>
+        <a href="#model">Revenue Model</a>
       </div>
-      <a class="btn btn-primary" href="#contact">Book discovery call</a>
+      <a class="btn btn-primary" href="#contact">Book a Discovery Audit</a>
       <button class="burger" aria-label="Menu" onclick="document.getElementById('hdr').classList.toggle('open')">☰</button>
     </nav>
   </div>
 </header>
 
 <main id="top">
+  <!-- HERO -->
   <section class="hero">
     <div class="wrap">
-      <div class="pill"><b>For Installation and Contracting Companies</b></div>
-      <h1>Turn Your Operational<br><span class="grad">Constraints Into Revenue</span></h1>
-      <p class="lead">Backlog Delays. Inventory Waste. Installer Downtime. These Aren't Just Inefficiencies. They're Untapped Revenue and Savings Waiting to Be Captured. Arvenix Converts Your Operational Constraints Into Measurable Wins.</p>
-      <div style="margin-top:2rem;font-size:15px">
-        <div style="margin-bottom:1.5rem">
-          <div class="stat"><span class="stat-number">40%+</span> Backlog Delays</div>
-          <div class="stat"><span class="stat-number">$200K+</span> Dead Inventory</div>
-          <div class="stat"><span class="stat-number">20-30%</span> Installer Downtime</div>
-        </div>
+      <span class="eyebrow">Operations Intelligence for Installation</span>
+      <h1>Turn Operational Constraints Into <span class="accent">Revenue</span>.</h1>
+      <p class="hero-lead">Arvenix brings proven operational-excellence discipline to your operations data. We locate the constraints throttling throughput, quantify each one in dollars, and convert backlog, inventory, capacity, and utilization into measurable revenue and margin.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary btn-lg" href="#contact">Book a Discovery Audit</a>
+        <a class="btn btn-line btn-lg" href="#method">See the Methodology</a>
       </div>
-      <div class="cta-row" style="margin-top:2.5rem">
-        <a class="btn btn-primary btn-lg" href="#contact">Schedule Audit</a>
-        <a class="btn btn-ghost btn-lg" href="#platform">See How It Works</a>
-      </div>
-      <div class="hero-note">See Your Constraint-to-Revenue Opportunity in 20 Minutes.</div>
+      <div class="hero-meta">Connected to ERP, CRM, WMS, and OMS. Every record analyzed, not a sample.</div>
 
-      <div class="mock reveal">
-        <div class="mock-bar">
-          <span class="dot" style="background:#ff5f57"></span>
-          <span class="dot" style="background:#febc2e"></span>
-          <span class="dot" style="background:#28c840"></span>
-          <span style="margin-left:14px;font-size:12.5px;color:#6f7688;font-family:ui-monospace,Menlo,monospace">dashboard.arvenix.io/audit-results</span>
+      <!-- Driver readout -->
+      <div class="drivers reveal">
+        <div class="drivers-head">
+          <span><span class="dot"></span>Key Constraint Drivers</span>
+          <span>Signal to Revenue</span>
         </div>
-        <div class="mock-body">
-          <div class="mock-side">
-            <div class="sk" style="width:70%;background:rgba(55,138,221,.55)"></div>
-            <div class="sk" style="width:88%"></div>
-            <div class="sk" style="width:62%"></div>
-            <div class="sk" style="width:78%"></div>
-            <div class="sk" style="width:54%"></div>
-            <div class="sk" style="width:82%"></div>
+        <div class="drivers-grid">
+          <div class="driver">
+            <div class="k">Driver 01</div>
+            <div class="v">Backlog Velocity</div>
+            <div class="n">Throughput unlocked</div>
           </div>
-          <div class="mock-main">
-            <div class="stat-cards">
-              <div class="stat-card"><div class="n grad">$1.2M</div><div class="l">Annual Savings Potential</div></div>
-              <div class="stat-card"><div class="n grad">12%</div><div class="l">Efficiency Improvement</div></div>
-              <div class="stat-card"><div class="n grad">6 wks</div><div class="l">To Full Deployment</div></div>
-            </div>
+          <div class="driver">
+            <div class="k">Driver 02</div>
+            <div class="v">Inventory Position</div>
+            <div class="n">Capital recovered</div>
+          </div>
+          <div class="driver">
+            <div class="k">Driver 03</div>
+            <div class="v">Installer Utilization</div>
+            <div class="n">Capacity gained</div>
+          </div>
+          <div class="driver">
+            <div class="k">Driver 04</div>
+            <div class="v">Capacity Headroom</div>
+            <div class="n">Revenue expanded</div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="sec" id="platform">
+  <!-- METHODOLOGY (signature) -->
+  <section class="band band-line" id="method">
     <div class="wrap">
       <div class="sec-head reveal">
-        <div class="kicker">Your Operational Constraints</div>
-        <h2>The Hidden Revenue Blockers Every Installation Company Faces</h2>
-        <p>These Aren't Just Inefficiencies. Each One Is a Direct Hit to Revenue and Profitability.</p>
+        <span class="sec-eyebrow">The Operating System</span>
+        <h2>Operational excellence, applied to your data.</h2>
+        <p>The disciplines that transformed modern manufacturing now run against your live operations. Not a dashboard, and not a consulting deck. A working system that finds waste, proves it, and holds the gain.</p>
       </div>
-      <div class="features">
-        <div class="card reveal">
-          <div class="icon" style="background:linear-gradient(135deg,rgba(37,99,235,.28),rgba(6,182,212,.18))">📦</div>
-          <h3>Inventory Constraints</h3>
-          <p>Dead Stock Sitting in Warehouses. Over-Ordered Materials. Slow Movers Tying Up Capital. Converting Inventory Into Working Capital Is Immediate Revenue Recovery.</p>
+      <div class="method-grid reveal">
+        <div class="method">
+          <div class="rule"></div>
+          <div class="tag">Waste</div>
+          <h3>Eliminate the waste</h3>
+          <p>Every touchpoint across materials, labor, and time is mapped against your value stream. We surface the non-value activity that quietly erodes margin on every job, then design it out.</p>
         </div>
-        <div class="card reveal">
-          <div class="icon" style="background:linear-gradient(135deg,rgba(37,99,235,.28),rgba(236,79,95,.18))">⏳</div>
-          <h3>Backlog Delays</h3>
-          <p>Jobs Waiting for Scheduling. Crews Idle Between Installations. Delayed Completions Pushing Revenue Into Next Quarter. Backlog Resolution Is Immediate Revenue Acceleration.</p>
+        <div class="method">
+          <div class="rule"></div>
+          <div class="tag">Improvement</div>
+          <h3>Compound the gains</h3>
+          <p>Improvement is continuous, not a one-time project. Models learn from every completed install and tighten with each cycle, so the system that runs your operation next quarter is sharper than today's.</p>
         </div>
-        <div class="card reveal">
-          <div class="icon" style="background:linear-gradient(135deg,rgba(6,182,212,.28),rgba(236,79,95,.18))">📋</div>
-          <h3>Downtime Constraints</h3>
-          <p>Installer Downtime Between Jobs. Capacity Not Fully Utilized. Scheduling Gaps Eating Into Billable Hours. Downtime Elimination Is Direct Margin Improvement.</p>
-        </div>
-        <div class="card reveal">
-          <div class="icon" style="background:linear-gradient(135deg,rgba(236,79,95,.28),rgba(37,99,235,.18))">👥</div>
-          <h3>Capacity Constraints</h3>
-          <p>Can't Take On More Work Because of Manual Planning. Installer Allocation Guesswork. Resource Planning in Spreadsheets. Capacity Optimization Unlocks Hidden Revenue Potential.</p>
-        </div>
-        <div class="card reveal">
-          <div class="icon" style="background:linear-gradient(135deg,rgba(59,130,246,.28),rgba(6,182,212,.18))">📊</div>
-          <h3>Contract Constraints</h3>
-          <p>Service Contracts Sit Untracked. Renewals Slip Away Quietly. Upsell Opportunities Missed. Contract Recovery and Management Is Pure Profit Recovery.</p>
-        </div>
-        <div class="card reveal">
-          <div class="icon" style="background:linear-gradient(135deg,rgba(6,182,212,.28),rgba(59,130,246,.18))">⚙️</div>
-          <h3>Visibility Constraints</h3>
-          <p>Leadership Can't See Bottlenecks Coming. Reactive Instead of Proactive. Real-Time Data Gaps. Visibility Into Your Operations Is the Foundation for Revenue Growth.</p>
+        <div class="method">
+          <div class="rule"></div>
+          <div class="tag">Evidence</div>
+          <h3>Prove it with data</h3>
+          <p>Decisions are grounded in the full record of your operation, never a convenient sample. Every recommendation carries a dollar figure and the confidence to defend it in the boardroom.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="sec" id="methodology">
+  <!-- CONSTRAINTS -->
+  <section class="band band-line" id="constraints">
     <div class="wrap">
       <div class="sec-head reveal">
-        <div class="kicker">Our Methodology</div>
-        <h2>Operational Excellence Built on Proven Frameworks</h2>
-        <p>Lean, Kaizen, and Six Sigma Principles Adapted for Modern Installation Operations.</p>
+        <span class="sec-eyebrow">Your Operational Constraints</span>
+        <h2>The revenue blockers hiding in your operation.</h2>
+        <p>These are not line-item inefficiencies to trim. Each one is a throttle on throughput, and every throttle is a direct hit to revenue and margin. Arvenix converts each into a lever you can pull.</p>
       </div>
-      <div class="features">
-        <div class="card reveal">
-          <div class="icon" style="background:linear-gradient(135deg,rgba(37,99,235,.28),rgba(59,130,246,.18));color:var(--brand)">◈</div>
-          <h3>Lean Elimination</h3>
-          <p>Identify and Eliminate Waste Across Materials, Labor, and Time. We Analyze All Data to Find Inefficiencies Most Teams Never See.</p>
+      <div class="blockers reveal">
+        <div class="blocker">
+          <div class="idx">01</div>
+          <h3>Inventory tied up as dead capital</h3>
+          <p>Dead stock, over-ordered materials, and slow movers sit idle in the warehouse while capital that should be working sits with them.</p>
+          <div class="lever">Lever: Inventory to cash</div>
         </div>
-        <div class="card reveal">
-          <div class="icon" style="background:linear-gradient(135deg,rgba(59,130,246,.28),rgba(6,182,212,.18));color:var(--accent2)">⟳</div>
-          <h3>Kaizen Continuous Improvement</h3>
-          <p>Small, Consistent Changes That Compound Into Major Results. Our Models Learn From Every Job and Continuously Optimize Your Operations.</p>
+        <div class="blocker">
+          <div class="idx">02</div>
+          <h3>Backlog stalling recognized revenue</h3>
+          <p>Jobs wait on scheduling while completed revenue slips into the next quarter. Backlog is booked work that has not yet paid.</p>
+          <div class="lever">Lever: Backlog velocity</div>
         </div>
-        <div class="card reveal">
-          <div class="icon" style="background:linear-gradient(135deg,rgba(6,182,212,.28),rgba(237,79,95,.18));color:var(--accent3)">Σ</div>
-          <h3>Six Sigma Data Rigor</h3>
-          <p>Decisions Based on 100% of Your Data, Not Samples or Guesses. Every Recommendation is Backed by Statistical Rigor and Real Numbers.</p>
+        <div class="blocker">
+          <div class="idx">03</div>
+          <h3>Installer capacity left on the table</h3>
+          <p>Routing and sequencing gaps mean crews complete fewer jobs per day than they could. Tightening utilization adds billable capacity without adding headcount.</p>
+          <div class="lever">Lever: Installer efficiency</div>
         </div>
-      </div>
-    </div>
-  <section class="sec" id="process">
-    <div class="wrap">
-      <div class="sec-head reveal">
-        <div class="kicker">How Arvenix Works</div>
-        <h2>From Constraints to Revenue in 6 Weeks</h2>
-        <p>We Connect to Your Systems, Identify Every Operational Constraint, Convert Each Into Revenue or Savings, and Build Custom Models to Lock In Results.</p>
-      </div>
-      <div class="features">
-        <div class="card reveal">
-          <div class="icon" style="background:linear-gradient(135deg,rgba(37,99,235,.28),rgba(59,130,246,.18));color:var(--brand)">1</div>
-          <h3>Data Audit</h3>
-          <p>Connect Your ERP, CRM, WMS, and OMS. We Analyze All Available Historical Operations Data to Build a Complete Picture of Your Workflow.</p>
+        <div class="blocker">
+          <div class="idx">04</div>
+          <h3>Capacity capped by manual planning</h3>
+          <p>Allocation runs on spreadsheets and gut feel, so the business turns away work it has the true capacity to deliver.</p>
+          <div class="lever">Lever: Capacity headroom</div>
         </div>
-        <div class="card reveal">
-          <div class="icon" style="background:linear-gradient(135deg,rgba(59,130,246,.28),rgba(6,182,212,.18));color:var(--accent2)">2</div>
-          <h3>Opportunity Report</h3>
-          <p>Specific Recommendations with Attached Dollar Values. Exactly Where You Are Leaving Money Through Waste, Inefficiency, and Process Gaps.</p>
+        <div class="blocker">
+          <div class="idx">05</div>
+          <h3>Contract value quietly leaking</h3>
+          <p>Service agreements go untracked, renewals lapse, and upsell windows close before anyone sees them open.</p>
+          <div class="lever">Lever: Contract recovery</div>
         </div>
-        <div class="card reveal">
-          <div class="icon" style="background:linear-gradient(135deg,rgba(6,182,212,.28),rgba(59,130,246,.18));color:var(--accent1)">3</div>
-          <h3>Custom Optimization Models</h3>
-          <p>Scheduling, Materials Allocation, Forecasting. Built on Lean and Kaizen Principles, Tailored 100% to Your Exact Business Rules.</p>
-        </div>
-        <div class="card reveal">
-          <div class="icon" style="background:linear-gradient(135deg,rgba(59,130,246,.28),rgba(237,79,95,.18));color:var(--accent3)">4</div>
-          <h3>Continuous Improvement</h3>
-          <p>Real-Time Optimization and Monitoring. Your Team Gets Dashboards, Recommendations, and Actionable Playbooks Based on Six Sigma Principles.</p>
-        </div>
-        <div class="card reveal">
-          <div class="icon" style="background:linear-gradient(135deg,rgba(237,79,95,.28),rgba(6,182,212,.18));color:#f43f5e">5</div>
-          <h3>Dead Stock to Cash</h3>
-          <p>Identify Excess and Obsolete Inventory Hiding in Your Warehouse. Convert Dead Stock Into Dollars Through Liquidation and Reallocation Strategies.</p>
+        <div class="blocker">
+          <div class="idx">06</div>
+          <h3>Leadership flying without instruments</h3>
+          <p>Bottlenecks are discovered after they cost money. Without a live read on the operation, the response is always reactive.</p>
+          <div class="lever">Lever: Operational visibility</div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="sec" id="impact" style="padding-top:0">
+  <!-- PROCESS / VALUE STREAM -->
+  <section class="band band-line" id="process">
     <div class="wrap">
-      <div class="stats reveal">
-        <div><div class="n grad">5-15%</div><div class="l">Waste Elimination Through Lean Analysis</div></div>
-        <div><div class="n grad">$500K-2M</div><div class="l">Annual Savings Captured</div></div>
-        <div><div class="n grad">100%</div><div class="l">Historical Data Analyzed</div></div>
-        <div><div class="n grad">12 wks</div><div class="l">Until ROI Positive</div></div>
+      <div class="sec-head reveal">
+        <span class="sec-eyebrow">The Engagement</span>
+        <h2>From constraint to revenue, in one value stream.</h2>
+        <p>A disciplined path from raw operations data to durable financial gain. Each stage produces an artifact your team owns.</p>
+      </div>
+      <div class="stream reveal">
+        <div class="stage">
+          <div class="step">Stage 01</div>
+          <h3>Connect and audit</h3>
+          <p>We integrate with your ERP, CRM, WMS, and OMS and analyze the full history of your operations data.</p>
+        </div>
+        <div class="stage">
+          <div class="step">Stage 02</div>
+          <h3>Quantify the goal</h3>
+          <p>Every constraint is mapped to a dollar figure, ranked by impact, and set against a defined revenue and margin goal.</p>
+        </div>
+        <div class="stage">
+          <div class="step">Stage 03</div>
+          <h3>Model the levers</h3>
+          <p>Custom models for scheduling, allocation, and forecasting are built to eliminate waste and tuned to your rules.</p>
+        </div>
+        <div class="stage">
+          <div class="step">Stage 04</div>
+          <h3>Hold the gain</h3>
+          <p>Statistical controls and live dashboards keep the improvement in place and flag drift before it costs you.</p>
+        </div>
+        <div class="stage">
+          <div class="step">Stage 05</div>
+          <h3>Convert dead stock</h3>
+          <p>Excess and obsolete inventory is identified and routed to liquidation or reallocation, turning idle stock into cash.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="sec">
+  <!-- REVENUE MODEL -->
+  <section class="band band-line" id="model">
     <div class="wrap">
-      <div class="split">
-        <div class="reveal">
-          <div class="kicker">Why Arvenix</div>
-          <h2>Converting Constraints Into Revenue Is Our Single Focus</h2>
-          <p>We Don't Just Identify Problems. We Convert Operational Constraints Into Measurable Revenue Growth and Savings Using Proven Lean Methodologies.</p>
-          <ul class="checks">
-            <li><span class="tick">✓</span><span>Analyze 100% of Your Operations Data to Identify Every Constraint Hiding in Plain Sight</span></li>
-            <li><span class="tick">✓</span><span>Convert Each Constraint Into a Specific Revenue or Savings Dollar Amount</span></li>
-            <li><span class="tick">✓</span><span>Build Custom Models That Systematically Eliminate Bottlenecks Using Lean Principles</span></li>
-            <li><span class="tick">✓</span><span>Your Team Owns the Results. We Provide Intelligence and Proven Methodology.</span></li>
+      <div class="model">
+        <div class="model-copy reveal">
+          <span class="sec-eyebrow">The Revenue Model</span>
+          <h2>Constraints, priced and converted.</h2>
+          <p>The goal is simple to state and measurable to prove: convert every operational constraint into recognized revenue or recovered capital. Here is how a typical first year adds up across the four key drivers.</p>
+          <ul class="model-list">
+            <li><span class="mk"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span>Full data population analyzed, so every figure is defensible</span></li>
+            <li><span class="mk"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span>Each driver carries its own target, owner, and control plan</span></li>
+            <li><span class="mk"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span>Your team owns the result. Arvenix supplies the intelligence.</span></li>
           </ul>
         </div>
-        <div class="reveal" style="background:linear-gradient(135deg,rgba(37,99,235,.12),rgba(6,182,212,.08));border-radius:20px;padding:32px;border:1px solid rgba(37,99,235,.3)">
-          <h3 style="margin-top:0;color:#fff">How We Convert Your Constraints Into Revenue</h3>
-          <p style="font-size:14px;color:var(--muted);margin:0 0 24px">Typical Year One Results From Constraint Elimination</p>
-          <div style="margin:24px 0">
-            <div style="margin-bottom:20px">
-              <div style="font-size:14px;color:var(--muted);margin-bottom:8px;text-transform:uppercase;font-weight:600;letter-spacing:0.5px">Inventory to Cash Recovery</div>
-              <div style="font-size:32px;font-weight:800;background:linear-gradient(135deg,var(--brand),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">$50-200K</div>
-            </div>
-            <div style="margin-bottom:20px">
-              <div style="font-size:14px;color:var(--muted);margin-bottom:8px;text-transform:uppercase;font-weight:600;letter-spacing:0.5px">Backlog Acceleration Revenue</div>
-              <div style="font-size:32px;font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent1));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">$200-600K</div>
-            </div>
-            <div style="margin-bottom:20px">
-              <div style="font-size:14px;color:var(--muted);margin-bottom:8px;text-transform:uppercase;font-weight:600;letter-spacing:0.5px">Downtime Elimination & Capacity Gains</div>
-              <div style="font-size:32px;font-weight:800;background:linear-gradient(135deg,#f43f5e,var(--accent1));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">$150-400K</div>
-            </div>
-            <div>
-              <div style="font-size:14px;color:var(--muted);margin-bottom:8px;text-transform:uppercase;font-weight:600;letter-spacing:0.5px">Contract & Margin Recovery</div>
-              <div style="font-size:32px;font-weight:800;background:linear-gradient(135deg,var(--accent3),var(--brand));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">$100-300K</div>
-            </div>
+        <div class="ledger reveal">
+          <div class="ledger-head">
+            <div class="t">First-Year Revenue Model</div>
+            <div class="s">Typical range by key driver</div>
           </div>
-          <div style="font-size:13px;color:#a8adb8;border-top:1px solid rgba(37,99,235,.2);padding-top:20px;margin-top:20px">Validated Across HVAC, Solar, Telecom, Roofing, Flooring, Bath and Kitchen, and General Contracting Verticals.</div>
+          <div class="ledger-row">
+            <span class="label">Inventory to Cash</span>
+            <span class="value">$50K&#8211;$200K</span>
+          </div>
+          <div class="ledger-row">
+            <span class="label">Backlog Acceleration</span>
+            <span class="value">$200K&#8211;$600K</span>
+          </div>
+          <div class="ledger-row">
+            <span class="label">Utilization &amp; Capacity</span>
+            <span class="value">$150K&#8211;$400K</span>
+          </div>
+          <div class="ledger-row">
+            <span class="label">Contract &amp; Margin</span>
+            <span class="value">$100K&#8211;$300K</span>
+          </div>
+          <div class="ledger-total">
+            <span class="label">Total Opportunity</span>
+            <span class="value">$500K&#8211;$1.5M</span>
+          </div>
+          <div class="ledger-note">Ranges reflect installation and contracting operations across HVAC, solar, telecom, roofing, flooring, bath and kitchen, and general contracting. Your audit produces the figure specific to your data.</div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="sec">
+  <!-- PROOF -->
+  <section class="band band-line">
     <div class="wrap">
-      <div class="sec-head reveal">
-        <div class="kicker">Pricing</div>
-        <h2>Aligned With Your Results</h2>
-        <p>Pay for Outcomes, Not Promises. Everything Based on the Actual Savings We Identify.</p>
-      </div>
-      <div class="tiers">
-        <div class="tier reveal">
-          <div class="tag">Data Audit</div>
-          <div class="price" style="background:linear-gradient(135deg,var(--brand),var(--accent1));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">$25K-50K</div>
-          <p style="color:var(--muted);margin:0;font-size:14.5px">6-Week Engagement</p>
-          <ul>
-            <li>Full Systems Audit</li>
-            <li>Savings Identification</li>
-            <li>Implementation Roadmap</li>
-          </ul>
-          <a class="btn btn-ghost" href="#contact">Book Discovery Call</a>
+      <div class="proof reveal">
+        <div class="proof-cell">
+          <div class="num">100%</div>
+          <div class="cap">Of your operations data analyzed</div>
         </div>
-        <div class="tier pop reveal">
-          <div class="badge-pop">Most Popular</div>
-          <div class="tag">Full Implementation</div>
-          <div class="price" style="background:linear-gradient(135deg,var(--accent2),var(--brand));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">$100-250K</div>
-          <p style="color:var(--muted);margin:0;font-size:14.5px">12-Month Contract</p>
-          <ul>
-            <li>Everything in Audit</li>
-            <li>Custom Model Deployment</li>
-            <li>Ongoing Optimization</li>
-            <li>Quarterly Business Reviews</li>
-          </ul>
-          <a class="btn btn-primary" href="#contact">Schedule Meeting</a>
+        <div class="proof-cell">
+          <div class="num">5&#8211;15%</div>
+          <div class="cap">Throughput gain from waste removed</div>
         </div>
-        <div class="tier reveal">
-          <div class="tag">Enterprise</div>
-          <div class="price" style="background:linear-gradient(135deg,var(--accent3),var(--accent1));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Custom</div>
-          <p style="color:var(--muted);margin:0;font-size:14.5px">Multi-Location or Complex Ops</p>
-          <ul>
-            <li>Dedicated Optimization Team</li>
-            <li>Multi-Site Coordination</li>
-            <li>Custom Integrations</li>
-            <li>White-Label Option</li>
-          </ul>
-          <a class="btn btn-ghost" href="#contact">Contact Sales</a>
+        <div class="proof-cell">
+          <div class="num">4</div>
+          <div class="cap">Key drivers, each with a revenue goal</div>
+        </div>
+        <div class="proof-cell">
+          <div class="num">7</div>
+          <div class="cap">Installation verticals served</div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="sec" id="contact" style="padding-top:20px">
+  <!-- VERTICALS -->
+  <section class="band band-line">
     <div class="wrap">
-      <div class="cta-box reveal">
-        <h2>See Your Constraint-To-Revenue Opportunity</h2>
-        <p>Schedule a 20-Minute Discovery Call. We Will Identify the Specific Operational Constraints Costing You Revenue and Show You Exactly How Much Money Is Waiting to Be Recovered Through Backlog Acceleration, Inventory Conversion, Downtime Elimination, and Capacity Optimization.</p>
+      <div class="sec-head center reveal">
+        <span class="sec-eyebrow">Built For Your Trade</span>
+        <h2>One methodology, proven across installation.</h2>
+      </div>
+      <div class="verticals reveal" style="justify-content:center">
+        <span class="vertical">HVAC</span>
+        <span class="vertical">Solar</span>
+        <span class="vertical">Telecom</span>
+        <span class="vertical">Roofing</span>
+        <span class="vertical">Flooring</span>
+        <span class="vertical">Bath &amp; Kitchen</span>
+        <span class="vertical">General Contracting</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="band" id="contact">
+    <div class="wrap">
+      <div class="cta reveal">
+        <h2>Find the revenue inside your operation.</h2>
+        <p>Book a discovery audit. We connect to your systems, run the analysis against your full data, and return a prioritized revenue model with a dollar figure on every driver.</p>
         <div class="cta-row">
-          <a class="btn btn-primary btn-lg" href="mailto:info@arvenix.io?subject=Schedule%20Arvenix%20Discovery%20Call">Book a Call</a>
-          <a class="btn btn-ghost btn-lg" href="mailto:info@arvenix.io?subject=Arvenix%20information%20request">Send Information</a>
+          <a class="btn btn-primary btn-lg" href="mailto:info@arvenix.io?subject=Book%20a%20Discovery%20Audit">Book a Discovery Audit</a>
+          <a class="btn btn-line btn-lg" href="mailto:info@arvenix.io?subject=Arvenix%20Information%20Request">Request Information</a>
         </div>
       </div>
     </div>
@@ -442,22 +532,39 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:56px 0 40px;colo
 
 <footer>
   <div class="wrap">
-    <div class="fgrid">
-      <div>
-        <a class="logo" href="#top" style="margin-bottom:14px"><span class="mark">◆</span> Arvenix</a>
-        <p style="max-width:300px;margin:12px 0 0">AI-Powered Operations Optimization for Installation and Contracting Companies. Stop Leaving Money on the Table.</p>
-        <div class="social" style="margin-top:20px">
-          <a href="https://linkedin.com/company/arvenix" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.39v-1.2h-2.84v8.37h2.84v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.84M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg></a>
-          <a href="mailto:info@arvenix.io" aria-label="Email"><svg viewBox="0 0 24 24"><path d="M2 5h20v14H2zm0 0 10 7 10-7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></a>
-        </div>
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="brand" href="#top">
+          <span class="brand-mark"><svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M7 25 L14.5 7 L17.5 7 L25 25 L21 25 L19.3 20.5 L12.7 20.5 L11 25 Z M13.6 17 L18.4 17 L16 10.5 Z" fill="#fff"/></svg></span>
+          Arvenix
+        </a>
+        <p>Operations intelligence for installation and contracting. Proven operational-excellence discipline applied to your data to convert constraints into revenue.</p>
       </div>
-      <div><h4>Product</h4><a href="#platform">How It Works</a><a href="#methodology">Methodology</a><a href="#process">Our Process</a><a href="#impact">Impact</a><a href="#contact">Contact</a></div>
-      <div><h4>For You</h4><a href="#">HVAC Contractors</a><a href="#">Solar Installers</a><a href="#">Telecom Operators</a><a href="#">Roofing Contractors</a><a href="#">Flooring Installers</a><a href="#">Bath and Kitchen</a></div>
-      <div><h4>Company</h4><a href="#">About</a><a href="mailto:info@arvenix.io">Contact</a><a href="#">Privacy</a><a href="#">Terms</a></div>
+      <div>
+        <h4>Platform</h4>
+        <a href="#method">Methodology</a>
+        <a href="#constraints">Constraints</a>
+        <a href="#process">Engagement</a>
+        <a href="#model">Revenue Model</a>
+      </div>
+      <div>
+        <h4>Industries</h4>
+        <a href="#">HVAC &amp; Solar</a>
+        <a href="#">Telecom</a>
+        <a href="#">Roofing &amp; Flooring</a>
+        <a href="#">Bath, Kitchen &amp; GC</a>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <a href="mailto:info@arvenix.io">Contact</a>
+        <a href="#contact">Book an Audit</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
     </div>
-    <div class="fbottom">
-      <div>© <span id="yr">2026</span> Arvenix. All rights reserved.</div>
-      <div style="display:flex;gap:22px"><a href="#">Privacy</a><a href="#">Terms</a></div>
+    <div class="foot-bottom">
+      <span>© <span id="yr">2026</span> Arvenix. All rights reserved.</span>
+      <span>info@arvenix.io</span>
     </div>
   </div>
 </footer>
@@ -465,28 +572,15 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:56px 0 40px;colo
 <script>
   document.getElementById("yr").textContent = new Date().getFullYear();
   const hdr = document.getElementById("hdr");
-  const onScroll = () => hdr.classList.toggle("scrolled", window.scrollY > 10);
-  onScroll(); 
-  window.addEventListener("scroll", onScroll, { passive: true });
-  
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        e.target.style.transitionDelay = (i * 60) + "ms";
-        e.target.classList.add("in");
-        io.unobserve(e.target);
-      }
+  const onScroll = () => hdr.classList.toggle("scrolled", window.scrollY > 8);
+  onScroll();
+  window.addEventListener("scroll", onScroll, {passive:true});
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach((e)=>{
+      if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); }
     });
-  }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
-  document.querySelectorAll(".reveal").forEach(el => io.observe(el));
-
-  document.querySelectorAll(".card").forEach(card => {
-    card.addEventListener("pointermove", ev => {
-      const r = card.getBoundingClientRect();
-      card.style.setProperty("--mx", (ev.clientX - r.left) + "px");
-      card.style.setProperty("--my", (ev.clientY - r.top) + "px");
-    });
-  });
+  }, {threshold:0.12, rootMargin:"0px 0px -40px 0px"});
+  document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
 </script>
 </body>
 </html>
