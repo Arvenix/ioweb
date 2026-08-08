@@ -1,131 +1,45 @@
-//
-// ARVENIX FINANCIAL VALUE CREATION MODEL
-//
-// Designed around CFO / FP&A / PE underwriting principles.
-//
-// Key rules:
-//
-// 1. Gross profit is separated from operating expenses.
-// 2. Marketing is NOT included in COGS.
-// 3. Existing backlog recovery does NOT incur marketing again.
-// 4. Inventory reduction is working capital, NOT EBITDA.
-// 5. Inventory carrying cost is NOT automatically counted as EBITDA.
-// 6. EBITDA improvements must come from identifiable P&L savings.
-// 7. Revenue recovery is converted through contribution margin.
-// 8. Enterprise value creation is shown separately from ROI.
-//
+export type Scenario = "conservative" | "base" | "upside";
 
-// ------------------------------------------------------------
-// TYPES
-// ------------------------------------------------------------
-
-export type Scenario =
-  | "conservative"
-  | "base"
-  | "upside";
+export interface ScenarioAssumptions {
+  materialProcurementImprovementPercent: number;
+  shrinkObsolescenceReductionPercent: number;
+  freightTransferReductionPercent: number;
+  reworkReductionPercent: number;
+  warehouseCostReductionPercent: number;
+  adminLaborReductionPercent: number;
+  operationalGapRecoveryPercent: number;
+  targetInventoryTurns: number;
+}
 
 export interface RoiInputs {
-  // ----------------------------------------------------------
-  // COMPANY BASELINE
-  // ----------------------------------------------------------
-
   annualInstalls: number;
   averageJobRevenue: number;
-
-  // Current company EBITDA
   currentEbitda: number;
-
-  // ----------------------------------------------------------
-  // GROSS PROFIT STRUCTURE
-  // ----------------------------------------------------------
 
   materialPercent: number;
   directLaborPercent: number;
   otherDirectCogsPercent: number;
-
-  // Marketing sits below gross profit
   marketingPercent: number;
 
-  // ----------------------------------------------------------
-  // INVENTORY / WORKING CAPITAL
-  // ----------------------------------------------------------
+  recoveredJobContributionMarginPercent: number;
 
   averageInventory: number;
 
-  // Target improvement in inventory turns
-  targetInventoryTurns: number;
-
-  // ----------------------------------------------------------
-  // MATERIAL PROCUREMENT
-  // ----------------------------------------------------------
-
-  // Example: 1% lower material acquisition cost
-  materialProcurementImprovementPercent: number;
-
-  // ----------------------------------------------------------
-  // SHRINK / OBSOLESCENCE
-  // ----------------------------------------------------------
-
   annualShrinkObsolescenceCost: number;
-  shrinkObsolescenceReductionPercent: number;
-
-  // ----------------------------------------------------------
-  // FREIGHT / TRANSFERS
-  // ----------------------------------------------------------
-
   annualFreightTransferCost: number;
-  freightTransferReductionPercent: number;
-
-  // ----------------------------------------------------------
-  // REWORK / REPEAT TRIPS
-  // ----------------------------------------------------------
-
   annualReworkRepeatTripCost: number;
-  reworkReductionPercent: number;
-
-  // ----------------------------------------------------------
-  // WAREHOUSE
-  // ----------------------------------------------------------
-
   annualWarehouseCost: number;
-  warehouseCostReductionPercent: number;
-
-  // ----------------------------------------------------------
-  // ADMINISTRATIVE LABOR
-  // ----------------------------------------------------------
-
   annualAdminLaborCost: number;
-  adminLaborReductionPercent: number;
 
-  // ----------------------------------------------------------
-  // ADDRESSABLE BACKLOG / INSTALLATION RECOVERY
-  // ----------------------------------------------------------
-
-  // Jobs management believes are actually recoverable.
-  //
-  // This should NOT include:
-  // credit declines
-  // rescission
-  // true customer cancellations
-  // uncontrollable losses
-  //
   addressableOperationalGapJobs: number;
 
-  // Percentage of those addressable jobs Arvenix is expected
-  // to recover.
-  operationalGapRecoveryPercent: number;
-
-  // ----------------------------------------------------------
-  // ARVENIX INVESTMENT
-  // ----------------------------------------------------------
+  conservative: ScenarioAssumptions;
+  base: ScenarioAssumptions;
+  upside: ScenarioAssumptions;
 
   annualArvenixCost: number;
   implementationCost: number;
   internalImplementationCost: number;
-
-  // ----------------------------------------------------------
-  // VALUATION
-  // ----------------------------------------------------------
 
   lowEbitdaMultiple: number;
   baseEbitdaMultiple: number;
@@ -135,16 +49,11 @@ export interface RoiInputs {
 export interface RoiResults {
   scenario: Scenario;
 
-  // ----------------------------------------------------------
-  // BASELINE P&L
-  // ----------------------------------------------------------
-
   annualRevenue: number;
 
   annualMaterialCogs: number;
   annualDirectLaborCogs: number;
   annualOtherDirectCogs: number;
-
   totalDirectCogs: number;
 
   grossProfit: number;
@@ -155,260 +64,121 @@ export interface RoiResults {
   currentEbitda: number;
   currentEbitdaMargin: number;
 
-  // ----------------------------------------------------------
-  // INVENTORY
-  // ----------------------------------------------------------
-
   currentInventoryTurns: number;
-
+  targetInventoryTurns: number;
   targetInventory: number;
-
   workingCapitalReleased: number;
 
-  // ----------------------------------------------------------
-  // EBITDA VALUE CREATION LEVERS
-  // ----------------------------------------------------------
+  materialProcurementImprovementPercent: number;
+  shrinkObsolescenceReductionPercent: number;
+  freightTransferReductionPercent: number;
+  reworkReductionPercent: number;
+  warehouseCostReductionPercent: number;
+  adminLaborReductionPercent: number;
+  operationalGapRecoveryPercent: number;
 
   materialProcurementSavings: number;
-
   shrinkObsolescenceSavings: number;
-
   freightTransferSavings: number;
-
   reworkSavings: number;
-
   warehouseSavings: number;
-
   adminLaborSavings: number;
-
-  // ----------------------------------------------------------
-  // BACKLOG / REVENUE RECOVERY
-  // ----------------------------------------------------------
-
-  recoveredJobs: number;
-
-  recoveredRevenue: number;
-
-  existingBacklogContributionMargin: number;
-
-  recoveredRevenueContribution: number;
-
-  // ----------------------------------------------------------
-  // EBITDA
-  // ----------------------------------------------------------
 
   directOperatingSavings: number;
 
-  grossAnnualEbitdaImprovement: number;
+  recoveredJobs: number;
+  recoveredRevenue: number;
+  recoveredJobContributionMargin: number;
+  recoveredRevenueContribution: number;
 
+  grossAnnualEbitdaImprovement: number;
   recurringNetEbitdaImprovement: number;
 
   proFormaEbitda: number;
-
   proFormaEbitdaMargin: number;
 
-  // ----------------------------------------------------------
-  // INVESTMENT / ROI
-  // ----------------------------------------------------------
-
+  upfrontImplementationInvestment: number;
   yearOneInvestment: number;
 
   yearOneNetBenefit: number;
-
   yearOneRoi: number;
 
+  annualNetRecurringBenefit: number;
   recurringRoi: number;
 
+  benefitCostRatio: number;
   paybackMonths: number;
 
-  // ----------------------------------------------------------
-  // ENTERPRISE VALUE
-  // ----------------------------------------------------------
-
   enterpriseValueLow: number;
-
   enterpriseValueBase: number;
-
   enterpriseValueHigh: number;
 }
 
-// ------------------------------------------------------------
-// DEFAULT ASSUMPTIONS
-// ------------------------------------------------------------
-
 export const defaultInputs: RoiInputs = {
-  // ----------------------------------------------------------
-  // COMPANY BASELINE
-  // ----------------------------------------------------------
-
   annualInstalls: 4000,
-
   averageJobRevenue: 19100,
-
-  // Illustrative 10% EBITDA margin.
-  // Customer should replace this with actual EBITDA.
   currentEbitda: 7640000,
 
-  // ----------------------------------------------------------
-  // GROSS PROFIT STRUCTURE
-  // ----------------------------------------------------------
-
-  // 22% materials
   materialPercent: 0.22,
-
-  // 15% direct installer labor
   directLaborPercent: 0.15,
-
-  // Freight directly tied to jobs, permits, disposal,
-  // commissions classified in COGS, etc.
-  //
-  // This brings modeled gross margin to 55%.
   otherDirectCogsPercent: 0.08,
-
-  // Marketing is an operating expense.
   marketingPercent: 0.20,
 
-  // ----------------------------------------------------------
-  // INVENTORY
-  // ----------------------------------------------------------
+  recoveredJobContributionMarginPercent: 0.55,
 
   averageInventory: 8000000,
 
-  // Current turns at the baseline are approximately 2.1x.
-  //
-  // Moving to 2.5x is the initial base underwriting case.
-  targetInventoryTurns: 2.5,
-
-  // ----------------------------------------------------------
-  // MATERIAL PROCUREMENT
-  // ----------------------------------------------------------
-
-  // 1% improvement against material COGS.
-  materialProcurementImprovementPercent: 0.01,
-
-  // ----------------------------------------------------------
-  // SHRINK / OBSOLESCENCE
-  // ----------------------------------------------------------
-
   annualShrinkObsolescenceCost: 150000,
-
-  shrinkObsolescenceReductionPercent: 0.20,
-
-  // ----------------------------------------------------------
-  // FREIGHT / TRANSFERS
-  // ----------------------------------------------------------
-
   annualFreightTransferCost: 250000,
-
-  freightTransferReductionPercent: 0.15,
-
-  // ----------------------------------------------------------
-  // REWORK
-  // ----------------------------------------------------------
-
   annualReworkRepeatTripCost: 400000,
-
-  reworkReductionPercent: 0.15,
-
-  // ----------------------------------------------------------
-  // WAREHOUSE
-  // ----------------------------------------------------------
-
   annualWarehouseCost: 750000,
-
-  warehouseCostReductionPercent: 0.05,
-
-  // ----------------------------------------------------------
-  // ADMINISTRATIVE LABOR
-  // ----------------------------------------------------------
-
   annualAdminLaborCost: 600000,
 
-  adminLaborReductionPercent: 0.05,
-
-  // ----------------------------------------------------------
-  // ADDRESSABLE OPERATIONAL GAP
-  // ----------------------------------------------------------
-
-  // Example:
-  //
-  // 4,500 sold
-  // 4,000 completed
-  // 500 gross gap
-  //
-  // Remove rescission, credit failure, true customer
-  // cancellations, etc.
-  //
-  // Assume 150 are operationally addressable.
-  //
   addressableOperationalGapJobs: 150,
 
-  // Base underwriting assumes Arvenix contributes to the
-  // recovery of 20% of those jobs.
-  operationalGapRecoveryPercent: 0.20,
+  conservative: {
+    materialProcurementImprovementPercent: 0.005,
+    shrinkObsolescenceReductionPercent: 0.10,
+    freightTransferReductionPercent: 0.05,
+    reworkReductionPercent: 0.05,
+    warehouseCostReductionPercent: 0.02,
+    adminLaborReductionPercent: 0.02,
+    operationalGapRecoveryPercent: 0.10,
+    targetInventoryTurns: 2.25,
+  },
 
-  // ----------------------------------------------------------
-  // ARVENIX INVESTMENT
-  // ----------------------------------------------------------
+  base: {
+    materialProcurementImprovementPercent: 0.01,
+    shrinkObsolescenceReductionPercent: 0.20,
+    freightTransferReductionPercent: 0.15,
+    reworkReductionPercent: 0.15,
+    warehouseCostReductionPercent: 0.05,
+    adminLaborReductionPercent: 0.05,
+    operationalGapRecoveryPercent: 0.20,
+    targetInventoryTurns: 2.50,
+  },
+
+  upside: {
+    materialProcurementImprovementPercent: 0.015,
+    shrinkObsolescenceReductionPercent: 0.30,
+    freightTransferReductionPercent: 0.25,
+    reworkReductionPercent: 0.25,
+    warehouseCostReductionPercent: 0.08,
+    adminLaborReductionPercent: 0.08,
+    operationalGapRecoveryPercent: 0.30,
+    targetInventoryTurns: 2.75,
+  },
 
   annualArvenixCost: 75000,
-
   implementationCost: 50000,
-
   internalImplementationCost: 25000,
 
-  // ----------------------------------------------------------
-  // PE VALUATION
-  // ----------------------------------------------------------
-
   lowEbitdaMultiple: 6,
-
   baseEbitdaMultiple: 8,
-
   highEbitdaMultiple: 10,
 };
 
-// ------------------------------------------------------------
-// SCENARIO FACTORS
-// ------------------------------------------------------------
-//
-// We do NOT change the customer's baseline financials.
-//
-// Scenario factors only change the amount of improvement
-// Arvenix is assumed to capture.
-//
-// Conservative = 75% of base case
-// Base         = 100%
-// Upside       = 125%
-//
-// The upside factor is capped when applied to percentages.
-//
-
-const scenarioFactors: Record<Scenario, number> = {
-  conservative: 0.75,
-  base: 1,
-  upside: 1.25,
-};
-
-// ------------------------------------------------------------
-// HELPERS
-// ------------------------------------------------------------
-
-function clamp(
-  value: number,
-  minimum: number,
-  maximum: number
-): number {
-  return Math.min(
-    Math.max(value, minimum),
-    maximum
-  );
-}
-
-function safeDivide(
-  numerator: number,
-  denominator: number
-): number {
+function safeDivide(numerator: number, denominator: number): number {
   if (denominator === 0) {
     return 0;
   }
@@ -416,286 +186,127 @@ function safeDivide(
   return numerator / denominator;
 }
 
-// ------------------------------------------------------------
-// CALCULATOR
-// ------------------------------------------------------------
+function clamp(value: number, minimum: number, maximum: number): number {
+  return Math.min(Math.max(value, minimum), maximum);
+}
 
 export function calculateRoi(
   inputs: RoiInputs,
   scenario: Scenario = "base"
 ): RoiResults {
-  const factor =
-    scenarioFactors[scenario];
-
-  // ==========================================================
-  // BASELINE REVENUE
-  // ==========================================================
+  const assumptions = inputs[scenario];
 
   const annualRevenue =
-    inputs.annualInstalls *
-    inputs.averageJobRevenue;
-
-  // ==========================================================
-  // BASELINE COGS
-  // ==========================================================
+    inputs.annualInstalls * inputs.averageJobRevenue;
 
   const annualMaterialCogs =
-    annualRevenue *
-    inputs.materialPercent;
+    annualRevenue * inputs.materialPercent;
 
   const annualDirectLaborCogs =
-    annualRevenue *
-    inputs.directLaborPercent;
+    annualRevenue * inputs.directLaborPercent;
 
   const annualOtherDirectCogs =
-    annualRevenue *
-    inputs.otherDirectCogsPercent;
+    annualRevenue * inputs.otherDirectCogsPercent;
 
   const totalDirectCogs =
     annualMaterialCogs +
     annualDirectLaborCogs +
     annualOtherDirectCogs;
 
-  // ==========================================================
-  // GROSS PROFIT
-  // ==========================================================
-
   const grossProfit =
-    annualRevenue -
-    totalDirectCogs;
+    annualRevenue - totalDirectCogs;
 
   const grossMargin =
-    safeDivide(
-      grossProfit,
-      annualRevenue
-    );
-
-  // ==========================================================
-  // MARKETING
-  // ==========================================================
+    safeDivide(grossProfit, annualRevenue);
 
   const annualMarketingExpense =
-    annualRevenue *
-    inputs.marketingPercent;
-
-  // ==========================================================
-  // CURRENT EBITDA
-  // ==========================================================
+    annualRevenue * inputs.marketingPercent;
 
   const currentEbitda =
     inputs.currentEbitda;
 
   const currentEbitdaMargin =
-    safeDivide(
-      currentEbitda,
-      annualRevenue
-    );
-
-  // ==========================================================
-  // INVENTORY TURNS
-  // ==========================================================
-  //
-  // Material consumption is used here rather than revenue.
-  //
-  // Inventory Turns =
-  //
-  // Annual Material COGS
-  // --------------------
-  // Average Inventory
-  //
+    safeDivide(currentEbitda, annualRevenue);
 
   const currentInventoryTurns =
-    safeDivide(
-      annualMaterialCogs,
-      inputs.averageInventory
-    );
+    safeDivide(annualMaterialCogs, inputs.averageInventory);
 
-  // ==========================================================
-  // TARGET INVENTORY
-  // ==========================================================
-  //
-  // Target Inventory =
-  //
-  // Annual Material COGS
-  // --------------------
-  // Target Turns
-  //
+  const targetInventoryTurns =
+    assumptions.targetInventoryTurns;
 
   const targetInventory =
-    inputs.targetInventoryTurns > 0
-      ? annualMaterialCogs /
-        inputs.targetInventoryTurns
+    targetInventoryTurns > 0
+      ? annualMaterialCogs / targetInventoryTurns
       : inputs.averageInventory;
 
-  // ==========================================================
-  // WORKING CAPITAL RELEASE
-  // ==========================================================
-  //
-  // This is NOT EBITDA.
-  //
-  // We do not allow inventory "release" to become negative.
-  //
-
   const workingCapitalReleased =
-    Math.max(
-      0,
-      inputs.averageInventory -
-        targetInventory
-    );
+    Math.max(0, inputs.averageInventory - targetInventory);
 
-  // ==========================================================
-  // MATERIAL PROCUREMENT SAVINGS
-  // ==========================================================
-  //
-  // Base calculation:
-  //
-  // Annual Material Spend
-  // x Procurement Improvement
-  //
-
-  const adjustedMaterialImprovement =
+  const materialProcurementImprovementPercent =
     clamp(
-      inputs.materialProcurementImprovementPercent *
-        factor,
+      assumptions.materialProcurementImprovementPercent,
       0,
       1
     );
 
   const materialProcurementSavings =
     annualMaterialCogs *
-    adjustedMaterialImprovement;
+    materialProcurementImprovementPercent;
 
-  // ==========================================================
-  // SHRINK / OBSOLESCENCE
-  // ==========================================================
-
-  const adjustedShrinkReduction =
+  const shrinkObsolescenceReductionPercent =
     clamp(
-      inputs.shrinkObsolescenceReductionPercent *
-        factor,
+      assumptions.shrinkObsolescenceReductionPercent,
       0,
       1
     );
 
   const shrinkObsolescenceSavings =
     inputs.annualShrinkObsolescenceCost *
-    adjustedShrinkReduction;
+    shrinkObsolescenceReductionPercent;
 
-  // ==========================================================
-  // FREIGHT / TRANSFERS
-  // ==========================================================
-
-  const adjustedFreightReduction =
+  const freightTransferReductionPercent =
     clamp(
-      inputs.freightTransferReductionPercent *
-        factor,
+      assumptions.freightTransferReductionPercent,
       0,
       1
     );
 
   const freightTransferSavings =
     inputs.annualFreightTransferCost *
-    adjustedFreightReduction;
+    freightTransferReductionPercent;
 
-  // ==========================================================
-  // REWORK
-  // ==========================================================
-
-  const adjustedReworkReduction =
+  const reworkReductionPercent =
     clamp(
-      inputs.reworkReductionPercent *
-        factor,
+      assumptions.reworkReductionPercent,
       0,
       1
     );
 
   const reworkSavings =
     inputs.annualReworkRepeatTripCost *
-    adjustedReworkReduction;
+    reworkReductionPercent;
 
-  // ==========================================================
-  // WAREHOUSE
-  // ==========================================================
-
-  const adjustedWarehouseReduction =
+  const warehouseCostReductionPercent =
     clamp(
-      inputs.warehouseCostReductionPercent *
-        factor,
+      assumptions.warehouseCostReductionPercent,
       0,
       1
     );
 
   const warehouseSavings =
     inputs.annualWarehouseCost *
-    adjustedWarehouseReduction;
+    warehouseCostReductionPercent;
 
-  // ==========================================================
-  // ADMIN LABOR
-  // ==========================================================
-
-  const adjustedAdminReduction =
+  const adminLaborReductionPercent =
     clamp(
-      inputs.adminLaborReductionPercent *
-        factor,
+      assumptions.adminLaborReductionPercent,
       0,
       1
     );
 
   const adminLaborSavings =
     inputs.annualAdminLaborCost *
-    adjustedAdminReduction;
-
-  // ==========================================================
-  // ADDRESSABLE OPERATIONAL RECOVERY
-  // ==========================================================
-  //
-  // Unlike the old model, we DO NOT say:
-  //
-  // installs x arbitrary leakage % x recovery %
-  //
-  // Management must first identify how many jobs are actually
-  // operationally addressable.
-  //
-  // Then Arvenix receives credit for recovering a conservative
-  // percentage of that addressable pool.
-  //
-
-  const adjustedGapRecovery =
-    clamp(
-      inputs.operationalGapRecoveryPercent *
-        factor,
-      0,
-      1
-    );
-
-  const recoveredJobs =
-    inputs.addressableOperationalGapJobs *
-    adjustedGapRecovery;
-
-  const recoveredRevenue =
-    recoveredJobs *
-    inputs.averageJobRevenue;
-
-  // ==========================================================
-  // EXISTING BACKLOG CONTRIBUTION MARGIN
-  // ==========================================================
-  //
-  // Marketing has already been incurred on sold backlog.
-  //
-  // Therefore we use gross margin rather than deducting the
-  // marketing percentage again.
-  //
-
-  const existingBacklogContributionMargin =
-    grossMargin;
-
-  const recoveredRevenueContribution =
-    recoveredRevenue *
-    existingBacklogContributionMargin;
-
-  // ==========================================================
-  // DIRECT OPERATING SAVINGS
-  // ==========================================================
+    adminLaborReductionPercent;
 
   const directOperatingSavings =
     materialProcurementSavings +
@@ -705,56 +316,58 @@ export function calculateRoi(
     warehouseSavings +
     adminLaborSavings;
 
-  // ==========================================================
-  // GROSS ANNUAL EBITDA IMPROVEMENT
-  // ==========================================================
+  const operationalGapRecoveryPercent =
+    clamp(
+      assumptions.operationalGapRecoveryPercent,
+      0,
+      1
+    );
+
+  const recoveredJobs =
+    inputs.addressableOperationalGapJobs *
+    operationalGapRecoveryPercent;
+
+  const recoveredRevenue =
+    recoveredJobs *
+    inputs.averageJobRevenue;
+
+  const recoveredJobContributionMargin =
+    clamp(
+      inputs.recoveredJobContributionMarginPercent,
+      0,
+      1
+    );
+
+  const recoveredRevenueContribution =
+    recoveredRevenue *
+    recoveredJobContributionMargin;
 
   const grossAnnualEbitdaImprovement =
     directOperatingSavings +
     recoveredRevenueContribution;
 
-  // ==========================================================
-  // NET RECURRING EBITDA IMPROVEMENT
-  // ==========================================================
-
   const recurringNetEbitdaImprovement =
     grossAnnualEbitdaImprovement -
     inputs.annualArvenixCost;
-
-  // ==========================================================
-  // PRO FORMA EBITDA
-  // ==========================================================
 
   const proFormaEbitda =
     currentEbitda +
     recurringNetEbitdaImprovement;
 
   const proFormaEbitdaMargin =
-    safeDivide(
-      proFormaEbitda,
-      annualRevenue
-    );
+    safeDivide(proFormaEbitda, annualRevenue);
 
-  // ==========================================================
-  // YEAR ONE INVESTMENT
-  // ==========================================================
-
-  const yearOneInvestment =
-    inputs.annualArvenixCost +
+  const upfrontImplementationInvestment =
     inputs.implementationCost +
     inputs.internalImplementationCost;
 
-  // ==========================================================
-  // YEAR ONE NET BENEFIT
-  // ==========================================================
+  const yearOneInvestment =
+    upfrontImplementationInvestment +
+    inputs.annualArvenixCost;
 
   const yearOneNetBenefit =
     grossAnnualEbitdaImprovement -
     yearOneInvestment;
-
-  // ==========================================================
-  // YEAR ONE ROI
-  // ==========================================================
 
   const yearOneRoi =
     safeDivide(
@@ -762,61 +375,41 @@ export function calculateRoi(
       yearOneInvestment
     );
 
-  // ==========================================================
-  // RECURRING ROI
-  // ==========================================================
+  const annualNetRecurringBenefit =
+    recurringNetEbitdaImprovement;
 
   const recurringRoi =
     safeDivide(
-      recurringNetEbitdaImprovement,
+      annualNetRecurringBenefit,
       inputs.annualArvenixCost
     );
 
-  // ==========================================================
-  // PAYBACK
-  // ==========================================================
-  //
-  // Working capital is intentionally excluded.
-  //
-  // Payback is based only on recurring EBITDA creation.
-  //
+  const benefitCostRatio =
+    safeDivide(
+      grossAnnualEbitdaImprovement,
+      inputs.annualArvenixCost
+    );
 
-  const monthlyGrossEbitdaImprovement =
-    grossAnnualEbitdaImprovement /
-    12;
+  const monthlyNetRecurringBenefit =
+    annualNetRecurringBenefit / 12;
 
   const paybackMonths =
-    monthlyGrossEbitdaImprovement > 0
-      ? yearOneInvestment /
-        monthlyGrossEbitdaImprovement
+    monthlyNetRecurringBenefit > 0
+      ? upfrontImplementationInvestment /
+        monthlyNetRecurringBenefit
       : 0;
 
-  // ==========================================================
-  // ENTERPRISE VALUE CREATION
-  // ==========================================================
-  //
-  // Uses NET sustainable recurring EBITDA improvement.
-  //
-  // Working capital is NOT included here.
-  //
-  // These values should be labeled illustrative.
-  //
-
   const enterpriseValueLow =
-    recurringNetEbitdaImprovement *
+    annualNetRecurringBenefit *
     inputs.lowEbitdaMultiple;
 
   const enterpriseValueBase =
-    recurringNetEbitdaImprovement *
+    annualNetRecurringBenefit *
     inputs.baseEbitdaMultiple;
 
   const enterpriseValueHigh =
-    recurringNetEbitdaImprovement *
+    annualNetRecurringBenefit *
     inputs.highEbitdaMultiple;
-
-  // ==========================================================
-  // RETURN
-  // ==========================================================
 
   return {
     scenario,
@@ -826,7 +419,6 @@ export function calculateRoi(
     annualMaterialCogs,
     annualDirectLaborCogs,
     annualOtherDirectCogs,
-
     totalDirectCogs,
 
     grossProfit,
@@ -838,55 +430,52 @@ export function calculateRoi(
     currentEbitdaMargin,
 
     currentInventoryTurns,
-
+    targetInventoryTurns,
     targetInventory,
-
     workingCapitalReleased,
 
+    materialProcurementImprovementPercent,
+    shrinkObsolescenceReductionPercent,
+    freightTransferReductionPercent,
+    reworkReductionPercent,
+    warehouseCostReductionPercent,
+    adminLaborReductionPercent,
+    operationalGapRecoveryPercent,
+
     materialProcurementSavings,
-
     shrinkObsolescenceSavings,
-
     freightTransferSavings,
-
     reworkSavings,
-
     warehouseSavings,
-
     adminLaborSavings,
-
-    recoveredJobs,
-
-    recoveredRevenue,
-
-    existingBacklogContributionMargin,
-
-    recoveredRevenueContribution,
 
     directOperatingSavings,
 
-    grossAnnualEbitdaImprovement,
+    recoveredJobs,
+    recoveredRevenue,
+    recoveredJobContributionMargin,
+    recoveredRevenueContribution,
 
+    grossAnnualEbitdaImprovement,
     recurringNetEbitdaImprovement,
 
     proFormaEbitda,
-
     proFormaEbitdaMargin,
 
+    upfrontImplementationInvestment,
     yearOneInvestment,
 
     yearOneNetBenefit,
-
     yearOneRoi,
 
+    annualNetRecurringBenefit,
     recurringRoi,
 
+    benefitCostRatio,
     paybackMonths,
 
     enterpriseValueLow,
-
     enterpriseValueBase,
-
     enterpriseValueHigh,
   };
 }
