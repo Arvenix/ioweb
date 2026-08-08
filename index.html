@@ -1,586 +1,121 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Arvenix | Turn Operational Constraints Into Revenue</title>
-<meta name="description" content="Arvenix applies proven operational-excellence discipline to your operations data, converting backlog, inventory, downtime, and capacity constraints into measurable revenue and margin.">
-<meta name="theme-color" content="#0a0e1a">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Arvenix | Operations Intelligence for Growing Service Businesses</title>
+<meta name="description" content="Arvenix connects inventory, purchasing, backlog, scheduling, technician capacity and operational analytics to help growing service businesses improve execution, working capital and profitability.">
 <link rel="canonical" href="https://arvenix.io/">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://arvenix.io/">
-<meta property="og:title" content="Arvenix | Turn Operational Constraints Into Revenue">
-<meta property="og:description" content="Proven operational-excellence discipline applied to your operations data. Convert constraints into revenue.">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232563eb'/%3E%3Cpath d='M7 25 L14.5 7 L17.5 7 L25 25 L21 25 L19.3 20.5 L12.7 20.5 L11 25 Z M13.6 17 L18.4 17 L16 10.5 Z' fill='%23fff'/%3E%3C/svg%3E">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  /* Palette: engineering blueprint. Deep ink, precision blue, signal cyan, one warm data-accent */
-  --ink:#0a0e1a;
-  --ink-2:#0d1424;
-  --panel:#111a2e;
-  --panel-2:#0f1728;
-  --line:rgba(120,150,210,.14);
-  --line-bright:rgba(120,160,230,.28);
-  --text:#eef2fb;
-  --text-2:#9aa8c4;
-  --text-3:#6b7a99;
-  --blue:#3b7dff;
-  --blue-deep:#2563eb;
-  --cyan:#22d3ee;
-  --signal:#f5b642;      /* warm signal accent, used sparingly for the "goal/driver" markers */
-  --radius:14px;
-  --maxw:1200px;
-  --gutter:clamp(20px,5vw,48px);
-}
-html{scroll-behavior:smooth}
-body{
-  background:var(--ink);
-  color:var(--text);
-  font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-  line-height:1.6;
-  -webkit-font-smoothing:antialiased;
-  overflow-x:hidden;
-}
-h1,h2,h3,h4{font-family:Sora,Inter,sans-serif;letter-spacing:-.02em;line-height:1.08}
-.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
-a{color:inherit;text-decoration:none}
-
-/* blueprint grid backdrop */
-.blueprint{
-  position:fixed;inset:0;z-index:-2;pointer-events:none;
-  background:
-    linear-gradient(var(--ink),var(--ink));
-}
-.blueprint::before{
-  content:"";position:absolute;inset:0;
-  background-image:
-    linear-gradient(rgba(120,160,230,.05) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(120,160,230,.05) 1px,transparent 1px);
-  background-size:52px 52px;
-  mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 30%,transparent 85%);
-  -webkit-mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 30%,transparent 85%);
-}
-.glow{position:fixed;z-index:-1;pointer-events:none;border-radius:50%;filter:blur(120px);opacity:.5}
-.glow.one{width:560px;height:560px;background:radial-gradient(circle,#1e40af,transparent 68%);top:-160px;left:-120px}
-.glow.two{width:520px;height:520px;background:radial-gradient(circle,#0e7490,transparent 68%);top:420px;right:-160px;opacity:.35}
-
-.wrap{max-width:var(--maxw);margin:0 auto;padding-left:var(--gutter);padding-right:var(--gutter)}
-
-/* ---------- nav ---------- */
-header{position:sticky;top:0;z-index:60;transition:background .3s,border-color .3s}
-header.scrolled{background:rgba(10,14,26,.82);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
-nav{display:flex;align-items:center;gap:32px;height:74px}
-.brand{display:flex;align-items:center;gap:11px;font-family:Sora;font-weight:700;font-size:19px}
-.brand-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(140deg,var(--blue-deep),var(--cyan));display:grid;place-items:center;box-shadow:0 6px 20px rgba(37,99,235,.4)}
-.brand-mark svg{width:20px;height:20px}
-.nav-links{display:flex;gap:30px;margin-left:auto;font-size:14.5px;color:var(--text-2);font-weight:500}
-.nav-links a{transition:color .2s}
-.nav-links a:hover{color:var(--text)}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:600;font-size:14.5px;border-radius:999px;padding:12px 22px;cursor:pointer;border:1px solid transparent;transition:transform .18s,box-shadow .25s,background .25s,border-color .25s;white-space:nowrap;font-family:Inter}
-.btn-primary{background:linear-gradient(135deg,var(--blue),var(--blue-deep));color:#fff;box-shadow:0 8px 24px rgba(37,99,235,.36)}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(37,99,235,.5)}
-.btn-line{background:rgba(255,255,255,.03);border-color:var(--line-bright);color:var(--text)}
-.btn-line:hover{background:rgba(255,255,255,.07);transform:translateY(-2px)}
-.btn-lg{padding:15px 30px;font-size:16px}
-.burger{display:none;background:none;border:0;color:var(--text);font-size:24px;cursor:pointer;margin-left:auto}
-
-/* ---------- hero ---------- */
-.hero{padding:96px 0 72px;position:relative}
-.eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:"IBM Plex Mono",monospace;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);margin-bottom:26px}
-.hero h1{font-size:clamp(40px,6.4vw,74px);font-weight:800;max-width:14ch;margin-bottom:26px}
-.hero h1 .accent{background:linear-gradient(120deg,var(--blue) 0%,var(--cyan) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero-lead{font-size:clamp(17px,2vw,20px);color:var(--text-2);max-width:62ch;margin-bottom:36px}
-.hero-cta{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
-.hero-meta{margin-top:22px;font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--text-3);letter-spacing:.04em}
-
-/* driver strip: the four constraint drivers as an engineered readout */
-.drivers{margin-top:56px;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(180deg,var(--panel),var(--panel-2));overflow:hidden}
-.drivers-head{display:flex;align-items:center;justify-content:space-between;padding:14px 22px;border-bottom:1px solid var(--line);font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3)}
-.drivers-head .dot{width:8px;height:8px;border-radius:50%;background:var(--signal);box-shadow:0 0 10px var(--signal);display:inline-block;margin-right:8px}
-.drivers-grid{display:grid;grid-template-columns:repeat(4,1fr)}
-.driver{padding:26px 22px;border-right:1px solid var(--line)}
-.driver:last-child{border-right:none}
-.driver .k{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:10px}
-.driver .v{font-family:Sora;font-size:15.5px;font-weight:700;color:var(--text);line-height:1.25}
-.driver .n{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--cyan);margin-top:10px}
-
-/* ---------- section scaffolding ---------- */
-section{position:relative}
-.band{padding:100px 0}
-.band-line{border-top:1px solid var(--line)}
-.sec-head{max-width:720px;margin-bottom:56px}
-.sec-head.center{margin-left:auto;margin-right:auto;text-align:center}
-.sec-eyebrow{font-family:"IBM Plex Mono",monospace;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);margin-bottom:16px;display:block}
-.sec-head h2{font-size:clamp(30px,4.2vw,46px);font-weight:800;margin-bottom:18px}
-.sec-head p{font-size:17px;color:var(--text-2)}
-
-/* ---------- methodology (signature block) ---------- */
-.method-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--panel-2)}
-.method{padding:38px 32px;border-right:1px solid var(--line);position:relative;transition:background .3s}
-.method:last-child{border-right:none}
-.method:hover{background:var(--panel)}
-.method .tag{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--cyan);margin-bottom:18px}
-.method h3{font-size:22px;font-weight:700;margin-bottom:12px}
-.method p{font-size:15px;color:var(--text-2)}
-.method .rule{width:34px;height:2px;background:linear-gradient(90deg,var(--blue),var(--cyan));margin-bottom:22px}
-
-/* ---------- constraints (blockers) ---------- */
-.blockers{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.blocker{border:1px solid var(--line);border-radius:var(--radius);background:var(--panel-2);padding:30px;transition:transform .3s,border-color .3s,background .3s;position:relative;overflow:hidden}
-.blocker::before{content:"";position:absolute;left:0;top:0;width:3px;height:100%;background:linear-gradient(180deg,var(--blue),var(--cyan));transform:scaleY(0);transform-origin:top;transition:transform .35s ease}
-.blocker:hover{transform:translateY(-5px);border-color:var(--line-bright);background:var(--panel)}
-.blocker:hover::before{transform:scaleY(1)}
-.blocker .idx{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--text-3);margin-bottom:16px}
-.blocker h3{font-size:18.5px;font-weight:700;margin-bottom:10px}
-.blocker p{font-size:14.5px;color:var(--text-2)}
-.blocker .lever{margin-top:16px;font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.04em;color:var(--cyan)}
-
-/* ---------- process (value stream) ---------- */
-.stream{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
-.stage{padding:32px 24px;border-right:1px solid var(--line);position:relative;background:var(--panel-2);transition:background .3s}
-.stage:last-child{border-right:none}
-.stage:hover{background:var(--panel)}
-.stage .step{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--cyan);margin-bottom:18px;letter-spacing:.08em}
-.stage h3{font-size:16.5px;font-weight:700;margin-bottom:10px}
-.stage p{font-size:13.5px;color:var(--text-2)}
-
-/* ---------- revenue model (the money block, uniform styling) ---------- */
-.model{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center}
-.model-copy h2{font-size:clamp(28px,3.8vw,42px);font-weight:800;margin-bottom:18px}
-.model-copy p{font-size:16.5px;color:var(--text-2);margin-bottom:24px}
-.model-list{list-style:none;display:grid;gap:14px}
-.model-list li{display:flex;gap:13px;align-items:flex-start;font-size:15.5px;color:var(--text)}
-.model-list .mk{flex:0 0 auto;width:20px;height:20px;border-radius:5px;background:linear-gradient(135deg,var(--blue),var(--cyan));display:grid;place-items:center;margin-top:2px}
-.model-list .mk svg{width:12px;height:12px}
-
-.ledger{border:1px solid var(--line-bright);border-radius:18px;overflow:hidden;background:linear-gradient(180deg,var(--panel),var(--panel-2))}
-.ledger-head{padding:22px 26px;border-bottom:1px solid var(--line)}
-.ledger-head .t{font-family:Sora;font-size:18px;font-weight:700}
-.ledger-head .s{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--text-3);margin-top:6px;letter-spacing:.04em}
-.ledger-row{display:flex;align-items:center;justify-content:space-between;padding:20px 26px;border-bottom:1px solid var(--line)}
-.ledger-row:last-of-type{border-bottom:none}
-.ledger-row .label{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-2)}
-.ledger-row .value{font-family:Sora;font-size:clamp(24px,3vw,30px);font-weight:800;color:var(--cyan);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-.ledger-foot{padding:18px 26px;background:rgba(37,99,235,.08);border-top:1px solid var(--line)}
-.ledger-foot .label{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--text)}
-.ledger-total{display:flex;align-items:baseline;justify-content:space-between;padding:22px 26px}
-.ledger-total .label{font-family:Sora;font-size:16px;font-weight:700;color:var(--text)}
-.ledger-total .value{font-family:Sora;font-size:clamp(28px,3.6vw,38px);font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;background:linear-gradient(120deg,var(--blue),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
-.ledger-note{padding:0 26px 22px;font-size:12.5px;color:var(--text-3);line-height:1.6}
-
-/* ---------- verticals ---------- */
-.verticals{display:flex;flex-wrap:wrap;gap:12px}
-.vertical{font-family:"IBM Plex Mono",monospace;font-size:13px;letter-spacing:.03em;color:var(--text-2);border:1px solid var(--line);border-radius:999px;padding:10px 18px;transition:border-color .25s,color .25s,background .25s}
-.vertical:hover{border-color:var(--line-bright);color:var(--text);background:var(--panel)}
-
-/* ---------- proof stats ---------- */
-.proof{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--panel-2)}
-.proof-cell{padding:34px 26px;border-right:1px solid var(--line);text-align:center}
-.proof-cell:last-child{border-right:none}
-.proof-cell .num{font-family:Sora;font-size:clamp(30px,4vw,42px);font-weight:800;letter-spacing:-.02em;background:linear-gradient(120deg,var(--blue),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
-.proof-cell .cap{font-size:13.5px;color:var(--text-2);margin-top:10px}
-
-/* ---------- CTA ---------- */
-.cta{border:1px solid var(--line-bright);border-radius:24px;padding:clamp(44px,6vw,72px);text-align:center;position:relative;overflow:hidden;background:linear-gradient(150deg,rgba(37,99,235,.16),rgba(34,211,238,.08))}
-.cta h2{font-size:clamp(30px,4.4vw,48px);font-weight:800;margin-bottom:18px;max-width:18ch;margin-left:auto;margin-right:auto}
-.cta p{font-size:17.5px;color:var(--text-2);max-width:56ch;margin:0 auto 34px}
-.cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-
-/* ---------- footer ---------- */
-footer{border-top:1px solid var(--line);padding:56px 0 40px;color:var(--text-2);font-size:14.5px;margin-top:20px}
-.foot-grid{display:grid;grid-template-columns:1.6fr repeat(3,1fr);gap:36px}
-.foot-grid h4{color:var(--text);font-size:13px;font-family:"IBM Plex Mono",monospace;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px;font-weight:600}
-.foot-grid a{display:block;padding:5px 0;color:var(--text-2);transition:color .2s}
-.foot-grid a:hover{color:var(--text)}
-.foot-brand p{max-width:300px;margin-top:14px;color:var(--text-3)}
-.foot-bottom{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:44px;padding-top:24px;border-top:1px solid var(--line);font-size:13px;color:var(--text-3);font-family:"IBM Plex Mono",monospace;letter-spacing:.03em}
-
-/* ---------- reveal ---------- */
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.2,.8,.3,1),transform .7s cubic-bezier(.2,.8,.3,1)}
-.reveal.in{opacity:1;transform:none}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
-
-/* ---------- responsive ---------- */
-@media(max-width:1000px){
-  .method-grid,.stream{grid-template-columns:1fr;}
-  .method{border-right:none;border-bottom:1px solid var(--line)}
-  .method:last-child{border-bottom:none}
-  .stage{border-right:none;border-bottom:1px solid var(--line)}
-  .stage:last-child{border-bottom:none}
-  .blockers{grid-template-columns:1fr 1fr}
-  .model{grid-template-columns:1fr;gap:40px}
-  .proof{grid-template-columns:1fr 1fr}
-  .proof-cell:nth-child(2){border-right:none}
-  .proof-cell{border-bottom:1px solid var(--line)}
-  .drivers-grid{grid-template-columns:1fr 1fr}
-  .driver:nth-child(2){border-right:none}
-  .driver{border-bottom:1px solid var(--line)}
-  .foot-grid{grid-template-columns:1fr 1fr}
-}
-@media(max-width:620px){
-  .nav-links{display:none}.burger{display:block}
-  header.open .nav-links{display:flex;position:absolute;top:74px;left:0;right:0;flex-direction:column;gap:0;padding:8px var(--gutter) 18px;background:rgba(10,14,26,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
-  header.open .nav-links a{padding:14px 0;border-bottom:1px solid var(--line);font-size:16px}
-  nav .btn{display:none}
-  .blockers{grid-template-columns:1fr}
-  .drivers-grid{grid-template-columns:1fr}
-  .driver{border-right:none;border-bottom:1px solid var(--line)}
-  .driver:last-child{border-bottom:none}
-  .proof{grid-template-columns:1fr}
-  .proof-cell{border-right:none}
-  .foot-grid{grid-template-columns:1fr}
-  .band{padding:72px 0}
-}
-</style>
+<link rel="stylesheet" href="/assets/services.css">
 </head>
 <body>
-<div class="blueprint"></div>
-<div class="glow one"></div>
-<div class="glow two"></div>
-
-<header id="hdr">
-  <div class="wrap">
-    <nav>
-      <a class="brand" href="#top">
-        <span class="brand-mark">
-          <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M7 25 L14.5 7 L17.5 7 L25 25 L21 25 L19.3 20.5 L12.7 20.5 L11 25 Z M13.6 17 L18.4 17 L16 10.5 Z" fill="#fff"/></svg>
-        </span>
-        Arvenix
-      </a>
-      <div class="nav-links">
-        <a href="#method">Methodology</a>
-        <a href="#constraints">Constraints</a>
-        <a href="#process">Engagement</a>
-        <a href="#model">Revenue Model</a>
-      </div>
-      <a class="btn btn-primary" href="#contact">Book a Discovery Audit</a>
-      <button class="burger" aria-label="Menu" onclick="document.getElementById('hdr').classList.toggle('open')">☰</button>
-    </nav>
-  </div>
+<header class="site-header">
+<div class="container nav">
+<a class="brand" href="/"><span class="mark">A</span><span>ARVENIX</span></a>
+<nav class="nav-links">
+<a href="#platform">Platform</a>
+<a href="#solutions">Solutions</a>
+<a href="/services/inventory-management.html">Inventory</a>
+<a href="/services/capacity-planning.html">Capacity</a>
+<a href="/services/backlog-management.html">Backlog</a>
+<a href="https://roi.arvenix.io">ROI Calculator</a>
+<a class="nav-cta" href="#contact">Talk to Arvenix</a>
+</nav>
+</div>
 </header>
 
-<main id="top">
-  <!-- HERO -->
-  <section class="hero">
-    <div class="wrap">
-      <span class="eyebrow">Operations Intelligence for Installation</span>
-      <h1>Turn Operational Constraints Into <span class="accent">Revenue</span>.</h1>
-      <p class="hero-lead">Arvenix brings proven operational-excellence discipline to your operations data. We locate the constraints throttling throughput, quantify each one in dollars, and convert backlog, inventory, capacity, and utilization into measurable revenue and margin.</p>
-      <div class="hero-cta">
-        <a class="btn btn-primary btn-lg" href="#contact">Book a Discovery Audit</a>
-        <a class="btn btn-line btn-lg" href="#method">See the Methodology</a>
-      </div>
-      <div class="hero-meta">Connected to ERP, CRM, WMS, and OMS. Every record analyzed, not a sample.</div>
+<main>
+<section class="hero">
+<div class="container">
+<p class="eyebrow">Operations Intelligence</p>
+<h1>Find the operating constraints holding your service business back.</h1>
+<p class="hero-copy">Arvenix connects inventory, purchasing, sold backlog, scheduling, technician capacity and financial impact so growing service businesses can see what is limiting production and what to do next.</p>
+<div class="hero-actions">
+<a class="button primary" href="#solutions">Explore Solutions</a>
+<a class="button secondary" href="https://roi.arvenix.io">Calculate Operational ROI</a>
+</div>
+</div>
+</section>
 
-      <!-- Driver readout -->
-      <div class="drivers reveal">
-        <div class="drivers-head">
-          <span><span class="dot"></span>Key Constraint Drivers</span>
-          <span>Signal to Revenue</span>
-        </div>
-        <div class="drivers-grid">
-          <div class="driver">
-            <div class="k">Driver 01</div>
-            <div class="v">Backlog Velocity</div>
-            <div class="n">Throughput unlocked</div>
-          </div>
-          <div class="driver">
-            <div class="k">Driver 02</div>
-            <div class="v">Inventory Position</div>
-            <div class="n">Capital recovered</div>
-          </div>
-          <div class="driver">
-            <div class="k">Driver 03</div>
-            <div class="v">Installer Utilization</div>
-            <div class="n">Capacity gained</div>
-          </div>
-          <div class="driver">
-            <div class="k">Driver 04</div>
-            <div class="v">Capacity Headroom</div>
-            <div class="n">Revenue expanded</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+<section id="platform" class="section">
+<div class="container">
+<p class="eyebrow">The Platform</p>
+<h2>Connect the data you already have.</h2>
+<p class="section-intro">Arvenix is designed to sit across the operating systems a contractor already uses and turn disconnected data into a common operating model for inventory, backlog, purchasing, scheduling and field execution.</p>
+<div class="grid-3">
+<div class="card"><h3>Connect</h3><p>Bring together operational data from CRM, ERP, accounting, inventory, scheduling and other business systems.</p></div>
+<div class="card"><h3>Analyze</h3><p>Identify constraints, exceptions, excess inventory, capacity gaps, aging backlog and financial leakage.</p></div>
+<div class="card"><h3>Act</h3><p>Give operators a prioritized view of what should be scheduled, purchased, transferred, recruited or escalated next.</p></div>
+</div>
+</div>
+</section>
 
-  <!-- METHODOLOGY (signature) -->
-  <section class="band band-line" id="method">
-    <div class="wrap">
-      <div class="sec-head reveal">
-        <span class="sec-eyebrow">The Operating System</span>
-        <h2>Operational excellence, applied to your data.</h2>
-        <p>The disciplines that transformed modern manufacturing now run against your live operations. Not a dashboard, and not a consulting deck. A working system that finds waste, proves it, and holds the gain.</p>
-      </div>
-      <div class="method-grid reveal">
-        <div class="method">
-          <div class="rule"></div>
-          <div class="tag">Waste</div>
-          <h3>Eliminate the waste</h3>
-          <p>Every touchpoint across materials, labor, and time is mapped against your value stream. We surface the non-value activity that quietly erodes margin on every job, then design it out.</p>
-        </div>
-        <div class="method">
-          <div class="rule"></div>
-          <div class="tag">Improvement</div>
-          <h3>Compound the gains</h3>
-          <p>Improvement is continuous, not a one-time project. Models learn from every completed install and tighten with each cycle, so the system that runs your operation next quarter is sharper than today's.</p>
-        </div>
-        <div class="method">
-          <div class="rule"></div>
-          <div class="tag">Evidence</div>
-          <h3>Prove it with data</h3>
-          <p>Decisions are grounded in the full record of your operation, never a convenient sample. Every recommendation carries a dollar figure and the confidence to defend it in the boardroom.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+<section id="solutions" class="section alt">
+<div class="container">
+<p class="eyebrow">Solutions</p>
+<h2>One operating model across the constraints that limit growth.</h2>
+<p class="section-intro">Explore the operating areas Arvenix is designed to connect.</p>
+<div class="grid-3">
+<a class="link-card" href="/services/inventory-management.html"><strong>Inventory Management</strong><span>Improve inventory visibility, turns, allocation and working capital.</span></a>
+<a class="link-card" href="/services/capacity-planning.html"><strong>Capacity Planning</strong><span>Compare sold demand with sustainable technician capacity.</span></a>
+<a class="link-card" href="/services/backlog-management.html"><strong>Backlog Management</strong><span>Prioritize sold jobs using readiness, aging, material position and revenue.</span></a>
+<a class="link-card" href="/services/scheduling-optimization.html"><strong>Scheduling Optimization</strong><span>Match ready jobs with available technicians and productive crew days.</span></a>
+<a class="link-card" href="/services/purchasing-optimization.html"><strong>Purchasing Optimization</strong><span>Use consumption, demand, inventory and open orders to improve replenishment.</span></a>
+<a class="link-card" href="/services/technician-workforce.html"><strong>Technician Workforce Planning</strong><span>Translate demand into recruiting requirements by market and skill.</span></a>
+<a class="link-card" href="/services/operational-analytics.html"><strong>Operational Analytics</strong><span>Connect operating KPIs to EBITDA, working capital and constrained revenue.</span></a>
+<a class="link-card" href="https://roi.arvenix.io"><strong>Operational ROI Calculator</strong><span>Model EBITDA improvement, working capital release, payback and value creation.</span></a>
+</div>
+</div>
+</section>
 
-  <!-- CONSTRAINTS -->
-  <section class="band band-line" id="constraints">
-    <div class="wrap">
-      <div class="sec-head reveal">
-        <span class="sec-eyebrow">Your Operational Constraints</span>
-        <h2>The revenue blockers hiding in your operation.</h2>
-        <p>These are not line-item inefficiencies to trim. Each one is a throttle on throughput, and every throttle is a direct hit to revenue and margin. Arvenix converts each into a lever you can pull.</p>
-      </div>
-      <div class="blockers reveal">
-        <div class="blocker">
-          <div class="idx">01</div>
-          <h3>Inventory tied up as dead capital</h3>
-          <p>Dead stock, over-ordered materials, and slow movers sit idle in the warehouse while capital that should be working sits with them.</p>
-          <div class="lever">Lever: Inventory to cash</div>
-        </div>
-        <div class="blocker">
-          <div class="idx">02</div>
-          <h3>Backlog stalling recognized revenue</h3>
-          <p>Jobs wait on scheduling while completed revenue slips into the next quarter. Backlog is booked work that has not yet paid.</p>
-          <div class="lever">Lever: Backlog velocity</div>
-        </div>
-        <div class="blocker">
-          <div class="idx">03</div>
-          <h3>Installer capacity left on the table</h3>
-          <p>Routing and sequencing gaps mean crews complete fewer jobs per day than they could. Tightening utilization adds billable capacity without adding headcount.</p>
-          <div class="lever">Lever: Installer efficiency</div>
-        </div>
-        <div class="blocker">
-          <div class="idx">04</div>
-          <h3>Capacity capped by manual planning</h3>
-          <p>Allocation runs on spreadsheets and gut feel, so the business turns away work it has the true capacity to deliver.</p>
-          <div class="lever">Lever: Capacity headroom</div>
-        </div>
-        <div class="blocker">
-          <div class="idx">05</div>
-          <h3>Contract value quietly leaking</h3>
-          <p>Service agreements go untracked, renewals lapse, and upsell windows close before anyone sees them open.</p>
-          <div class="lever">Lever: Contract recovery</div>
-        </div>
-        <div class="blocker">
-          <div class="idx">06</div>
-          <h3>Leadership flying without instruments</h3>
-          <p>Bottlenecks are discovered after they cost money. Without a live read on the operation, the response is always reactive.</p>
-          <div class="lever">Lever: Operational visibility</div>
-        </div>
-      </div>
-    </div>
-  </section>
+<section class="section">
+<div class="container">
+<p class="eyebrow">Built for Operators</p>
+<h2>Growth creates complexity before most businesses build the systems to manage it.</h2>
+<p class="section-intro">Arvenix focuses on service and installation businesses where sold demand must be converted into completed work through materials, warehouses, field labor and scheduling.</p>
+<div class="grid-3">
+<div class="card"><h3>Home Improvement</h3><p>Bath, flooring, roofing, windows, doors and other installed home improvement businesses.</p></div>
+<div class="card"><h3>Home Services</h3><p>HVAC, plumbing, electrical and field service businesses managing technicians, materials and demand.</p></div>
+<div class="card"><h3>Growing Contractors</h3><p>Operators moving from owner-managed processes toward repeatable systems that support the next stage of growth.</p></div>
+</div>
+</div>
+</section>
 
-  <!-- PROCESS / VALUE STREAM -->
-  <section class="band band-line" id="process">
-    <div class="wrap">
-      <div class="sec-head reveal">
-        <span class="sec-eyebrow">The Engagement</span>
-        <h2>From constraint to revenue, in one value stream.</h2>
-        <p>A disciplined path from raw operations data to durable financial gain. Each stage produces an artifact your team owns.</p>
-      </div>
-      <div class="stream reveal">
-        <div class="stage">
-          <div class="step">Stage 01</div>
-          <h3>Connect and audit</h3>
-          <p>We integrate with your ERP, CRM, WMS, and OMS and analyze the full history of your operations data.</p>
-        </div>
-        <div class="stage">
-          <div class="step">Stage 02</div>
-          <h3>Quantify the goal</h3>
-          <p>Every constraint is mapped to a dollar figure, ranked by impact, and set against a defined revenue and margin goal.</p>
-        </div>
-        <div class="stage">
-          <div class="step">Stage 03</div>
-          <h3>Model the levers</h3>
-          <p>Custom models for scheduling, allocation, and forecasting are built to eliminate waste and tuned to your rules.</p>
-        </div>
-        <div class="stage">
-          <div class="step">Stage 04</div>
-          <h3>Hold the gain</h3>
-          <p>Statistical controls and live dashboards keep the improvement in place and flag drift before it costs you.</p>
-        </div>
-        <div class="stage">
-          <div class="step">Stage 05</div>
-          <h3>Convert dead stock</h3>
-          <p>Excess and obsolete inventory is identified and routed to liquidation or reallocation, turning idle stock into cash.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+<section class="section alt">
+<div class="container">
+<p class="eyebrow">Value Creation</p>
+<h2>Measure operational improvement in financial terms.</h2>
+<p class="section-intro">Better operations should show up somewhere measurable. Arvenix connects operating improvements to inventory cash release, gross profit, EBITDA, revenue conversion and capacity.</p>
+<div class="metric-grid">
+<div class="metric"><span>Inventory</span><strong>Turns</strong><small>Reduce excess working capital</small></div>
+<div class="metric"><span>Backlog</span><strong>Cycle Time</strong><small>Move executable work faster</small></div>
+<div class="metric"><span>Field</span><strong>Capacity</strong><small>Support more completed revenue</small></div>
+<div class="metric"><span>Finance</span><strong>EBITDA</strong><small>Connect operating gains to financial impact</small></div>
+</div>
+<div class="hero-actions">
+<a class="button primary" href="https://roi.arvenix.io">Open ROI Calculator</a>
+<a class="button secondary" href="/services/operational-analytics.html">Explore Operational Analytics</a>
+</div>
+</div>
+</section>
 
-  <!-- REVENUE MODEL -->
-  <section class="band band-line" id="model">
-    <div class="wrap">
-      <div class="model">
-        <div class="model-copy reveal">
-          <span class="sec-eyebrow">The Revenue Model</span>
-          <h2>Constraints, priced and converted.</h2>
-          <p>The goal is simple to state and measurable to prove: convert every operational constraint into recognized revenue or recovered capital. Here is how a typical first year adds up across the four key drivers.</p>
-          <ul class="model-list">
-            <li><span class="mk"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span>Full data population analyzed, so every figure is defensible</span></li>
-            <li><span class="mk"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span>Each driver carries its own target, owner, and control plan</span></li>
-            <li><span class="mk"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span>Your team owns the result. Arvenix supplies the intelligence.</span></li>
-          </ul>
-        </div>
-        <div class="ledger reveal">
-          <div class="ledger-head">
-            <div class="t">First-Year Revenue Model</div>
-            <div class="s">Typical range by key driver</div>
-          </div>
-          <div class="ledger-row">
-            <span class="label">Inventory to Cash</span>
-            <span class="value">$50K&#8211;$200K</span>
-          </div>
-          <div class="ledger-row">
-            <span class="label">Backlog Acceleration</span>
-            <span class="value">$200K&#8211;$600K</span>
-          </div>
-          <div class="ledger-row">
-            <span class="label">Utilization &amp; Capacity</span>
-            <span class="value">$150K&#8211;$400K</span>
-          </div>
-          <div class="ledger-row">
-            <span class="label">Contract &amp; Margin</span>
-            <span class="value">$100K&#8211;$300K</span>
-          </div>
-          <div class="ledger-total">
-            <span class="label">Total Opportunity</span>
-            <span class="value">$500K&#8211;$1.5M</span>
-          </div>
-          <div class="ledger-note">Ranges reflect installation and contracting operations across HVAC, solar, telecom, roofing, flooring, bath and kitchen, and general contracting. Your audit produces the figure specific to your data.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROOF -->
-  <section class="band band-line">
-    <div class="wrap">
-      <div class="proof reveal">
-        <div class="proof-cell">
-          <div class="num">100%</div>
-          <div class="cap">Of your operations data analyzed</div>
-        </div>
-        <div class="proof-cell">
-          <div class="num">5&#8211;15%</div>
-          <div class="cap">Throughput gain from waste removed</div>
-        </div>
-        <div class="proof-cell">
-          <div class="num">4</div>
-          <div class="cap">Key drivers, each with a revenue goal</div>
-        </div>
-        <div class="proof-cell">
-          <div class="num">7</div>
-          <div class="cap">Installation verticals served</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- VERTICALS -->
-  <section class="band band-line">
-    <div class="wrap">
-      <div class="sec-head center reveal">
-        <span class="sec-eyebrow">Built For Your Trade</span>
-        <h2>One methodology, proven across installation.</h2>
-      </div>
-      <div class="verticals reveal" style="justify-content:center">
-        <span class="vertical">HVAC</span>
-        <span class="vertical">Solar</span>
-        <span class="vertical">Telecom</span>
-        <span class="vertical">Roofing</span>
-        <span class="vertical">Flooring</span>
-        <span class="vertical">Bath &amp; Kitchen</span>
-        <span class="vertical">General Contracting</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="band" id="contact">
-    <div class="wrap">
-      <div class="cta reveal">
-        <h2>Find the revenue inside your operation.</h2>
-        <p>Book a discovery audit. We connect to your systems, run the analysis against your full data, and return a prioritized revenue model with a dollar figure on every driver.</p>
-        <div class="cta-row">
-          <a class="btn btn-primary btn-lg" href="mailto:info@arvenix.io?subject=Book%20a%20Discovery%20Audit">Book a Discovery Audit</a>
-          <a class="btn btn-line btn-lg" href="mailto:info@arvenix.io?subject=Arvenix%20Information%20Request">Request Information</a>
-        </div>
-      </div>
-    </div>
-  </section>
+<section id="contact" class="cta">
+<div class="container">
+<h2>Start with the operating problem.</h2>
+<p>Arvenix helps growing service businesses identify where inventory, backlog, purchasing, scheduling or field capacity is limiting growth and quantify what fixing it is worth.</p>
+<div class="hero-actions">
+<a class="button primary" href="mailto:info@arvenix.io">Contact Arvenix</a>
+<a class="button secondary" href="https://roi.arvenix.io">Calculate ROI</a>
+</div>
+</div>
+</section>
 </main>
 
-<footer>
-  <div class="wrap">
-    <div class="foot-grid">
-      <div class="foot-brand">
-        <a class="brand" href="#top">
-          <span class="brand-mark"><svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M7 25 L14.5 7 L17.5 7 L25 25 L21 25 L19.3 20.5 L12.7 20.5 L11 25 Z M13.6 17 L18.4 17 L16 10.5 Z" fill="#fff"/></svg></span>
-          Arvenix
-        </a>
-        <p>Operations intelligence for installation and contracting. Proven operational-excellence discipline applied to your data to convert constraints into revenue.</p>
-      </div>
-      <div>
-        <h4>Platform</h4>
-        <a href="#method">Methodology</a>
-        <a href="#constraints">Constraints</a>
-        <a href="#process">Engagement</a>
-        <a href="#model">Revenue Model</a>
-      </div>
-      <div>
-        <h4>Industries</h4>
-        <a href="#">HVAC &amp; Solar</a>
-        <a href="#">Telecom</a>
-        <a href="#">Roofing &amp; Flooring</a>
-        <a href="#">Bath, Kitchen &amp; GC</a>
-      </div>
-      <div>
-        <h4>Company</h4>
-        <a href="mailto:info@arvenix.io">Contact</a>
-        <a href="#contact">Book an Audit</a>
-        <a href="#">Privacy</a>
-        <a href="#">Terms</a>
-      </div>
-    </div>
-    <div class="foot-bottom">
-      <span>© <span id="yr">2026</span> Arvenix. All rights reserved.</span>
-      <span>info@arvenix.io</span>
-    </div>
-  </div>
+<footer class="footer">
+<div class="container footer-row">
+<span>© 2026 Arvenix. Operations intelligence for growing service businesses.</span>
+<span>Illustrative examples are provided for product demonstration and are not customer results.</span>
+</div>
 </footer>
-
-<script>
-  document.getElementById("yr").textContent = new Date().getFullYear();
-  const hdr = document.getElementById("hdr");
-  const onScroll = () => hdr.classList.toggle("scrolled", window.scrollY > 8);
-  onScroll();
-  window.addEventListener("scroll", onScroll, {passive:true});
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach((e)=>{
-      if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); }
-    });
-  }, {threshold:0.12, rootMargin:"0px 0px -40px 0px"});
-  document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
-</script>
 </body>
 </html>
