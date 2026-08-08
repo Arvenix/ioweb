@@ -6,6 +6,8 @@ import {
   calculateRoi,
   defaultInputs,
   type RoiInputs,
+  type Scenario,
+  type ScenarioAssumptions,
 } from "@/lib/calculator";
 
 const money = new Intl.NumberFormat("en-US", {
@@ -20,6 +22,11 @@ const number = new Intl.NumberFormat("en-US", {
 
 const wholeNumber = new Intl.NumberFormat("en-US", {
   maximumFractionDigits: 0,
+});
+
+const multiple = new Intl.NumberFormat("en-US", {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
 });
 
 function percentInputValue(value: number): number {
@@ -56,10 +63,10 @@ function NumberInput({
 
         <input
           type="number"
+          value={value}
           step={step}
           min={min}
           max={max}
-          value={value}
           onChange={(event) => {
             const parsedValue = Number(event.target.value);
 
@@ -99,9 +106,7 @@ function Metric({
       }
     >
       <span>{label}</span>
-
       <strong>{value}</strong>
-
       {sub && <small>{sub}</small>}
     </div>
   );
@@ -111,10 +116,16 @@ export default function Home() {
   const [inputs, setInputs] =
     useState<RoiInputs>(defaultInputs);
 
+  const [scenario, setScenario] =
+    useState<Scenario>("base");
+
   const results = useMemo(
-    () => calculateRoi(inputs),
-    [inputs]
+    () => calculateRoi(inputs, scenario),
+    [inputs, scenario]
   );
+
+  const scenarioInputs =
+    inputs[scenario];
 
   const setInput = (
     key: keyof RoiInputs,
@@ -126,49 +137,61 @@ export default function Home() {
     }));
   };
 
-  const benefitRows = [
+  const setScenarioInput = (
+    key: keyof ScenarioAssumptions,
+    value: number
+  ) => {
+    setInputs((current) => ({
+      ...current,
+      [scenario]: {
+        ...current[scenario],
+        [key]: value,
+      },
+    }));
+  };
+
+  const resetAssumptions = () => {
+    setInputs(defaultInputs);
+    setScenario("base");
+  };
+
+  const valueCreationRows = [
     {
-      label: "Inventory carrying cost",
+      label: "Material procurement",
       value:
-        results.inventoryCarryingCostSavings,
+        results.materialProcurementSavings,
     },
     {
-      label: "Warehouse footprint",
-      value: inputs.warehouseSavings,
-    },
-    {
-      label: "Freight & transfers",
+      label: "Shrink / obsolescence",
       value:
-        inputs.freightTransferSavings,
+        results.shrinkObsolescenceSavings,
     },
     {
-      label: "Inventory shrink",
+      label: "Freight / transfers",
       value:
-        inputs.inventoryShrinkSavings,
-    },
-    {
-      label: "Administrative labor",
-      value: inputs.adminLaborSavings,
+        results.freightTransferSavings,
     },
     {
       label: "Rework / repeat trips",
-      value: inputs.reworkSavings,
+      value: results.reworkSavings,
     },
     {
-      label: "Capacity leakage recovery",
-      value:
-        results.capacityEbitdaContribution,
+      label: "Warehouse",
+      value: results.warehouseSavings,
     },
     {
-      label:
-        "Backlog / cancellation recovery",
+      label: "Administrative labor",
+      value: results.adminLaborSavings,
+    },
+    {
+      label: "Recovered job contribution",
       value:
-        inputs.backlogCancellationSavings,
+        results.recoveredRevenueContribution,
     },
   ];
 
   const maxBenefit = Math.max(
-    ...benefitRows.map(
+    ...valueCreationRows.map(
       (row) => row.value
     ),
     1
@@ -176,8 +199,6 @@ export default function Home() {
 
   return (
     <main>
-      {/* HEADER */}
-
       <header className="hero">
         <div>
           <p className="eyebrow">
@@ -185,47 +206,35 @@ export default function Home() {
           </p>
 
           <h1>
-            Operational ROI Calculator
+            Operational Value Creation Calculator
           </h1>
 
           <p className="lede">
-            Quantify EBITDA recovery,
-            revenue capacity, and working
-            capital released by improving
-            inventory, material readiness,
-            scheduling, backlog management,
-            and install execution.
+            Model EBITDA improvement, working
+            capital release, operating leverage,
+            payback, and illustrative enterprise
+            value from operational improvements.
           </p>
         </div>
 
         <button
           className="reset"
           type="button"
-          onClick={() =>
-            setInputs(defaultInputs)
-          }
+          onClick={resetAssumptions}
         >
           Reset assumptions
         </button>
       </header>
 
-      {/* SUMMARY */}
-
       <section className="summaryGrid">
         <Metric
-          label="Gross annual EBITDA opportunity"
+          label="Net recurring EBITDA improvement"
           value={money.format(
-            results.grossEbitdaOpportunity
+            results.recurringNetEbitdaImprovement
           )}
-          emphasis
-        />
-
-        <Metric
-          label="Net recurring EBITDA impact"
-          value={money.format(
-            results.recurringNetEbitdaImpact
-          )}
-          sub="After annual Arvenix platform cost"
+          sub={`Pro forma EBITDA ${money.format(
+            results.proFormaEbitda
+          )}`}
           emphasis
         />
 
@@ -234,7 +243,7 @@ export default function Home() {
           value={money.format(
             results.workingCapitalReleased
           )}
-          sub="Cash released from inventory. Not counted as EBITDA."
+          sub="Inventory cash release. Not included in EBITDA."
         />
 
         <Metric
@@ -242,35 +251,79 @@ export default function Home() {
           value={`${number.format(
             results.yearOneRoi * 100
           )}%`}
-          sub={`${results.paybackMonths.toFixed(
-            1
-          )} month EBITDA payback`}
+          sub={`${number.format(
+            results.paybackMonths
+          )} month payback`}
+        />
+
+        <Metric
+          label="Illustrative EV impact"
+          value={money.format(
+            results.enterpriseValueBase
+          )}
+          sub={`${number.format(
+            inputs.baseEbitdaMultiple
+          )}x net recurring EBITDA`}
         />
       </section>
 
+      <section className="panel">
+        <div className="panelTitle">
+          <h2>Underwriting case</h2>
+          <span>Scenario selection</span>
+        </div>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns:
+              "repeat(3, minmax(0, 1fr))",
+            gap: "12px",
+          }}
+        >
+          {(
+            [
+              "conservative",
+              "base",
+              "upside",
+            ] as Scenario[]
+          ).map((option) => (
+            <button
+              key={option}
+              type="button"
+              className={
+                scenario === option
+                  ? "reset"
+                  : "inputWrap"
+              }
+              onClick={() =>
+                setScenario(option)
+              }
+              style={{
+                cursor: "pointer",
+                textTransform: "capitalize",
+                justifyContent: "center",
+                minHeight: "48px",
+              }}
+            >
+              {option}
+            </button>
+          ))}
+        </div>
+      </section>
+
       <div className="layout">
-        {/* LEFT COLUMN */}
-
         <div className="inputsColumn">
-          {/* COMPANY BASELINE */}
-
           <section className="panel">
             <div className="panelTitle">
-              <h2>
-                Company baseline
-              </h2>
-
-              <span>
-                Core economics
-              </span>
+              <h2>Company baseline</h2>
+              <span>Current state</span>
             </div>
 
             <div className="fieldGrid">
               <NumberInput
-                label="Annual install volume"
-                value={
-                  inputs.annualInstalls
-                }
+                label="Annual completed installs"
+                value={inputs.annualInstalls}
                 onChange={(value) =>
                   setInput(
                     "annualInstalls",
@@ -278,11 +331,10 @@ export default function Home() {
                   )
                 }
                 step={100}
-                help="Current annual completed installation volume."
               />
 
               <NumberInput
-                label="Average job revenue"
+                label="Average sale price"
                 prefix="$"
                 value={
                   inputs.averageJobRevenue
@@ -293,41 +345,70 @@ export default function Home() {
                     value
                   )
                 }
-                step={500}
+                step={100}
               />
 
               <NumberInput
-                label="Inventory on hand"
+                label="Current EBITDA"
                 prefix="$"
-                value={
-                  inputs.inventoryValue
-                }
+                value={inputs.currentEbitda}
                 onChange={(value) =>
                   setInput(
-                    "inventoryValue",
+                    "currentEbitda",
                     value
                   )
                 }
                 step={100000}
-                help="Predetermined Arvenix baseline: $8 million."
               />
 
               <NumberInput
-                label="Labor"
-                suffix="%"
-                value={percentInputValue(
-                  inputs.laborPercent
-                )}
+                label="Average inventory"
+                prefix="$"
+                value={
+                  inputs.averageInventory
+                }
                 onChange={(value) =>
                   setInput(
-                    "laborPercent",
-                    value / 100
+                    "averageInventory",
+                    value
                   )
                 }
-                step={0.5}
-                max={100}
+                step={100000}
               />
+            </div>
 
+            <div className="resultList">
+              <div>
+                <span>Annual revenue</span>
+                <strong>
+                  {money.format(
+                    results.annualRevenue
+                  )}
+                </strong>
+              </div>
+
+              <div>
+                <span>
+                  Current EBITDA margin
+                </span>
+                <strong>
+                  {number.format(
+                    results.currentEbitdaMargin *
+                      100
+                  )}
+                  %
+                </strong>
+              </div>
+            </div>
+          </section>
+
+          <section className="panel">
+            <div className="panelTitle">
+              <h2>Gross profit model</h2>
+              <span>Cost structure</span>
+            </div>
+
+            <div className="fieldGrid">
               <NumberInput
                 label="Materials"
                 suffix="%"
@@ -337,6 +418,38 @@ export default function Home() {
                 onChange={(value) =>
                   setInput(
                     "materialPercent",
+                    value / 100
+                  )
+                }
+                step={0.5}
+                max={100}
+              />
+
+              <NumberInput
+                label="Direct installation labor"
+                suffix="%"
+                value={percentInputValue(
+                  inputs.directLaborPercent
+                )}
+                onChange={(value) =>
+                  setInput(
+                    "directLaborPercent",
+                    value / 100
+                  )
+                }
+                step={0.5}
+                max={100}
+              />
+
+              <NumberInput
+                label="Other direct COGS"
+                suffix="%"
+                value={percentInputValue(
+                  inputs.otherDirectCogsPercent
+                )}
+                onChange={(value) =>
+                  setInput(
+                    "otherDirectCogsPercent",
                     value / 100
                   )
                 }
@@ -359,102 +472,474 @@ export default function Home() {
                 step={0.5}
                 max={100}
               />
+
+              <NumberInput
+                label="Recovered job contribution margin"
+                suffix="%"
+                value={percentInputValue(
+                  inputs.recoveredJobContributionMarginPercent
+                )}
+                onChange={(value) =>
+                  setInput(
+                    "recoveredJobContributionMarginPercent",
+                    value / 100
+                  )
+                }
+                step={0.5}
+                max={100}
+              />
             </div>
 
-            <div className="formulaCallout">
-              <span>
-                Fully loaded contribution
-                margin
-              </span>
+            <div className="resultList">
+              <div>
+                <span>Material COGS</span>
+                <strong>
+                  {money.format(
+                    results.annualMaterialCogs
+                  )}
+                </strong>
+              </div>
 
-              <strong>
-                {number.format(
-                  results.contributionMargin *
-                    100
-                )}
-                %
-              </strong>
+              <div>
+                <span>
+                  Direct labor COGS
+                </span>
+                <strong>
+                  {money.format(
+                    results.annualDirectLaborCogs
+                  )}
+                </strong>
+              </div>
 
-              <small>
-                100% less labor, materials,
-                and marketing. Recovered
-                revenue is converted to
-                EBITDA contribution using
-                this margin.
-              </small>
+              <div>
+                <span>
+                  Other direct COGS
+                </span>
+                <strong>
+                  {money.format(
+                    results.annualOtherDirectCogs
+                  )}
+                </strong>
+              </div>
+
+              <div>
+                <span>Total direct COGS</span>
+                <strong>
+                  {money.format(
+                    results.totalDirectCogs
+                  )}
+                </strong>
+              </div>
+
+              <div className="total">
+                <span>Gross profit</span>
+                <strong>
+                  {money.format(
+                    results.grossProfit
+                  )}
+                </strong>
+              </div>
+
+              <div>
+                <span>Gross margin</span>
+                <strong>
+                  {number.format(
+                    results.grossMargin *
+                      100
+                  )}
+                  %
+                </strong>
+              </div>
+
+              <div>
+                <span>
+                  Annual marketing expense
+                </span>
+                <strong>
+                  {money.format(
+                    results.annualMarketingExpense
+                  )}
+                </strong>
+              </div>
             </div>
           </section>
 
-          {/* CAPACITY LEAKAGE */}
-
           <section className="panel">
             <div className="panelTitle">
-              <h2>
-                Capacity leakage recovery
-              </h2>
-
+              <h2>Inventory optimization</h2>
               <span>
-                Revenue opportunity
+                Working capital
               </span>
             </div>
 
             <div className="fieldGrid">
               <NumberInput
-                label="Estimated capacity leakage"
-                suffix="%"
-                value={percentInputValue(
-                  inputs.capacityLeakagePercent
-                )}
+                label="Average material inventory"
+                prefix="$"
+                value={
+                  inputs.averageInventory
+                }
                 onChange={(value) =>
                   setInput(
-                    "capacityLeakagePercent",
-                    value / 100
+                    "averageInventory",
+                    value
                   )
                 }
-                step={1}
-                max={100}
-                help="Estimated portion of current install volume lost to operational constraints. Default: 10%."
+                step={100000}
               />
 
               <NumberInput
-                label="Sustainable recovery of leakage"
-                suffix="%"
-                value={percentInputValue(
-                  inputs.sustainableCapacityRecoveryPercent
-                )}
+                label={`${scenario} target inventory turns`}
+                suffix="x"
+                value={
+                  scenarioInputs.targetInventoryTurns
+                }
                 onChange={(value) =>
-                  setInput(
-                    "sustainableCapacityRecoveryPercent",
-                    value / 100
+                  setScenarioInput(
+                    "targetInventoryTurns",
+                    value
                   )
                 }
-                step={1}
-                max={100}
-                help="Percentage of identified capacity leakage Arvenix is assumed to sustainably recover. Default: 7%."
+                step={0.05}
+                min={0.1}
               />
             </div>
 
             <div className="resultList">
               <div>
                 <span>
-                  Current annual installs
+                  Annual material consumption
                 </span>
+                <strong>
+                  {money.format(
+                    results.annualMaterialCogs
+                  )}
+                </strong>
+              </div>
 
+              <div>
+                <span>
+                  Current inventory turns
+                </span>
+                <strong>
+                  {multiple.format(
+                    results.currentInventoryTurns
+                  )}
+                  x
+                </strong>
+              </div>
+
+              <div>
+                <span>
+                  Target inventory turns
+                </span>
+                <strong>
+                  {multiple.format(
+                    results.targetInventoryTurns
+                  )}
+                  x
+                </strong>
+              </div>
+
+              <div>
+                <span>
+                  Target inventory
+                </span>
+                <strong>
+                  {money.format(
+                    results.targetInventory
+                  )}
+                </strong>
+              </div>
+
+              <div className="total">
+                <span>
+                  Working capital released
+                </span>
+                <strong>
+                  {money.format(
+                    results.workingCapitalReleased
+                  )}
+                </strong>
+              </div>
+            </div>
+          </section>
+
+          <section className="panel">
+            <div className="panelTitle">
+              <h2>
+                Operating cost pools
+              </h2>
+              <span>
+                Current annual spend
+              </span>
+            </div>
+
+            <div className="fieldGrid">
+              <NumberInput
+                label="Shrink / obsolescence cost"
+                prefix="$"
+                value={
+                  inputs.annualShrinkObsolescenceCost
+                }
+                onChange={(value) =>
+                  setInput(
+                    "annualShrinkObsolescenceCost",
+                    value
+                  )
+                }
+                step={10000}
+              />
+
+              <NumberInput
+                label="Freight / transfer cost"
+                prefix="$"
+                value={
+                  inputs.annualFreightTransferCost
+                }
+                onChange={(value) =>
+                  setInput(
+                    "annualFreightTransferCost",
+                    value
+                  )
+                }
+                step={10000}
+              />
+
+              <NumberInput
+                label="Rework / repeat trip cost"
+                prefix="$"
+                value={
+                  inputs.annualReworkRepeatTripCost
+                }
+                onChange={(value) =>
+                  setInput(
+                    "annualReworkRepeatTripCost",
+                    value
+                  )
+                }
+                step={10000}
+              />
+
+              <NumberInput
+                label="Warehouse cost"
+                prefix="$"
+                value={
+                  inputs.annualWarehouseCost
+                }
+                onChange={(value) =>
+                  setInput(
+                    "annualWarehouseCost",
+                    value
+                  )
+                }
+                step={25000}
+              />
+
+              <NumberInput
+                label="Administrative labor cost"
+                prefix="$"
+                value={
+                  inputs.annualAdminLaborCost
+                }
+                onChange={(value) =>
+                  setInput(
+                    "annualAdminLaborCost",
+                    value
+                  )
+                }
+                step={25000}
+              />
+            </div>
+          </section>
+
+          <section className="panel">
+            <div className="panelTitle">
+              <h2>
+                Underwritten improvements
+              </h2>
+              <span>
+                {scenario} case
+              </span>
+            </div>
+
+            <div className="fieldGrid">
+              <NumberInput
+                label="Material cost reduction"
+                suffix="%"
+                value={percentInputValue(
+                  scenarioInputs.materialProcurementImprovementPercent
+                )}
+                onChange={(value) =>
+                  setScenarioInput(
+                    "materialProcurementImprovementPercent",
+                    value / 100
+                  )
+                }
+                step={0.1}
+                max={100}
+              />
+
+              <NumberInput
+                label="Shrink / obsolescence reduction"
+                suffix="%"
+                value={percentInputValue(
+                  scenarioInputs.shrinkObsolescenceReductionPercent
+                )}
+                onChange={(value) =>
+                  setScenarioInput(
+                    "shrinkObsolescenceReductionPercent",
+                    value / 100
+                  )
+                }
+                step={1}
+                max={100}
+              />
+
+              <NumberInput
+                label="Freight / transfer reduction"
+                suffix="%"
+                value={percentInputValue(
+                  scenarioInputs.freightTransferReductionPercent
+                )}
+                onChange={(value) =>
+                  setScenarioInput(
+                    "freightTransferReductionPercent",
+                    value / 100
+                  )
+                }
+                step={1}
+                max={100}
+              />
+
+              <NumberInput
+                label="Rework reduction"
+                suffix="%"
+                value={percentInputValue(
+                  scenarioInputs.reworkReductionPercent
+                )}
+                onChange={(value) =>
+                  setScenarioInput(
+                    "reworkReductionPercent",
+                    value / 100
+                  )
+                }
+                step={1}
+                max={100}
+              />
+
+              <NumberInput
+                label="Warehouse cost reduction"
+                suffix="%"
+                value={percentInputValue(
+                  scenarioInputs.warehouseCostReductionPercent
+                )}
+                onChange={(value) =>
+                  setScenarioInput(
+                    "warehouseCostReductionPercent",
+                    value / 100
+                  )
+                }
+                step={1}
+                max={100}
+              />
+
+              <NumberInput
+                label="Administrative labor reduction"
+                suffix="%"
+                value={percentInputValue(
+                  scenarioInputs.adminLaborReductionPercent
+                )}
+                onChange={(value) =>
+                  setScenarioInput(
+                    "adminLaborReductionPercent",
+                    value / 100
+                  )
+                }
+                step={1}
+                max={100}
+              />
+            </div>
+          </section>
+
+          <section className="panel">
+            <div className="panelTitle">
+              <h2>
+                Addressable operational gap
+              </h2>
+              <span>
+                Existing sold revenue
+              </span>
+            </div>
+
+            <div className="fieldGrid">
+              <NumberInput
+                label="Addressable gap jobs"
+                value={
+                  inputs.addressableOperationalGapJobs
+                }
+                onChange={(value) =>
+                  setInput(
+                    "addressableOperationalGapJobs",
+                    value
+                  )
+                }
+                step={10}
+                help="Sold jobs considered operationally recoverable."
+              />
+
+              <NumberInput
+                label={`${scenario} recovery rate`}
+                suffix="%"
+                value={percentInputValue(
+                  scenarioInputs.operationalGapRecoveryPercent
+                )}
+                onChange={(value) =>
+                  setScenarioInput(
+                    "operationalGapRecoveryPercent",
+                    value / 100
+                  )
+                }
+                step={1}
+                max={100}
+              />
+
+              <NumberInput
+                label="Recovered job contribution margin"
+                suffix="%"
+                value={percentInputValue(
+                  inputs.recoveredJobContributionMarginPercent
+                )}
+                onChange={(value) =>
+                  setInput(
+                    "recoveredJobContributionMarginPercent",
+                    value / 100
+                  )
+                }
+                step={0.5}
+                max={100}
+              />
+            </div>
+
+            <div className="resultList">
+              <div>
+                <span>
+                  Addressable jobs
+                </span>
                 <strong>
                   {wholeNumber.format(
-                    inputs.annualInstalls
+                    inputs.addressableOperationalGapJobs
                   )}
                 </strong>
               </div>
 
               <div>
                 <span>
-                  Estimated capacity leakage
+                  Underwritten recovery
                 </span>
-
                 <strong>
                   {number.format(
-                    inputs.capacityLeakagePercent *
+                    results.operationalGapRecoveryPercent *
                       100
                   )}
                   %
@@ -462,40 +947,10 @@ export default function Home() {
               </div>
 
               <div>
-                <span>
-                  Estimated lost install
-                  opportunities
-                </span>
-
+                <span>Recovered jobs</span>
                 <strong>
                   {number.format(
-                    results.estimatedLostCapacityInstalls
-                  )}
-                </strong>
-              </div>
-
-              <div>
-                <span>
-                  Sustainable recovery rate
-                </span>
-
-                <strong>
-                  {number.format(
-                    inputs.sustainableCapacityRecoveryPercent *
-                      100
-                  )}
-                  %
-                </strong>
-              </div>
-
-              <div>
-                <span>
-                  Recovered installs
-                </span>
-
-                <strong>
-                  {number.format(
-                    results.recoveredInstalls
+                    results.recoveredJobs
                   )}
                 </strong>
               </div>
@@ -504,7 +959,6 @@ export default function Home() {
                 <span>
                   Recovered revenue
                 </span>
-
                 <strong>
                   {money.format(
                     results.recoveredRevenue
@@ -512,259 +966,43 @@ export default function Home() {
                 </strong>
               </div>
 
-              <div className="total">
-                <span>
-                  Capacity EBITDA
-                  contribution
-                </span>
-
-                <strong>
-                  {money.format(
-                    results.capacityEbitdaContribution
-                  )}
-                </strong>
-              </div>
-            </div>
-
-            <p className="disclaimer">
-              Capacity recovery is not
-              calculated against all
-              installation volume. Arvenix
-              first estimates the portion of
-              install volume affected by
-              operational leakage, then
-              applies the sustainable
-              recovery assumption only to
-              that leakage.
-            </p>
-          </section>
-
-          {/* INVENTORY */}
-
-          <section className="panel">
-            <div className="panelTitle">
-              <h2>
-                Inventory optimization
-              </h2>
-
-              <span>
-                Working capital + EBITDA
-              </span>
-            </div>
-
-            <div className="fieldGrid">
-              <NumberInput
-                label="Inventory reduction"
-                suffix="%"
-                value={percentInputValue(
-                  inputs.inventoryReductionPercent
-                )}
-                onChange={(value) =>
-                  setInput(
-                    "inventoryReductionPercent",
-                    value / 100
-                  )
-                }
-                step={1}
-                max={100}
-                help="Reduction in inventory required to support the same operating volume."
-              />
-
-              <NumberInput
-                label="Inventory carrying cost"
-                suffix="%"
-                value={percentInputValue(
-                  inputs.inventoryCarryingCostPercent
-                )}
-                onChange={(value) =>
-                  setInput(
-                    "inventoryCarryingCostPercent",
-                    value / 100
-                  )
-                }
-                step={1}
-                max={100}
-                help="Estimated annual cost of carrying inventory."
-              />
-            </div>
-
-            <div className="resultList">
               <div>
                 <span>
-                  Inventory baseline
+                  Contribution margin
                 </span>
-
                 <strong>
-                  {money.format(
-                    inputs.inventoryValue
+                  {number.format(
+                    results.recoveredJobContributionMargin *
+                      100
                   )}
-                </strong>
-              </div>
-
-              <div>
-                <span>
-                  Working capital released
-                </span>
-
-                <strong>
-                  {money.format(
-                    results.inventoryReduction
-                  )}
+                  %
                 </strong>
               </div>
 
               <div className="total">
                 <span>
-                  Annual carrying cost
-                  savings
+                  Recovered EBITDA contribution
                 </span>
-
                 <strong>
                   {money.format(
-                    results.inventoryCarryingCostSavings
+                    results.recoveredRevenueContribution
                   )}
                 </strong>
               </div>
             </div>
-
-            <p className="disclaimer">
-              Inventory reduction is
-              treated as working capital
-              release. Only the avoided
-              annual carrying cost is
-              included in EBITDA
-              improvement.
-            </p>
           </section>
-
-          {/* OPERATIONAL IMPROVEMENT */}
 
           <section className="panel">
             <div className="panelTitle">
-              <h2>
-                Operational improvement
-              </h2>
-
+              <h2>Arvenix investment</h2>
               <span>
-                Editable annual assumptions
+                Year 1 and recurring
               </span>
             </div>
 
             <div className="fieldGrid">
               <NumberInput
-                label="Warehouse savings"
-                prefix="$"
-                value={
-                  inputs.warehouseSavings
-                }
-                onChange={(value) =>
-                  setInput(
-                    "warehouseSavings",
-                    value
-                  )
-                }
-                step={5000}
-                help="Reduced storage footprint, overflow, or third-party warehouse expense."
-              />
-
-              <NumberInput
-                label="Freight / transfer savings"
-                prefix="$"
-                value={
-                  inputs.freightTransferSavings
-                }
-                onChange={(value) =>
-                  setInput(
-                    "freightTransferSavings",
-                    value
-                  )
-                }
-                step={5000}
-                help="Reduced unnecessary transfers, repositioning, and expedited freight."
-              />
-
-              <NumberInput
-                label="Inventory shrink savings"
-                prefix="$"
-                value={
-                  inputs.inventoryShrinkSavings
-                }
-                onChange={(value) =>
-                  setInput(
-                    "inventoryShrinkSavings",
-                    value
-                  )
-                }
-                step={5000}
-                help="Reduction in lost, damaged, stranded, or unaccounted inventory."
-              />
-
-              <NumberInput
-                label="Administrative labor savings"
-                prefix="$"
-                value={
-                  inputs.adminLaborSavings
-                }
-                onChange={(value) =>
-                  setInput(
-                    "adminLaborSavings",
-                    value
-                  )
-                }
-                step={5000}
-                help="Reduced manual reconciliation, reporting, follow-up, and exception handling."
-              />
-
-              <NumberInput
-                label="Rework / repeat trip savings"
-                prefix="$"
-                value={
-                  inputs.reworkSavings
-                }
-                onChange={(value) =>
-                  setInput(
-                    "reworkSavings",
-                    value
-                  )
-                }
-                step={5000}
-                help="Avoided repeat trips, material errors, and preventable operational rework."
-              />
-
-              <NumberInput
-                label="Backlog / cancellation savings"
-                prefix="$"
-                value={
-                  inputs.backlogCancellationSavings
-                }
-                onChange={(value) =>
-                  setInput(
-                    "backlogCancellationSavings",
-                    value
-                  )
-                }
-                step={5000}
-                help="Defaults to $0 to avoid double counting capacity recovery."
-              />
-            </div>
-          </section>
-
-          {/* ARVENIX INVESTMENT */}
-
-          <section className="panel">
-            <div className="panelTitle">
-              <h2>
-                Arvenix investment
-              </h2>
-
-              <span>
-                Customer cost
-              </span>
-            </div>
-
-            <div className="fieldGrid two">
-              <NumberInput
-                label="Implementation"
+                label="Implementation cost"
                 prefix="$"
                 value={
                   inputs.implementationCost
@@ -772,6 +1010,21 @@ export default function Home() {
                 onChange={(value) =>
                   setInput(
                     "implementationCost",
+                    value
+                  )
+                }
+                step={5000}
+              />
+
+              <NumberInput
+                label="Internal implementation cost"
+                prefix="$"
+                value={
+                  inputs.internalImplementationCost
+                }
+                onChange={(value) =>
+                  setInput(
+                    "internalImplementationCost",
                     value
                   )
                 }
@@ -794,9 +1047,65 @@ export default function Home() {
               />
             </div>
           </section>
-        </div>
 
-        {/* RIGHT COLUMN */}
+          <section className="panel">
+            <div className="panelTitle">
+              <h2>
+                Valuation assumptions
+              </h2>
+              <span>
+                Illustrative only
+              </span>
+            </div>
+
+            <div className="fieldGrid">
+              <NumberInput
+                label="Low EBITDA multiple"
+                suffix="x"
+                value={
+                  inputs.lowEbitdaMultiple
+                }
+                onChange={(value) =>
+                  setInput(
+                    "lowEbitdaMultiple",
+                    value
+                  )
+                }
+                step={0.5}
+              />
+
+              <NumberInput
+                label="Base EBITDA multiple"
+                suffix="x"
+                value={
+                  inputs.baseEbitdaMultiple
+                }
+                onChange={(value) =>
+                  setInput(
+                    "baseEbitdaMultiple",
+                    value
+                  )
+                }
+                step={0.5}
+              />
+
+              <NumberInput
+                label="High EBITDA multiple"
+                suffix="x"
+                value={
+                  inputs.highEbitdaMultiple
+                }
+                onChange={(value) =>
+                  setInput(
+                    "highEbitdaMultiple",
+                    value
+                  )
+                }
+                step={0.5}
+              />
+            </div>
+          </section>
+        </div>
 
         <div className="resultsColumn">
           <section className="panel sticky">
@@ -804,25 +1113,23 @@ export default function Home() {
               <h2>
                 Annual value creation
               </h2>
-
               <span>
-                EBITDA impact
+                {scenario} case
               </span>
             </div>
 
             <div className="bars">
-              {benefitRows.map(
+              {valueCreationRows.map(
                 (row) => {
-                  const width =
-                    Math.max(
-                      0,
-                      Math.min(
-                        100,
-                        (row.value /
-                          maxBenefit) *
-                          100
-                      )
-                    );
+                  const width = Math.max(
+                    0,
+                    Math.min(
+                      100,
+                      (row.value /
+                        maxBenefit) *
+                        100
+                    )
+                  );
 
                   return (
                     <div
@@ -860,9 +1167,70 @@ export default function Home() {
             <div className="resultList">
               <div>
                 <span>
+                  Material procurement
+                </span>
+                <strong>
+                  {money.format(
+                    results.materialProcurementSavings
+                  )}
+                </strong>
+              </div>
+
+              <div>
+                <span>
+                  Shrink / obsolescence
+                </span>
+                <strong>
+                  {money.format(
+                    results.shrinkObsolescenceSavings
+                  )}
+                </strong>
+              </div>
+
+              <div>
+                <span>
+                  Freight / transfer
+                </span>
+                <strong>
+                  {money.format(
+                    results.freightTransferSavings
+                  )}
+                </strong>
+              </div>
+
+              <div>
+                <span>Rework</span>
+                <strong>
+                  {money.format(
+                    results.reworkSavings
+                  )}
+                </strong>
+              </div>
+
+              <div>
+                <span>Warehouse</span>
+                <strong>
+                  {money.format(
+                    results.warehouseSavings
+                  )}
+                </strong>
+              </div>
+
+              <div>
+                <span>
+                  Administrative labor
+                </span>
+                <strong>
+                  {money.format(
+                    results.adminLaborSavings
+                  )}
+                </strong>
+              </div>
+
+              <div className="total">
+                <span>
                   Direct operating savings
                 </span>
-
                 <strong>
                   {money.format(
                     results.directOperatingSavings
@@ -872,25 +1240,11 @@ export default function Home() {
 
               <div>
                 <span>
-                  Estimated lost install
-                  opportunities
+                  Recovered jobs
                 </span>
-
                 <strong>
                   {number.format(
-                    results.estimatedLostCapacityInstalls
-                  )}
-                </strong>
-              </div>
-
-              <div>
-                <span>
-                  Recovered installs
-                </span>
-
-                <strong>
-                  {number.format(
-                    results.recoveredInstalls
+                    results.recoveredJobs
                   )}
                 </strong>
               </div>
@@ -899,7 +1253,6 @@ export default function Home() {
                 <span>
                   Recovered revenue
                 </span>
-
                 <strong>
                   {money.format(
                     results.recoveredRevenue
@@ -909,49 +1262,30 @@ export default function Home() {
 
               <div>
                 <span>
-                  Fully loaded contribution
-                  margin
+                  Recovered job contribution
                 </span>
-
-                <strong>
-                  {number.format(
-                    results.contributionMargin *
-                      100
-                  )}
-                  %
-                </strong>
-              </div>
-
-              <div>
-                <span>
-                  Capacity EBITDA
-                  contribution
-                </span>
-
                 <strong>
                   {money.format(
-                    results.capacityEbitdaContribution
+                    results.recoveredRevenueContribution
                   )}
                 </strong>
               </div>
 
               <div className="total">
                 <span>
-                  Gross EBITDA opportunity
+                  Gross annual EBITDA improvement
                 </span>
-
                 <strong>
                   {money.format(
-                    results.grossEbitdaOpportunity
+                    results.grossAnnualEbitdaImprovement
                   )}
                 </strong>
               </div>
 
               <div>
                 <span>
-                  Annual Arvenix expense
+                  Annual Arvenix cost
                 </span>
-
                 <strong>
                   (
                   {money.format(
@@ -963,14 +1297,64 @@ export default function Home() {
 
               <div className="net">
                 <span>
-                  Net recurring EBITDA
-                  impact
+                  Net recurring EBITDA improvement
                 </span>
-
                 <strong>
                   {money.format(
-                    results.recurringNetEbitdaImpact
+                    results.recurringNetEbitdaImprovement
                   )}
+                </strong>
+              </div>
+            </div>
+
+            <div className="divider" />
+
+            <div className="resultList">
+              <div>
+                <span>
+                  Current EBITDA
+                </span>
+                <strong>
+                  {money.format(
+                    results.currentEbitda
+                  )}
+                </strong>
+              </div>
+
+              <div>
+                <span>
+                  Current EBITDA margin
+                </span>
+                <strong>
+                  {number.format(
+                    results.currentEbitdaMargin *
+                      100
+                  )}
+                  %
+                </strong>
+              </div>
+
+              <div className="net">
+                <span>
+                  Pro forma EBITDA
+                </span>
+                <strong>
+                  {money.format(
+                    results.proFormaEbitda
+                  )}
+                </strong>
+              </div>
+
+              <div>
+                <span>
+                  Pro forma EBITDA margin
+                </span>
+                <strong>
+                  {number.format(
+                    results.proFormaEbitdaMargin *
+                      100
+                  )}
+                  %
                 </strong>
               </div>
             </div>
@@ -978,21 +1362,30 @@ export default function Home() {
             <div className="roiBox">
               <div>
                 <span>
-                  Year 1 cost
+                  Upfront implementation
                 </span>
-
                 <strong>
                   {money.format(
-                    results.yearOneCost
+                    results.upfrontImplementationInvestment
                   )}
                 </strong>
               </div>
 
               <div>
                 <span>
-                  Year 1 net EBITDA benefit
+                  Year 1 investment
                 </span>
+                <strong>
+                  {money.format(
+                    results.yearOneInvestment
+                  )}
+                </strong>
+              </div>
 
+              <div>
+                <span>
+                  Year 1 net benefit
+                </span>
                 <strong>
                   {money.format(
                     results.yearOneNetBenefit
@@ -1001,10 +1394,7 @@ export default function Home() {
               </div>
 
               <div>
-                <span>
-                  Year 1 ROI
-                </span>
-
+                <span>Year 1 ROI</span>
                 <strong>
                   {number.format(
                     results.yearOneRoi *
@@ -1018,7 +1408,6 @@ export default function Home() {
                 <span>
                   Recurring ROI
                 </span>
-
                 <strong>
                   {number.format(
                     results.recurringRoi *
@@ -1030,18 +1419,159 @@ export default function Home() {
 
               <div>
                 <span>
-                  EBITDA payback
+                  Benefit / cost
                 </span>
-
                 <strong>
-                  {results.paybackMonths.toFixed(
-                    1
+                  {number.format(
+                    results.benefitCostRatio
+                  )}
+                  x
+                </strong>
+              </div>
+
+              <div>
+                <span>Payback</span>
+                <strong>
+                  {number.format(
+                    results.paybackMonths
                   )}{" "}
                   months
                 </strong>
               </div>
 
               <div>
+                <span>
+                  Working capital released
+                </span>
+                <strong>
+                  {money.format(
+                    results.workingCapitalReleased
+                  )}
+                </strong>
+              </div>
+            </div>
+
+            <div className="divider" />
+
+            <div className="panelTitle">
+              <h2>
+                Illustrative enterprise value
+              </h2>
+              <span>
+                Net recurring EBITDA
+              </span>
+            </div>
+
+            <div className="resultList">
+              <div>
+                <span>
+                  {number.format(
+                    inputs.lowEbitdaMultiple
+                  )}
+                  x EBITDA
+                </span>
+
+                <strong>
+                  {money.format(
+                    results.enterpriseValueLow
+                  )}
+                </strong>
+              </div>
+
+              <div className="total">
+                <span>
+                  {number.format(
+                    inputs.baseEbitdaMultiple
+                  )}
+                  x EBITDA
+                </span>
+
+                <strong>
+                  {money.format(
+                    results.enterpriseValueBase
+                  )}
+                </strong>
+              </div>
+
+              <div>
+                <span>
+                  {number.format(
+                    inputs.highEbitdaMultiple
+                  )}
+                  x EBITDA
+                </span>
+
+                <strong>
+                  {money.format(
+                    results.enterpriseValueHigh
+                  )}
+                </strong>
+              </div>
+            </div>
+
+            <div className="divider" />
+
+            <div className="panelTitle">
+              <h2>
+                Inventory impact
+              </h2>
+              <span>
+                Cash conversion
+              </span>
+            </div>
+
+            <div className="resultList">
+              <div>
+                <span>
+                  Current average inventory
+                </span>
+
+                <strong>
+                  {money.format(
+                    inputs.averageInventory
+                  )}
+                </strong>
+              </div>
+
+              <div>
+                <span>
+                  Current inventory turns
+                </span>
+
+                <strong>
+                  {multiple.format(
+                    results.currentInventoryTurns
+                  )}
+                  x
+                </strong>
+              </div>
+
+              <div>
+                <span>
+                  Target inventory turns
+                </span>
+
+                <strong>
+                  {multiple.format(
+                    results.targetInventoryTurns
+                  )}
+                  x
+                </strong>
+              </div>
+
+              <div>
+                <span>
+                  Target inventory
+                </span>
+
+                <strong>
+                  {money.format(
+                    results.targetInventory
+                  )}
+                </strong>
+              </div>
+
+              <div className="net">
                 <span>
                   Working capital released
                 </span>
@@ -1053,22 +1583,6 @@ export default function Home() {
                 </strong>
               </div>
             </div>
-
-            <p className="disclaimer">
-              Working capital release is
-              shown separately and is not
-              included in EBITDA or ROI.
-              Recovered revenue is converted
-              to EBITDA contribution using
-              the fully loaded contribution
-              margin. Capacity recovery is
-              calculated only against
-              estimated operational leakage,
-              not total installation volume.
-              Backlog and cancellation
-              savings default to zero to
-              reduce double counting.
-            </p>
           </section>
         </div>
       </div>
