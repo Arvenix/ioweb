@@ -1,61 +1,456 @@
-<!doctype html><html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Arvenix | Operations Intelligence for Growing Service Businesses</title>
-<meta name="description" content="Arvenix connects inventory, purchasing, backlog, scheduling, capacity, workforce and operational analytics to help growing service businesses scale with better control.">
-<link rel="canonical" href="https://arvenix.io/"><link rel="stylesheet" href="/assets/site.css">
-</head><body><header class="site-header"><div class="container nav">
-<a class="brand" href="/"><span class="mark">A</span><span>ARVENIX</span></a>
-<nav class="nav-links" aria-label="Primary">
-<a href="/#platform">Platform</a><a href="/#solutions">Solutions</a>
-<a href="/services/inventory-management.html">Inventory</a>
-<a href="/services/capacity-planning.html">Capacity</a>
-<a href="/services/backlog-management.html">Backlog</a>
-<a href="https://roi.arvenix.io">ROI Calculator</a>
-<a class="nav-cta" href="/#contact">Talk to Arvenix</a>
-</nav></div></header><main>
-<section class="hero"><div class="container"><p class="eyebrow">Operations Intelligence</p>
-<h1>Turn operational data into the decisions that drive growth.</h1>
-<p class="hero-copy">Arvenix connects inventory, purchasing, sold backlog, scheduling, capacity, workforce and financial impact so growing service businesses can see what is limiting execution and what to do next.</p>
-<div class="hero-actions"><a class="button primary" href="#solutions">Explore Solutions</a><a class="button secondary" href="https://roi.arvenix.io">Calculate Operational ROI</a></div></div></section>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Arvenix | Turn Operational Constraints Into Revenue</title>
+  <meta name="description" content="Arvenix connects operational data across inventory, backlog, purchasing, scheduling, capacity and workforce planning to reveal constraints, recover revenue and improve profitability.">
+  <link rel="canonical" href="https://arvenix.io/">
+  <link rel="stylesheet" href="/assets/site.css">
+  <style>
+    .home-hero{
+      min-height:calc(100vh - 74px);
+      display:flex;
+      align-items:center;
+      position:relative;
+      overflow:hidden;
+      padding:70px 0 90px;
+    }
+    .home-hero:before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at 75% 25%,rgba(34,139,230,.18),transparent 28%),
+        radial-gradient(circle at 88% 60%,rgba(59,130,246,.10),transparent 26%);
+      pointer-events:none;
+    }
+    .hero-grid{
+      position:relative;
+      display:grid;
+      grid-template-columns:minmax(0,1.12fr) minmax(420px,.88fr);
+      gap:58px;
+      align-items:center;
+    }
+    .hero-title{
+      font-size:clamp(48px,6.2vw,82px);
+      max-width:780px;
+      margin:0;
+      line-height:.98;
+      letter-spacing:-.05em;
+      color:#fff;
+    }
+    .hero-title .accent{color:#4da3ff}
+    .hero-lead{
+      max-width:690px;
+      margin:24px 0 0;
+      color:#aebdd0;
+      font-size:20px;
+    }
+    .hero-points{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:12px;
+      margin-top:28px;
+      max-width:700px;
+    }
+    .hero-point{
+      border:1px solid #263852;
+      background:rgba(16,29,49,.66);
+      border-radius:12px;
+      padding:13px 15px;
+      color:#c7d4e4;
+      font-size:14px;
+    }
+    .hero-point strong{
+      color:#fff;
+      display:block;
+      margin-bottom:2px;
+    }
+    .intel-panel{
+      background:linear-gradient(180deg,#111f34,#0d192a);
+      border:1px solid #29405e;
+      border-radius:20px;
+      padding:20px;
+      box-shadow:0 28px 75px rgba(0,0,0,.34);
+    }
+    .intel-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      border-bottom:1px solid #263852;
+      padding-bottom:15px;
+      margin-bottom:15px;
+    }
+    .intel-head span{color:#7f91a9;font-size:12px}
+    .status-dot{
+      width:9px;height:9px;border-radius:50%;
+      background:#34d399;display:inline-block;margin-right:7px;
+      box-shadow:0 0 16px rgba(52,211,153,.7);
+    }
+    .intel-kpis{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:10px;
+    }
+    .intel-kpi{
+      background:#14233a;
+      border:1px solid #263852;
+      padding:15px;
+      border-radius:12px;
+    }
+    .intel-kpi span{
+      display:block;color:#7f91a9;font-size:11px;
+      text-transform:uppercase;letter-spacing:.07em;font-weight:800;
+    }
+    .intel-kpi strong{
+      display:block;color:#fff;font-size:25px;margin-top:5px;
+    }
+    .intel-list{
+      margin-top:12px;
+      border:1px solid #263852;
+      border-radius:12px;
+      overflow:hidden;
+    }
+    .intel-row{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:15px;
+      padding:12px 14px;
+      border-bottom:1px solid #263852;
+      color:#b8c7da;
+      font-size:13px;
+    }
+    .intel-row:last-child{border-bottom:0}
+    .intel-row strong{color:#4da3ff}
+    .home-solutions{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:14px;
+      margin-top:28px;
+    }
+    .home-solution{
+      text-decoration:none;
+      background:linear-gradient(180deg,#14233a,#101d31);
+      border:1px solid #263852;
+      border-radius:14px;
+      padding:18px;
+      min-height:145px;
+      transition:.18s ease;
+    }
+    .home-solution:hover{
+      transform:translateY(-2px);
+      border-color:#43658f;
+    }
+    .home-solution strong{
+      display:block;color:#fff;font-size:17px;margin-bottom:7px;
+    }
+    .home-solution span{color:#8fa2ba;font-size:13px}
+    .how-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:16px;
+      margin-top:28px;
+    }
+    .step{
+      position:relative;
+      border-top:2px solid #285f9e;
+      padding-top:17px;
+    }
+    .step b{
+      color:#4da3ff;
+      font-size:12px;
+      letter-spacing:.1em;
+    }
+    .step h3{
+      color:white;margin:7px 0 5px;font-size:18px;
+    }
+    .step p{color:#8496ad;margin:0;font-size:14px}
+    @media(max-width:980px){
+      .hero-grid{grid-template-columns:1fr}
+      .intel-panel{max-width:700px}
+      .home-solutions,.how-grid{grid-template-columns:repeat(2,1fr)}
+      .home-hero{min-height:auto}
+    }
+    @media(max-width:650px){
+      .home-solutions,.how-grid,.hero-points{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
 
-<section id="platform" class="section"><div class="container"><p class="eyebrow">The Platform</p>
-<h2>Connect. Analyze. Act.</h2><p class="section-intro">Arvenix is designed to sit across the systems a business already uses and create a common operating model for execution and finance.</p>
-<div class="grid-3">
-<div class="card"><h3>Connect</h3><p>Bring together data from CRM, ERP, accounting, inventory, scheduling and other operating systems.</p></div>
-<div class="card"><h3>Analyze</h3><p>Identify excess inventory, blocked work, capacity gaps, aging backlog, cost leakage and financial opportunity.</p></div>
-<div class="card"><h3>Act</h3><p>Make the next decision visible: schedule, transfer, order, recruit, escalate or hold.</p></div>
-</div></div></section>
+<header class="site-header">
+  <div class="container nav">
+    <a class="brand" href="/">
+      <span class="mark">A</span>
+      <span>ARVENIX</span>
+    </a>
 
-<section id="solutions" class="section alt"><div class="container"><p class="eyebrow">Solutions</p>
-<h2>One operating model across the constraints that limit growth.</h2>
-<p class="section-intro">Each capability can stand alone, but the value increases when inventory, backlog, purchasing, scheduling and capacity are evaluated together.</p>
-<div class="grid-3"><a class="link-card" href="/services/inventory-management.html"><strong>Inventory Management</strong><span>Arvenix connects inventory, allocation, purchasing, demand and working capital so growing service businesses can make better material decisions.</span></a><a class="link-card" href="/services/capacity-planning.html"><strong>Capacity Planning</strong><span>Arvenix compares sold demand, production capacity, geography and workload so growing service businesses can see where execution is constrained.</span></a><a class="link-card" href="/services/backlog-management.html"><strong>Backlog Management</strong><span>Arvenix prioritizes sold work using readiness, aging, material position, geography, revenue and operational constraints.</span></a><a class="link-card" href="/services/scheduling-optimization.html"><strong>Scheduling Optimization</strong><span>Arvenix improves scheduling using readiness, skills, geography, backlog priority and available production capacity.</span></a><a class="link-card" href="/services/purchasing-optimization.html"><strong>Purchasing Optimization</strong><span>Arvenix combines consumption, backlog, open orders, lead times and inventory position to improve purchasing and replenishment decisions.</span></a><a class="link-card" href="/services/workforce-planning.html"><strong>Workforce Planning</strong><span>Arvenix translates demand, workload, skills and geography into field recruiting and resource requirements.</span></a><a class="link-card" href="/services/operational-analytics.html"><strong>Operational Analytics</strong><span>Arvenix connects inventory, backlog, purchasing, scheduling, field capacity and finance into one operational intelligence layer.</span></a>
-<a class="link-card" href="https://roi.arvenix.io"><strong>Operational ROI Calculator</strong><span>Model EBITDA improvement, working capital release, payback and illustrative enterprise value.</span></a>
-</div></div></section>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="/">Home</a>
+      <a href="/services/inventory-management.html">Inventory</a>
+      <a href="/services/purchasing-optimization.html">Purchasing</a>
+      <a href="/services/backlog-management.html">Backlog</a>
+      <a href="/services/scheduling-optimization.html">Scheduling</a>
+      <a href="/services/capacity-planning.html">Capacity</a>
+      <a href="/services/workforce-planning.html">Workforce</a>
+      <a href="/services/operational-analytics.html">Analytics</a>
+      <a href="https://roi.arvenix.io">ROI</a>
+    </nav>
+  </div>
+</header>
 
-<section class="section"><div class="container"><p class="eyebrow">Built for Growth</p>
-<h2>Operational complexity shows up before most businesses build the systems to manage it.</h2>
-<p class="section-intro">Arvenix is focused on businesses where sold demand must be converted into completed work through materials, purchasing, warehouses, field labor and scheduling.</p>
-<div class="grid-3">
-<div class="card"><h3>Home Improvement</h3><p>Bath, flooring, roofing, windows, doors and other installed home improvement businesses.</p></div>
-<div class="card"><h3>Home Services</h3><p>HVAC, plumbing, electrical and field service businesses managing demand, materials and field resources.</p></div>
-<div class="card"><h3>Scaling Businesses</h3><p>Operators moving from owner-managed processes toward repeatable systems that can support the next stage of growth.</p></div>
-</div></div></section>
+<main>
 
-<section class="section alt"><div class="container"><p class="eyebrow">Value Creation</p>
-<h2>Measure operational improvement in financial terms.</h2>
-<p class="section-intro">Better execution should show up somewhere measurable. Arvenix connects operating improvement to working capital, gross profit, EBITDA, revenue conversion and capacity.</p>
-<div class="metric-grid">
-<div class="metric"><span>Inventory</span><strong>Turns</strong><small>Reduce excess working capital</small></div>
-<div class="metric"><span>Backlog</span><strong>Cycle Time</strong><small>Move executable work faster</small></div>
-<div class="metric"><span>Capacity</span><strong>Utilization</strong><small>Support more completed revenue</small></div>
-<div class="metric"><span>Finance</span><strong>EBITDA</strong><small>Connect operating gains to financial impact</small></div>
-</div></div></section>
+<section class="home-hero">
+  <div class="container hero-grid">
 
-<section id="contact" class="cta"><div class="container"><h2>Start with the operating problem.</h2>
-<p>Arvenix helps growing businesses identify where inventory, backlog, purchasing, scheduling, workforce or capacity is limiting growth and quantify what fixing it is worth.</p>
-<div class="hero-actions"><a class="button primary" href="mailto:info@arvenix.io">Contact Arvenix</a><a class="button secondary" href="https://roi.arvenix.io">Calculate ROI</a></div>
-</div></section></main><footer class="footer"><div class="container footer-row">
-<span>© 2026 Arvenix. Operations intelligence for growing service businesses.</span>
-<span>Illustrative examples are product demonstrations, not customer results.</span>
-</div></footer></body></html>
+    <div>
+      <p class="eyebrow">OPERATIONS INTELLIGENCE</p>
+
+      <h1 class="hero-title">
+        Turn Operational Constraints
+        <span class="accent">Into Revenue.</span>
+      </h1>
+
+      <p class="hero-lead">
+        Arvenix connects the operating data already inside your business,
+        reveals where execution is being constrained, and turns those insights
+        into clear actions around inventory, backlog, purchasing, scheduling,
+        capacity and profitability.
+      </p>
+
+      <div class="hero-actions">
+        <a class="button primary" href="https://roi.arvenix.io">
+          Calculate Your ROI
+        </a>
+        <a class="button secondary" href="#solutions">
+          Explore Arvenix
+        </a>
+      </div>
+
+      <div class="hero-points">
+        <div class="hero-point">
+          <strong>Reveal Constraints</strong>
+          Find what is blocking revenue, cash and execution.
+        </div>
+        <div class="hero-point">
+          <strong>Prioritize Action</strong>
+          Focus teams on the operating moves with the greatest impact.
+        </div>
+        <div class="hero-point">
+          <strong>Improve Working Capital</strong>
+          Connect inventory decisions directly to real demand.
+        </div>
+        <div class="hero-point">
+          <strong>Support Growth</strong>
+          Build capacity before growth overwhelms the operation.
+        </div>
+      </div>
+    </div>
+
+    <div class="intel-panel">
+      <div class="intel-head">
+        <strong>Operational Intelligence</strong>
+        <span><i class="status-dot"></i>Live operating view</span>
+      </div>
+
+      <div class="intel-kpis">
+        <div class="intel-kpi">
+          <span>Revenue</span>
+          <strong>$76.4M</strong>
+        </div>
+        <div class="intel-kpi">
+          <span>Inventory Turns</span>
+          <strong>2.1x</strong>
+        </div>
+        <div class="intel-kpi">
+          <span>Ready Backlog</span>
+          <strong>$3.13M</strong>
+        </div>
+        <div class="intel-kpi">
+          <span>Capacity Utilization</span>
+          <strong>78%</strong>
+        </div>
+      </div>
+
+      <div class="intel-list">
+        <div class="intel-row">
+          <span>Inventory working capital opportunity</span>
+          <strong>$1.28M</strong>
+        </div>
+        <div class="intel-row">
+          <span>Ready work available to schedule</span>
+          <strong>164 jobs</strong>
+        </div>
+        <div class="intel-row">
+          <span>Open field capacity next 30 days</span>
+          <strong>23 days</strong>
+        </div>
+        <div class="intel-row">
+          <span>Purchasing exposure requiring review</span>
+          <strong>$84K</strong>
+        </div>
+      </div>
+
+      <p class="note">Illustrative operating data shown for product demonstration.</p>
+    </div>
+
+  </div>
+</section>
+
+<section id="solutions" class="section alt">
+  <div class="container">
+    <p class="eyebrow">CONNECTED OPERATIONS</p>
+    <h2>See the business as one operating system.</h2>
+    <p class="section-intro">
+      Inventory, backlog, purchasing, scheduling, workforce and capacity affect
+      one another. Arvenix is designed to connect those decisions instead of
+      analyzing each function in isolation.
+    </p>
+
+    <div class="home-solutions">
+      <a class="home-solution" href="/services/inventory-management.html">
+        <strong>Inventory Management</strong>
+        <span>Improve turns, allocation, availability and working capital.</span>
+      </a>
+
+      <a class="home-solution" href="/services/purchasing-optimization.html">
+        <strong>Purchasing Optimization</strong>
+        <span>Use demand, inventory and open orders to improve replenishment.</span>
+      </a>
+
+      <a class="home-solution" href="/services/backlog-management.html">
+        <strong>Backlog Management</strong>
+        <span>Turn sold work into a prioritized queue based on readiness and risk.</span>
+      </a>
+
+      <a class="home-solution" href="/services/scheduling-optimization.html">
+        <strong>Scheduling Optimization</strong>
+        <span>Match ready work with available field resources.</span>
+      </a>
+
+      <a class="home-solution" href="/services/capacity-planning.html">
+        <strong>Capacity Planning</strong>
+        <span>Understand where production capability is limiting growth.</span>
+      </a>
+
+      <a class="home-solution" href="/services/workforce-planning.html">
+        <strong>Workforce Planning</strong>
+        <span>Translate future demand into resource requirements by market.</span>
+      </a>
+
+      <a class="home-solution" href="/services/operational-analytics.html">
+        <strong>Operational Analytics</strong>
+        <span>Connect operating KPIs to revenue, EBITDA and working capital.</span>
+      </a>
+
+      <a class="home-solution" href="https://roi.arvenix.io">
+        <strong>Operational ROI</strong>
+        <span>Quantify potential EBITDA improvement, cash release and payback.</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <p class="eyebrow">WHAT THE DATA COULD REVEAL</p>
+    <h2>Move from reporting what happened to deciding what happens next.</h2>
+    <p class="section-intro">
+      Connected data can expose the relationship between operational constraints
+      and financial performance before those issues appear in month-end results.
+    </p>
+
+    <div class="metric-grid">
+      <div class="metric">
+        <span>Inventory</span>
+        <strong>$1.28M</strong>
+        <small>Illustrative working capital opportunity</small>
+      </div>
+
+      <div class="metric">
+        <span>Backlog</span>
+        <strong>$3.13M</strong>
+        <small>Illustrative revenue ready to schedule</small>
+      </div>
+
+      <div class="metric">
+        <span>Capacity</span>
+        <strong>23</strong>
+        <small>Illustrative open productive days</small>
+      </div>
+
+      <div class="metric">
+        <span>Purchasing</span>
+        <strong>$84K</strong>
+        <small>Illustrative order exposure to review</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="container">
+    <p class="eyebrow">HOW ARVENIX WORKS</p>
+    <h2>From constraints to revenue.</h2>
+
+    <div class="how-grid">
+      <div class="step">
+        <b>01</b>
+        <h3>Connect</h3>
+        <p>Bring together data from the systems already running the business.</p>
+      </div>
+
+      <div class="step">
+        <b>02</b>
+        <h3>Reveal</h3>
+        <p>Identify operating constraints, exceptions, leakage and opportunity.</p>
+      </div>
+
+      <div class="step">
+        <b>03</b>
+        <h3>Prioritize</h3>
+        <p>Rank the actions that have the greatest operational and financial impact.</p>
+      </div>
+
+      <div class="step">
+        <b>04</b>
+        <h3>Improve</h3>
+        <p>Measure whether the operating change actually produces the expected result.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="cta">
+  <div class="container">
+    <p class="eyebrow">ARVENIX</p>
+    <h2>Find out what your operating data is already trying to tell you.</h2>
+    <p>
+      Start with the ROI model or explore the operating capabilities Arvenix
+      is being designed to connect.
+    </p>
+    <div class="hero-actions">
+      <a class="button primary" href="https://roi.arvenix.io">
+        Calculate Operational ROI
+      </a>
+      <a class="button secondary" href="mailto:info@arvenix.io">
+        Contact Arvenix
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="container footer-row">
+    <span>© 2026 Arvenix. Operations intelligence.</span>
+    <span>Illustrative examples are product demonstrations, not customer results.</span>
+  </div>
+</footer>
+
+</body>
+</html>

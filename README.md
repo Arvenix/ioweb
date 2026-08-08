@@ -1,17 +1,20 @@
-# Arvenix Dark SEO Site
+# Arvenix Website Package
 
-Copy these files directly into the root of the existing `ioweb` repository.
+This version restores the original landing-page direction centered on:
 
-Structure:
+Turn Operational Constraints Into Revenue.
 
-ioweb/
-  index.html
-  robots.txt
-  sitemap.xml
-  assets/site.css
-  services/*.html
-  arvenix-roi-calculator/
+It adds top navigation to the new service pages and keeps the dark Arvenix visual system.
 
-The site uses a dark navy theme designed to visually align with the Arvenix ROI calculator.
+Service pages:
+- Inventory Management
+- Purchasing Optimization
+- Backlog Management
+- Scheduling Optimization
+- Capacity Planning
+- Workforce Planning
+- Operational Analytics
 
-All demo figures are labeled illustrative and should be replaced with validated customer case-study data when available.
+The service page section previously called "What the SaaS view could surface" is now "What the data could reveal."
+
+Copy the package into the root of the existing ioweb repository and commit to main.
