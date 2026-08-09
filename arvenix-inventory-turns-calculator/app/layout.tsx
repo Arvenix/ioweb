@@ -1,0 +1,1 @@
+import "./globals.css"; import type { Metadata } from "next"; export const metadata:Metadata={title:"Inventory Turns Calculator | Arvenix",description:"Calculate inventory turns, days on hand and potential working capital release."}; export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="en"><body>{children}</body></html>}
